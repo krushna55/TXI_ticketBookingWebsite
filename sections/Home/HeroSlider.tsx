@@ -13,7 +13,7 @@ export default function HeroSlider() {
 
 
   return (
-    <div className="mt-20 mb-10">
+    <div className="mt-20 mb-10 px-2">
     <Swiper
       modules={[Navigation, Scrollbar, A11y, Autoplay]}
       spaceBetween={25}

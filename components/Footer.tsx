@@ -61,22 +61,22 @@ export default function Footer() {
                         <Image src={logo} alt='logo' className='w-50 aspect-auto' />
                     </div>
                 </div>
-                <div className='col-span-3'>
+                <div className='col-span-3 mt-5'>
                     <div className='sm:grid sm:grid-cols-3'>
-                <div className=' flex items-center sm:items-start   flex-col space-y-5'>
+                <div className=' flex items-center sm:items-start mt-5  sm:mt-0 flex-col space-y-5'>
                     <Link href={'/'} className='font-bold'>Company </Link>
                     <Link href={'/'} className=''>Contact Us </Link>
                     <Link href={'/'} className=''>About US </Link>
                     <Link href={'/'} className=''>Partner </Link>
                 </div>
-                <div className=' flex items-center sm:items-start  flex-col space-y-5'>
+                <div className=' flex items-center sm:items-start  mt-5  sm:mt-0 flex-col space-y-5'>
                     <Link href={'/'} className='font-bold'>About </Link>
                     <Link href={'/'} className=''>TIX ID News </Link>
                     <Link href={'/'} className=''>Cinema </Link>
                     <Link href={'/'} className=''>My Ticket </Link>
                     <Link href={'/'}>Installment</Link>
                 </div>
-                <div className=' flex items-center sm:items-start justify-start flex-col space-y-5 '>
+                <div className=' flex items-center sm:items-start  mt-5  sm:mt-0 justify-start flex-col space-y-5 '>
                     <Link href={'/'} className='font-bold'>Support</Link>
                     <Link href={'/'} className=''>Help Center </Link>
                     <Link href={'/'} className=''>Privacy Policy </Link>
@@ -89,9 +89,9 @@ export default function Footer() {
                     <div className='flex flex-1 flex-col space-y-5  '>
                         <p className='text-gray-600'>Follow us On Social Media</p>
                         <div className='flex space-x-5'>
-                            <Image src={Instagram} alt='instagram' />
-                            <Image src={Twitter} alt='Twitter' />
-                            <Image src={Facebook} alt='FaceBook' />
+                            <Image src={Instagram} className='h-auto aspect-square' alt='instagram' />
+                            <Image src={Twitter} className='h-auto aspect-square' alt='Twitter' />
+                            <Image src={Facebook}  className='h-auto aspect-square'alt='FaceBook' />
                         </div>
                         <p className='font-bold'>Download the TIX ID Application</p>
                         <div className='flex space-x-5'>
