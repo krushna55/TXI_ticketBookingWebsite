@@ -39,6 +39,7 @@ export default function RootLayout({
           <Navbar/>
           <MobileNavbar />
           {children}
+          
           <Footer/>
         </ThemeProvider>
       </body>

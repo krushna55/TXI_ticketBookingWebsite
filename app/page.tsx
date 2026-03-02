@@ -5,7 +5,9 @@ import { Suspense } from "react";
 export default function Home() {
   return (
     <main className="">
-     <HeroSlider/>
+      <Suspense fallback={'Loading...'}>
+        <HeroSlider/>
+      </Suspense>
      <AdevertiseMent/>
     </main>
   );

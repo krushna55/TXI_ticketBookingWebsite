@@ -5,9 +5,9 @@ import { Bell } from "lucide-react";
 
 export default function Navbar() {
     return (
-        <div className="hidden md:flex items-center justify-between px-1">
+        <div className="hidden md:flex items-center justify-between px-10">
             <div>
-                <Image src={logo} alt="logo" className="h-14 w-full" />
+                <Image src={logo} alt="logo" className="h-20 w-full" />
             </div>
             <div className="flex items-center justify-between space-x-10">
                 <div className="flex space-x-10 text-base">

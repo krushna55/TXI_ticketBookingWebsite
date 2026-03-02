@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
 import { AdvertisementData } from "@/consts/AdvertiseMentData";
-
+import './advertisement.css'
 
 export default function AdevertiseMent() {
 
@@ -24,7 +24,7 @@ export default function AdevertiseMent() {
       navigation
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
-      className="my-auto"
+      className="my-auto advertiseMent-swiper"
     >
       {
         AdvertisementData.map((url) => {
