@@ -27,7 +27,7 @@
 
 @layer base {
   * {
-    @apply box-border;
+    @apply box-border  bg-white text-black;
   }
   body {
     @apply mx-auto max-w-[1600px] bg-white text-black;

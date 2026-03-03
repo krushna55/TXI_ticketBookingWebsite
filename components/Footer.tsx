@@ -11,7 +11,7 @@ import AppleStore from '../public/apple-download.png'
 export default function Footer() {
     return (
         <>
-            <hr className='border border-gray-100 mt-10' />
+            <hr className='border border-gray-400 mt-10  bg-white text-black ' />
             {/* <div className='block mx-auto md:flex flex-1 w-full mt-10'>
                 <div className='flex flex-1   w-[20vw]'>
                     <div className='pl-16'>
@@ -55,9 +55,9 @@ export default function Footer() {
                 </div>
 
             </div> */}
-            <div className='flex flex-col  lg:grid  lg:grid-cols-8 mt-10 space-x-5 space-y-5'>
+            <div className='flex flex-col  lg:grid max-w-[1400px] mx-auto  lg:grid-cols-8 mt-10 space-x-5 space-y-5 '>
                 <div className='w-full col-span-2  mt-2'>
-                    <div className='flex lg:block justify-center items-center mb-5 w-full lg:pl-8'>
+                    <div className='flex lg:block justify-center items-center mb-5 w-full'>
                         <Image src={logo} alt='logo' className='w-50 aspect-auto' />
                     </div>
                 </div>

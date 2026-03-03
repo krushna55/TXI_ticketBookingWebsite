@@ -16,7 +16,7 @@ export default function HeroSlider() {
     <div className="mt-20 mb-10 px-2">
     <Swiper
       modules={[Navigation, Scrollbar, A11y, Autoplay]}
-      spaceBetween={25}
+      spaceBetween={0}
       slidesPerView={2}
       autoplay={{
         delay: 2500,
@@ -31,9 +31,9 @@ export default function HeroSlider() {
         BannerData.map((banner) => {
           return (
             <SwiperSlide className="h-[100%]">
-              <div className="w-full justify-center items-center flex flex-col sm:px-2 ">
+              <div className="justify-center items-center flex flex-col sm:px-2 ">
                 {/* <div className="aspect-1/19"> */}
-                  <Image src={banner.banner} alt="spider-movie" className="aspect-[3/4] object-cover overflow-none w-[600px] rounded-md" />
+                  <Image src={banner.banner} alt="spider-movie" className="aspect-[3/4] object-cover overflow-none w-[500px] rounded-md" />
                 {/* </div> */}
                 <p className="text-md md:text-2xl xl:text-3xl line-clamp-1">{banner.MovieName}</p>
                 <div className="flex h-full justify-center space-x-2 my-2">

@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="max-w-[1400px] mx-auto">
       <Suspense fallback={'Loading...'}>
         <HeroSlider />
       </Suspense>
