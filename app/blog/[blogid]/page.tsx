@@ -1,6 +1,11 @@
+
 import '../../globals.css'
-export default function BlogPage({params}){
+import { Suspense } from 'react';
+import {DisplayBlog} from '@/sections/blog/DisplayBlog';
+export default function BlogPage() {
     return (
-        <p>hey</p>
-    )
+        <Suspense fallback={'loading...'}>
+            <DisplayBlog />
+        </Suspense>
+    );
 }

@@ -27,10 +27,10 @@
 
 @layer base {
   * {
-    @apply box-border  bg-white text-black;
+    @apply box-border ;
   }
   body {
-    @apply mx-auto max-w-[1600px] bg-white text-black;
+    @apply mx-auto max-w-[1600px] bg-white text-black ;
   }
   
 

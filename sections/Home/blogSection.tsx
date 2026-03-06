@@ -6,7 +6,7 @@ import BlogFrame from "../blog/blogFrame"
 
 export const BlogSection = async () => {
     const result = await  fetchBlogWithOffset(0,2)
-    console.log(result)
+
     const renderedList = result?.map((data)=>{
         return (
             <BlogFrame obj={data} key={data.id}/>

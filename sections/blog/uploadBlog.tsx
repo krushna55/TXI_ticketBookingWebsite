@@ -7,7 +7,16 @@ import { addBlog, fetchBlogWithType } from '@/api/blog';
 import ImageToUrl from '@/utils/imgtourl';
 import { blog } from '@/types/blog';
 // Add this line at the top
-
+interface uploadblogProp extends blog{
+  Blogimage:string
+}
+interface UploadBlogFormData {
+  title: string;
+  description: string;
+  type: 'Spotlight' | 'News' | 'Trailor';
+  imageUrl:string,
+  Blogimage?: FileList; // for file input
+}
 export default function FileUploadPage() {
   // const spotlight = await fetchBlogWithType('spotlight')
   // console.log(spotlight)
@@ -21,19 +30,25 @@ export default function FileUploadPage() {
       },
     }
   );
-  const onSubmit = async (data: blog) => {
-
-    let imageUrl;
-    if (data.type !== "Trailor") {
-      imageUrl = await ImageToUrl(data.Blogimage[0])
-    }else{
-      imageUrl=null
-    }
-    // console.log(data)
-    const { Blogimage, ...blogData } = data;
-    console.log({ ...blogData, imageUrl })
-    addBlog({ ...blogData, imageUrl })
+const onSubmit = async (data: UploadBlogFormData) => {
+  let imageUrl: string | undefined = undefined;
+  
+  if (data.type !== 'Trailor' && data.Blogimage?.[0]) {
+    imageUrl = await ImageToUrl(data.Blogimage[0]);
   }
+
+  const blogData = {
+    title: data.title,
+    description: data.description,
+    type: data.type,
+    imageUrl: imageUrl,
+    videoUrl: '', // optional, can be empty
+    created_at: new Date(),
+    likes: 0,
+  };
+
+  addBlog(blogData);
+};
 
   useEffect(() => {
     reset();

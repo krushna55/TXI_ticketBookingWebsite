@@ -5,7 +5,7 @@ import { Bell } from "lucide-react";
 
 export default function Navbar() {
     return (
-        <div className="hidden md:flex items-center justify-between px-10">
+        <div className="max-w-[1400px] mx-auto hidden md:flex items-center justify-between sm:px-5">
             <div>
                 <Image src={logo} alt="logo" className="h-20 w-full" />
             </div>
