@@ -1,6 +1,6 @@
 "use client"; // Must be at the very top!
 import { FaRegThumbsUp } from "react-icons/fa";
-import { fetchBlogById, fetchRecommandedBlog, increatelikebyId } from "@/api/blog";
+import { fetchBlogById, fetchRecommandedBlog, increatelikebyId } from "@/api/blog/blog";
 import Typography from "@/components/Typography";
 import DateConverter from "@/utils/dateConverter";
 import Image from "next/image";

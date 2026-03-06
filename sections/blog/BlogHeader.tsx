@@ -4,7 +4,7 @@
 import { TiTick } from "react-icons/ti";
 import { CiSearch } from "react-icons/ci";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
-import { fetchBlogWithtitle, fetchBlogWithType } from "@/api/blog"
+import { fetchBlogWithtitle, fetchBlogWithType } from "@/api/blog/blog"
 import { useEffect, useRef, useState } from "react"
 import { blog } from "@/types/blog";
 
@@ -37,7 +37,7 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
         // if (debounce !== query) {
             ref.current = setTimeout(async () => {
                 const data: blog[] | null = await fetchBlogWithtitle('title', query)
-                console.log("inside useffec", data)
+                
                 setBlogs(data)
                 setDebounce(query)
             }, 500)

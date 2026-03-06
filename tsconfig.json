@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "api/blog/blog.tsx"  ],
   "exclude": ["node_modules"]
 }

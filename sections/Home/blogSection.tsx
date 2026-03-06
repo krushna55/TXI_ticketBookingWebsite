@@ -1,4 +1,4 @@
-import { fetchBlog, fetchBlogWithOffset } from "@/api/blog"
+import { fetchBlog, fetchBlogWithOffset } from "@/api/blog/blog"
 import DateConverter from "@/utils/dateConverter"
 import Image from "next/image"
 import Link from "next/link"

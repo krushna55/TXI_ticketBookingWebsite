@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchBlogWithType } from "@/api/blog";
+import { fetchBlogWithType } from "@/api/blog/blog";
 import { BlogHeader } from "@/sections/blog/BlogHeader";
 import BlogPageFrame from "@/sections/blog/blogPageFrame";
 import UploadBlog from "@/sections/blog/uploadBlog";

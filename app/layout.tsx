@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import MobileNavbar from "@/components/MobileNav";
+import GloableLayout from "@/layout/gloableLayout";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -36,11 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar/>
-          <MobileNavbar />
-          {children}
-          
-          <Footer/>
+          <GloableLayout>
+            {children}
+          </GloableLayout>
         </ThemeProvider>
       </body>
     </html>

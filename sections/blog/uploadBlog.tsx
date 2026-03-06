@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { createClient } from "@/lib/supabase/client";
 import { useEffect } from 'react';
-import { addBlog, fetchBlogWithType } from '@/api/blog';
+import { addBlog, fetchBlogWithType } from '@/api/blog/blog';
 import ImageToUrl from '@/utils/imgtourl';
 import { blog } from '@/types/blog';
 // Add this line at the top

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BlogFrame from "./blogFrame"
 import { blog } from "@/types/blog";
-import { fetchBlogWithOffset, fetchRecommandedBlog } from "@/api/blog";
+import { fetchBlogWithOffset, fetchRecommandedBlog } from "@/api/blog/blog";
 
 export default function SuggestedBlog() {
     const [suggestData, setSuggestData] = useState<blog[] | null>(null); // Use state to keep the data
