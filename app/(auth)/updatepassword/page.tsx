@@ -7,12 +7,12 @@ import SignupForm from '@/form/auth/SignupForm';
 
 
 
-export default function ForgetPassword() {
+export default function ResetPassword() {
     
     return (
         <>
-        <AuthFrame backgroundImg={forgetpassbackground} title='Forget Password'>
-            <ForgetPasswordForm/>
+        <AuthFrame backgroundImg={forgetpassbackground} title='Reset Password'>
+            <ResetPassword/>
         </AuthFrame>
         </>
     )

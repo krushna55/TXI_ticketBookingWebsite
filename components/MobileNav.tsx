@@ -6,11 +6,12 @@ import { MenuIcon, Bell } from "lucide-react";
 import { useState } from "react";
 
 
-export default function MobileNavbar() {
+export default function MobileNavbar({upadteScroll}) {
     const [toggle, setToggle] = useState(false)
    
     function handleClick() {
         setToggle(toggle=>!toggle)
+        upadteScroll(prev=>!prev)
        
        console.log(toggle)
     }
@@ -30,7 +31,8 @@ export default function MobileNavbar() {
                     <p>A</p>
                 </div>
             </div>
-            <div className={`z-10  absolute  flex justify-center items-center inset-0 ${toggle ? '' : 'hidden'}  left-${toggle ? '[100vw]' : '[0px]'} transition-all duration-500 ease-in-out h-full bg-slate-50 bg-opacity-40`}>
+            <div className={`z-10 fixed  flex justify-center items-center inset-0 ${toggle ? '' : 'hidden'}  left-${toggle ? '[100vw]' : '[0px]'} transition-all duration-500 ease-in-out h-full bg-slate-50 bg-opacity-40`}>
+                
                 <div className="flex flex-col opacity-100">
                     <Link href={'/'}>Home</Link>
                     <Link href={'/'}>My Tickets</Link>
