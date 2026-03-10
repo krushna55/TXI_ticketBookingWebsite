@@ -5,22 +5,27 @@ import Navbar from "@/components/Navbar";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-export default function GloableLayout({ children }: { children: React.ReactNode }) {
+export default function GlobalLayout({ children }: { children: React.ReactNode }) {
+
     const pathName = usePathname()
-    const auth = pathName === '/register' || pathName === '/login' || pathName === '/forgetpassword' || pathName === '/updatepassword'
+
+    const auth =
+        pathName === '/register' ||
+        pathName === '/login' ||
+        pathName === '/forgetpassword' ||
+        pathName === '/updatepassword'
 
     const [scroll, setScroll] = useState(false)
-    console.log(scroll)
+
     return (
         <>
             {!auth && <Navbar />}
-            {!auth && <MobileNavbar upadteScroll={setScroll} />}
-            <div className={`${scroll? "overflow-hidden h-screen":'' }`}>
+            {!auth && <MobileNavbar updateScroll={setScroll} />}
 
-                {
-                    children
-                }
+            <div className={scroll ? "overflow-hidden h-screen" : ""}>
+                {children}
             </div>
+
             {!auth && <Footer />}
         </>
     )

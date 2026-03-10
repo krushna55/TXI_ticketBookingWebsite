@@ -33,7 +33,10 @@ export default function LoginForm() {
                 }
             })} />
             {errors.Password && <p role="alert" className='text-red-500  text-xs'>*{errors.Password.message} </p>}
-            < input type="submit" className={`${Object.keys(errors).length > 0? 'disabled:bg-slate-200 text-gray-600 cursor-not-allowed':'bg-royal text-white' }  p-2  mt-10 text-xl rounded-lg`} />
+            <div className="flex justify-end mt-10">
+                <Link href={'/forgetpassword'}>Forgot password?</Link>
+            </div>
+            < input type="submit" className={`${Object.keys(errors).length > 0? 'disabled:bg-slate-200 text-gray-600 cursor-not-allowed':'bg-royal text-white' }  p-2  mt-5 text-xl rounded-lg`} />
         </form>
         <Typography className="py-2 text-center">Already have an Account?</Typography>
             <Link href={'/register'}  className={`${Object.keys(errors).length > 0? 'border-slate-200 text-gray-600 cursor-not-allowed':'border border-royal text-royal' }  p-2  mt-1  text-xl rounded-lg`} ><p className=" w-full text-center">Register now</p></Link>

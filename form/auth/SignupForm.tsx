@@ -3,10 +3,11 @@ import { signupdata } from "@/types/user";
 import { useForm } from "react-hook-form";
 
 export default function SignupForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm<signupdata>();
+    const { register, handleSubmit, reset,formState: { errors } } = useForm<signupdata>();
     const onSubmit = async (data: signupdata) => {
         console.log(data);
         await RegisterUser(data)
+        reset();
     };
 
     if (Object.keys(errors).length > 0) {

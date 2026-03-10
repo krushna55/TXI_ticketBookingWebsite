@@ -1,7 +1,24 @@
 import { createClient } from "@/lib/supabase/client"
 import { ForgetPassData, loginData, ResettPassData, signupdata } from "@/types/user"
+import { useRouter } from "next/navigation"
 
 const supabase = createClient()
+
+export async function fetchUser() {
+    const { data, error } = await supabase.auth.getUser()
+    if (error) {
+        console.log("Error occured while fetching user", error)
+    }
+    return (data.user?.user_metadata)
+}
+export async function LogoutUser() {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+        console.log("Error occured while fetching user", error)
+    }
+
+}
+
 
 export async function RegisterUser(user: signupdata) {
     const { data, error } = await supabase.auth.signUp({
@@ -49,7 +66,7 @@ export async function ForgetPassword(user: ForgetPassData) {
     return data
 }
 export async function ResetPassword(user: ResettPassData) {
-    const { data, error } = await supabase.auth.updateUser({ password: user.Password})
+    const { data, error } = await supabase.auth.updateUser({ password: user.Password })
     console.log({ error })
 
     if (error) {

@@ -17,12 +17,12 @@ export default function AuthFrame({ children, backgroundImg,title }:AuthFramePro
                 alt='background'
             />
             <div className='absolute z-10 inset-0 text-white my-10 md:my-20  lg:mx-10  sm:flex'>
-                <div className='md:w-1/2 p-2 hidden md:block' onClick={() => Moveback()}><div className='flex items-center '>
+                <div className='md:w-1/2 p-2 hidden md:block cursor-pointer pb-1' onClick={() => window.history.back()}><div className='flex items-center '>
                     <FaArrowLeft className='mr-2' />Return</div></div>
                 <div className='w-full  md:w-1/2 flex  items-center xl:items-start'>
                     <div className='h-fit bg-white m-2 px-5 md:px-10 py-5  md:mr-10 w-full flex-col justify-between items-start rounded-xl'>
                         <div className='space-y- flex flex-col w-full lg:w-[70%]'>
-                            <div className=' text-black md:hidden' onClick={() => Moveback()}><div className='flex items-center '>
+                            <div className=' text-black md:hidden cursor-pointer pb-1' onClick={() =>window.history.back()}><div className='flex items-center '>
                                 <FaArrowLeft className='mr-2' />Return</div></div>
                             <Typography size='lg' className='font-extrabold'>
                                 {title}
