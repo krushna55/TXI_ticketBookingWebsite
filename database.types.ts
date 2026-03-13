@@ -47,23 +47,372 @@ export type Database = {
         }
         Relationships: []
       }
-      todos: {
+      brands: {
         Row: {
           created_at: string
           id: number
-          todo: string | null
+          logo_url: string
+          name: string
+          updated_at: string
         }
         Insert: {
           created_at?: string
-          id?: number
-          todo?: string | null
+          id?: never
+          logo_url: string
+          name: string
+          updated_at?: string
         }
         Update: {
           created_at?: string
-          id?: number
-          todo?: string | null
+          id?: never
+          logo_url?: string
+          name?: string
+          updated_at?: string
         }
         Relationships: []
+      }
+      cities: {
+        Row: {
+          id: number
+          latitude: number | null
+          longitude: number | null
+          name: string
+          state: string
+        }
+        Insert: {
+          id?: never
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          state: string
+        }
+        Update: {
+          id?: never
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          state?: string
+        }
+        Relationships: []
+      }
+      discounts: {
+        Row: {
+          code: string
+          created_at: string
+          discount_pct: number | null
+          id: number
+          min_amount: number | null
+          min_valid_amount: number | null
+          name: string | null
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_pct?: number | null
+          id?: never
+          min_amount?: number | null
+          min_valid_amount?: number | null
+          name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_pct?: number | null
+          id?: never
+          min_amount?: number | null
+          min_valid_amount?: number | null
+          name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      movies: {
+        Row: {
+          age_rating: Database["public"]["Enums"]["age_rating"]
+          created_at: string
+          director: string | null
+          duration: string | null
+          genre: string | null
+          id: number
+          movie_img: string | null
+          movies_status: Database["public"]["Enums"]["movie_status"]
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          age_rating?: Database["public"]["Enums"]["age_rating"]
+          created_at?: string
+          director?: string | null
+          duration?: string | null
+          genre?: string | null
+          id?: never
+          movie_img?: string | null
+          movies_status?: Database["public"]["Enums"]["movie_status"]
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          age_rating?: Database["public"]["Enums"]["age_rating"]
+          created_at?: string
+          director?: string | null
+          duration?: string | null
+          genre?: string | null
+          id?: never
+          movie_img?: string | null
+          movies_status?: Database["public"]["Enums"]["movie_status"]
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profile: {
+        Row: {
+          address: string | null
+          age: string | null
+          created_at: string | null
+          email: string | null
+          first_name: string | null
+          last_name: string | null
+          mobile_no: number | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          age?: string | null
+          created_at?: string | null
+          email?: string | null
+          first_name?: string | null
+          last_name?: string | null
+          mobile_no?: number | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          age?: string | null
+          created_at?: string | null
+          email?: string | null
+          first_name?: string | null
+          last_name?: string | null
+          mobile_no?: number | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      screen: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          screen_column: number | null
+          screen_row: number | null
+          theater_id: number
+          type: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          name: string
+          screen_column?: number | null
+          screen_row?: number | null
+          theater_id: number
+          type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          name?: string
+          screen_column?: number | null
+          screen_row?: number | null
+          theater_id?: number
+          type?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "screen_theater_id_fkey"
+            columns: ["theater_id"]
+            isOneToOne: false
+            referencedRelation: "theater"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seat_reservations: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: number
+          price: number | null
+          reservation_status: Database["public"]["Enums"]["reservation_status"]
+          seat_no: string
+          showtime_id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          id?: never
+          price?: number | null
+          reservation_status?: Database["public"]["Enums"]["reservation_status"]
+          seat_no: string
+          showtime_id: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: never
+          price?: number | null
+          reservation_status?: Database["public"]["Enums"]["reservation_status"]
+          seat_no?: string
+          showtime_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seat_reservations_showtime_id_fkey"
+            columns: ["showtime_id"]
+            isOneToOne: false
+            referencedRelation: "showtimes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seat_reservations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      showtimes: {
+        Row: {
+          created_at: string
+          date: string | null
+          id: number
+          movie_id: number
+          price: number | null
+          screen_id: number
+          show_time: string | null
+          theater_id: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          id?: never
+          movie_id: number
+          price?: number | null
+          screen_id: number
+          show_time?: string | null
+          theater_id: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          id?: never
+          movie_id?: number
+          price?: number | null
+          screen_id?: number
+          show_time?: string | null
+          theater_id?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "showtimes_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "showtimes_screen_id_fkey"
+            columns: ["screen_id"]
+            isOneToOne: false
+            referencedRelation: "screen"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "showtimes_theater_id_fkey"
+            columns: ["theater_id"]
+            isOneToOne: false
+            referencedRelation: "theater"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      theater: {
+        Row: {
+          brand_id: number
+          city_id: number
+          complete_address: string | null
+          created_at: string
+          district: string | null
+          id: number
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          brand_id: number
+          city_id: number
+          complete_address?: string | null
+          created_at?: string
+          district?: string | null
+          id?: never
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          brand_id?: number
+          city_id?: number
+          complete_address?: string | null
+          created_at?: string
+          district?: string | null
+          id?: never
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "theater_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "theater_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "theater_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
     }
     Views: {
@@ -73,7 +422,19 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      age_rating: "U" | "U/A 7+" | "U/A 13+" | "U/A 16+" | "A" | "S"
+      booking_status: "pending" | "paid" | "cancelled"
+      brand_type: "qtv" | "iol" | "cinepolis"
+      movie_status: "upcoming" | "now_showing" | "streaming"
+      payment_method: "card" | "upi" | "netbanking" | "wallet"
+      payment_status:
+        | "succeeded"
+        | "processing"
+        | "requires_action"
+        | "requires_payment_action"
+        | "cancelled"
+      reservation_status: "available" | "hold" | "paid"
+      user_role: "user" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -200,6 +561,21 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      age_rating: ["U", "U/A 7+", "U/A 13+", "U/A 16+", "A", "S"],
+      booking_status: ["pending", "paid", "cancelled"],
+      brand_type: ["qtv", "iol", "cinepolis"],
+      movie_status: ["upcoming", "now_showing", "streaming"],
+      payment_method: ["card", "upi", "netbanking", "wallet"],
+      payment_status: [
+        "succeeded",
+        "processing",
+        "requires_action",
+        "requires_payment_action",
+        "cancelled",
+      ],
+      reservation_status: ["available", "hold", "paid"],
+      user_role: ["user", "admin"],
+    },
   },
 } as const
