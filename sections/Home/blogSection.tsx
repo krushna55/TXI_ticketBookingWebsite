@@ -1,4 +1,4 @@
-import { fetchBlog, fetchBlogWithOffset } from "@/api/blog/blog"
+import { fetchBlog, fetchBlogWithOffset, fetchMovies } from "@/api/blog/blog"
 import DateConverter from "@/utils/dateConverter"
 import Image from "next/image"
 import Link from "next/link"
@@ -6,7 +6,7 @@ import BlogFrame from "../blog/blogFrame"
 
 export const BlogSection = async () => {
     const result = await  fetchBlogWithOffset(0,2)
-
+ 
     const renderedList = result?.map((data)=>{
         return (
             <BlogFrame obj={data} key={data.id}/>

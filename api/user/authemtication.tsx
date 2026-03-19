@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/client"
 import { ForgetPassData, loginData, ResettPassData, signupdata } from "@/types/user"
-import { useRouter } from "next/navigation"
 
 const supabase = createClient()
 

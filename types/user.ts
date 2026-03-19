@@ -1,3 +1,5 @@
+import { Tables } from "@/database.types"
+export type user = Tables<'profile'>
 export interface signupdata {
     Name: string
     Email: string

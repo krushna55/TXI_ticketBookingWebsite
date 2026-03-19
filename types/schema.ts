@@ -1,3 +1,2 @@
-Need to install the following packages:
-supabase@2.77.1
-Ok to proceed? (y) 
+// Schema types - see database.types.ts for actual type definitions
+export {};

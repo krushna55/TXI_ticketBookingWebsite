@@ -7,43 +7,45 @@ import { addBlog, fetchBlogWithType } from '@/api/blog/blog';
 import ImageToUrl from '@/utils/imgtourl';
 import { blog } from '@/types/blog';
 // Add this line at the top
-interface uploadblogProp extends blog{
-  Blogimage:string
-}
+// interface uploadblogProp extends blog{
+//   Blogimage:string
+// }
 interface UploadBlogFormData {
   title: string;
   description: string;
   type: 'Spotlight' | 'News' | 'Trailor';
-  imageUrl:string,
+  imageUrl?: string | null;
   Blogimage?: FileList; // for file input
 }
 export default function FileUploadPage() {
   // const spotlight = await fetchBlogWithType('spotlight')
   // console.log(spotlight)
-  const { register, reset, handleSubmit, formState: { isSubmitSuccessful } } = useForm(
+  const { register, reset, handleSubmit, formState: { isSubmitSuccessful } } = useForm<UploadBlogFormData>(
     {
       defaultValues: {
         title: '',
         description: '',
-        type: 'Spotlight',
-        Blogimage: null
+        type: 'Spotlight' as const,
+        Blogimage: undefined
       },
     }
   );
 const onSubmit = async (data: UploadBlogFormData) => {
-  let imageUrl: string | undefined = undefined;
+  let imageUrl: string | null = null;
   
   if (data.type !== 'Trailor' && data.Blogimage?.[0]) {
-    imageUrl = await ImageToUrl(data.Blogimage[0]);
+    const url = await ImageToUrl(data.Blogimage[0]);
+    imageUrl = url || null;
   }
 
-  const blogData = {
+  const blogData:blog = {
+    id: 0,
     title: data.title,
     description: data.description,
     type: data.type,
     imageUrl: imageUrl,
-    videoUrl: '', // optional, can be empty
-    created_at: new Date(),
+    videoUrl: '',
+    created_at: new Date().toISOString(),
     likes: 0,
   };
 

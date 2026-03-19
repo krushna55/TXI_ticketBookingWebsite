@@ -8,8 +8,9 @@ import { fetchBlogWithtitle, fetchBlogWithType } from "@/api/blog/blog"
 import { useEffect, useRef, useState } from "react"
 import { blog } from "@/types/blog";
 
+
 interface BlogHeaderProps {
-    setBlogs: (blogs: blog[] | null) => void;
+    setBlogs: (blogs: blog[] | null ) => void;
 }
 interface Dropdownlist {
     value: string,
@@ -65,9 +66,8 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
             const data = await fetchBlogWithType('type', type)
             return data
         }))
-        setBlogs(data.flat())
+        setBlogs(data.flat().filter(Boolean) as blog[])
         setSelectedType(updatedType)
-        console.log(updatedType)
     };
     function handleDropDown() {
 

@@ -5,7 +5,7 @@ CREATE TABLE public.showtimes (
   theater_id  BIGINT NOT NULL REFERENCES public.theater(id) ON DELETE CASCADE,
   screen_id   BIGINT NOT NULL REFERENCES public.screen(id) ON DELETE CASCADE,
   price       INT,
-  date        TIMESTAMPTZ,
+  date        Date,
   show_time   TIME WITHOUT TIME ZONE,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()

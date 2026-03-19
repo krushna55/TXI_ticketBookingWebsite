@@ -3,6 +3,9 @@ import { Roboto } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import GloableLayout from "@/layout/gloableLayout";
+import { Provider } from "react-redux";
+import { store } from "@/lib/store";
+import MovieDetailsProvider from "./movieDetailsProvider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -34,9 +37,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <GloableLayout>
-            {children}
-          </GloableLayout>
+          <MovieDetailsProvider>
+            <GloableLayout>
+              {children}
+            </GloableLayout>
+          </MovieDetailsProvider>
         </ThemeProvider>
       </body>
     </html>

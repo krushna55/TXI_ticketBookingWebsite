@@ -10,7 +10,7 @@ export default function BlogFrame({ obj }:objProp) {
         <Link href={`/blog/${obj.id}`}>
             <div >
                 <div>
-                    {obj.imageUrl && <Image src={obj.imageUrl} alt="image of Blog" className="aspect-video rounded-xl my-5 md:my-10" width={1000} height={500} />}
+                    {obj.imageUrl && <Image src={obj.imageUrl} alt="image of Blog" className="aspect-video object-cover rounded-xl my-5 md:my-10" width={1000} height={500} />}
                 </div>
                 <div className="space-y-2 md:space-y-5">
                     <div className="border border-black px-3 py-1.5 w-fit my-5"><p className="text-[10px]">{obj.type}</p></div>

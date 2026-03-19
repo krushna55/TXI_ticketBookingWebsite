@@ -1,10 +1,10 @@
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import Moveback from '@/utils/moveback'
 import { FaArrowLeft } from "react-icons/fa6";
 import Typography from '@/components/Typography';
 type AuthFrameProp = {
     children: React.ReactNode;
-    backgroundImg: string;
+    backgroundImg: StaticImageData;
     title:string
 }
 export default function AuthFrame({ children, backgroundImg,title }:AuthFrameProp) {

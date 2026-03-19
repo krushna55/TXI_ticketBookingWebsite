@@ -25,7 +25,7 @@ export default function Typography({
     xs: "md:text-xs text-[10px]",
     sm: "md:text-sm text-xs",
     base: "md:text-base text-sm",
-    md: "md:text-lg text-base",
+    md: "md:text-md text-base",
     lg: "md:text-3xl text-2xl",
     xl:'text-xl md:text-4xl lg:text-6xl'
   };

@@ -8,17 +8,19 @@ import { Bell } from "lucide-react";
 import { fetchUser, LogoutUser } from "@/api/user/authemtication";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { user } from "@/types/user";
+import { UserMetadata } from "@supabase/supabase-js";
 
 export default function Navbar() {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<UserMetadata | null>(null);
     const [logout, setLogout] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
         async function getUser() {
             const userData = await fetchUser();
-            setUser(userData);
+            userData && setUser(userData);
         }
         getUser();
     }, []);
@@ -53,7 +55,7 @@ export default function Navbar() {
                     className="relative bg-[linear-gradient(to_right,#F2C46F,#C6943F)] rounded-full py-1 px-3 cursor-pointer"
                 >
                     <p className="text-white">
-                        {user?.fullName?.charAt(0).toUpperCase()
+                        {user?.first_name?.charAt(0).toUpperCase()
                             ||
                             'u'}
                     </p>

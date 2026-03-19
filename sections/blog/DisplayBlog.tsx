@@ -12,7 +12,6 @@ import Twitter from '../../public/twitter.svg'
 import { FiLoader } from "react-icons/fi";
 import BlogFrame from "./blogFrame";
 import { blog } from "@/types/blog";
-import SuggestedBlog from "./suggestedBlog";
 
 
 export const DisplayBlog = () => {
@@ -20,7 +19,7 @@ export const DisplayBlog = () => {
     const blogid = params?.blogid as string;
     const [blogData, setBlogData] = useState<blog | null>(null); // Use state to keep the data
     const [suggestData, setSuggestData] = useState<blog[] | null>(null); // Use state to keep the data
-    const [changedLikes, setLike] = useState<number>(blogData?.likes ?? 0);
+    const [changedLikes, setLike] = useState<number >(blogData?.likes ?? 0);
     const [isLoading, setLoading] = useState<boolean>(false);
     const [islikeLoading, setlikeLoading] = useState<boolean>(false);
 
@@ -29,12 +28,10 @@ export const DisplayBlog = () => {
             if (!blogid) return;
             setLoading(true)
             const data = await fetchBlogById(Number(blogid));
-            console.log(data)
             setBlogData(data);
-            console.log(data?.likes)
-            setLike(data?.likes)
+            setLike(data?.likes ?? 0)
 
-            const suggestdata = await fetchRecommandedBlog(0, 2, data?.id)
+            const suggestdata = await fetchRecommandedBlog(0, 2, data?.id ?? 1)
             setSuggestData(suggestdata)
             setLoading(false)
         };
@@ -81,7 +78,7 @@ export const DisplayBlog = () => {
                     {DateConverter(blogData?.created_at ?? '')}|TIX ID
                 </Typography>
                 <div>
-                    <Image src={blogData?.imageUrl ?? '/fallback-image.jpg'} height={500} width={1000} className="aspect-video rounded-xl mb-10 md:mb-20" alt="blog image" />
+                    <Image src={blogData?.imageUrl ?? '/fallback-image.jpg'} height={500} width={1000} className="aspect-video object-cover rounded-xl mb-10 md:mb-20" alt="blog image" />
                     <Typography size='md' className="whitespace-pre-line w-[90%] md:w-[100%] flex text-justify">
                         {blogData?.description}
                     </Typography>

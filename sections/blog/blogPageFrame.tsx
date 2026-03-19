@@ -19,7 +19,7 @@ export default function BlogPageFrame({ blogList }: BlogframeProp) {
                 <Link href={`/blog/${blog.id}`} key={blog.id}>
                     <div  className={`${index%2 == 0 ? "md:flex-row":"md:flex-row-reverse" }  flex gap-10 flex-col `} >
                         <div className="md:w-1/2">
-                            {blog.imageUrl && <Image src={blog.imageUrl} alt="image of Blog" className="aspect-video rounded-xl my-5 md:my-10" width={1000} height={500} />}
+                            {blog.imageUrl && <Image src={blog.imageUrl} alt="image of Blog" className="aspect-video object-cover rounded-xl my-5 md:my-10" width={1000} height={500} />}
                         </div>
                         <div className="space-y-2 md:space-y-5 md:w-1/2 flex flex-col justify-center ">
                             <div className="border border-black px-3 py-1.5 w-fit my-5 "><p className="text-[10px] text-sm md:text-base text-gray-500">{blog.type}</p></div>

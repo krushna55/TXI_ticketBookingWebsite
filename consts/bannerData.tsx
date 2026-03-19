@@ -1,20 +1,23 @@
 import spiderManBanner from '../public/spider_movie.png'
 import benBanner from '../public/ben_movie..png'
-import ghostbusterBanner  from '../public/ghost_movie.jpg'
+import ghostbusterBanner from '../public/ghost_movie.jpg'
 import gucciBanner from '../public/gucci_movie.png'
-export const BannerData=[
+import { createClient } from '@/lib/supabase/client'
+import type { Database } from '@/database.types'
+
+export const BannerData = [
     {
-        MovieName:'SpiderMan-No way Home',
-        banner:spiderManBanner
+        MovieName: 'SpiderMan-No way Home',
+        banner: spiderManBanner
     },
     {
-        MovieName:'Yowis Ben Finale',
-        banner:benBanner
-    },{
-        MovieName:'Ghost Buster: After Life',
-        banner:ghostbusterBanner
-    },{
-        MovieName:'House of Gucci',
-        banner:gucciBanner
+        MovieName: 'Yowis Ben Finale',
+        banner: benBanner
+    }, {
+        MovieName: 'Ghost Buster: After Life',
+        banner: ghostbusterBanner
+    }, {
+        MovieName: 'House of Gucci',
+        banner: gucciBanner
     }
 ]

@@ -1,8 +1,12 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server";
+import { Tables } from "@/database.types";
+import { Database } from "@/database.types";
 
-export async function addBlog(data) {
+type blog = Tables<'blog'>
+
+export async function addBlog(data: blog): Promise<void | null> {
     const supabase = await createClient()
     const { data: insertData, error } = await supabase
         .from('blog')
@@ -12,7 +16,7 @@ export async function addBlog(data) {
         .select()
     if (error) console.error('Error fetching users:', error);
 }
-export async function fetchBlogWithOffset(start = 0, end = 10) {
+export async function fetchBlogWithOffset(start = 0, end = 10): Promise<blog[] | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase.from('blog').select("*").range(start, end).order('id', { ascending: true });
@@ -21,7 +25,16 @@ export async function fetchBlogWithOffset(start = 0, end = 10) {
     }
     return data
 }
-export async function fetchRecommandedBlog(start = 0, end = 10, id) {
+export async function fetchMovies() {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase.from('movies').select("*")
+    if (error) {
+        console.error('error while fetching the blog', error);
+    }
+    return data
+}
+export async function fetchRecommandedBlog(start = 0, end = 10, id: number) {
     const supabase = await createClient()
 
     const { data, error } = await supabase.from('blog').select("*").range(start, end).neq('id', id);
@@ -61,22 +74,25 @@ export async function fetchBlogWithtitle(col: string, type: string) {
 export async function fetchBlogById(id: number) {
     const supabase = await createClient()
 
-    const { data, error } = await supabase.from('blog').select('*').eq('id', id)
+    const { data, error } = await supabase.from('blog').select('*').eq('id', id).single()
     if (error) {
         console.log('error while fetching blog with id', error)
     }
-    const detail = data[0]
-    return detail
+
+    return data
 }
 
-export async function increatelikebyId(id: number) {
+export async function increatelikebyId(id: number): Promise<number> {
     const supabase = await createClient()
-    const { data, error } = await supabase.from('blog').select('likes').eq('id', id)
-    if (error) {
+    const { data, error } = await supabase.from('blog').select('likes').eq('id', id).single()
+    if (error || !data) {
         console.log('error while fetching blog with id', error)
     }
-    let { likes } = data[0]
-    likes += 1
-    await supabase.from('blog').update({ 'likes': likes }).select().eq('id', id)
-    return likes
+    const updatedLikes = (data?.likes ?? 0) + 1
+
+    const { error: updateError } = await supabase
+        .from('blog')
+        .update({ likes: updatedLikes })
+        .eq('id', id)
+    return updatedLikes
 }

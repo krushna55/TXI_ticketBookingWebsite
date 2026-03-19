@@ -9,7 +9,7 @@ export default function DateConverter(date: string): string {
 
 
 
-    const day = String(dateObj.getDate()).padStart(2, 0);
+    const day = String(dateObj.getDate()).padStart(2, '0');
     const month = dateObj.toLocaleString('default', { month: 'long' });
     const year = dateObj.getFullYear();
 

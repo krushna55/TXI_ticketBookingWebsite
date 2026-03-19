@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 
-export default async function ImageToUrl(file){
+export default async function ImageToUrl(file: File): Promise<string | undefined> {
     const supabase = createClient()
     try {
           //   setUploading(true);
@@ -18,7 +18,8 @@ export default async function ImageToUrl(file){
           const imageUrl = url.publicUrl;
           return imageUrl;
         } catch (error) {
-          alert(error.message);
+          const message = error instanceof Error ? error.message : String(error);
+          console.error('Image upload error:', message);
         } finally {
           //   setUploading(false);
         }
