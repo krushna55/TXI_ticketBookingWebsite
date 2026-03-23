@@ -1,8 +1,7 @@
 import { fetchMovieById, fetchMovies, fetchShowtimeByMovieIdandDate } from "@/api/Movies/movies";
-import { movies, showtimes } from "@/types/movies";
+import { movies, showtimes, TheaterEntry, TheaterMap } from "@/types/movies";
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createClient } from "../supabase/server";
-
 export const movieApi = createApi({
   reducerPath: "movieApi",
   baseQuery: fakeBaseQuery(),
@@ -32,12 +31,12 @@ export const movieApi = createApi({
           }
       }
     }),
-    fetchShowtimewithDateandMovieId: builder.query<showtimes[], { date: string; movie_id: number }>({
-      queryFn: async ( {date, movie_id} ) => {
+    fetchShowtimewithDateandMovieId: builder.query<TheaterEntry[]|null, { date: string; movie_id: number,city_id:number }>({
+      queryFn: async ( {date, movie_id,city_id} ) => {
         try {
-          const data = await fetchShowtimeByMovieIdandDate(date, movie_id);
+          const data = await fetchShowtimeByMovieIdandDate(date, movie_id,city_id);
           
-          return { data: data as showtimes[] };
+          return { data: data as TheaterEntry[]|null };
         } catch (e) {
           return {
             error: {

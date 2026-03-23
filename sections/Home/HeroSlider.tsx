@@ -18,6 +18,7 @@ import Skelaton from "@/components/skelaton";
 export default function HeroSlider() {
 
   const { data: bannerData = [], isError, isLoading } = useFetchMoviesQuery()
+  console.log(bannerData)
   console.log(isLoading)
 
   return (

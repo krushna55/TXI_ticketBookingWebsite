@@ -24,11 +24,8 @@ export default {
         gradientBlue: "var(--color-gradientBlue)",
         defaultBtnColor: "var(--color-defaultBtnColor)",
         pressedBtnColor: "var(--color-pressedBtnColor)",
-        
-
-        
       }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),require('tailwind-scrollbar-hide')],
 } satisfies Config;

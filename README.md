@@ -94,6 +94,16 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
 
    The starter kit should now be running on [localhost:3000](http://localhost:3000/).
 
+### Local build on low-RAM machines
+
+If your machine has limited RAM (e.g., 8GB), the default Turbopack build can run out of memory. Use the safe local build which disables Turbopack, uses webpack, and reduces the Node heap to ~4GB:
+
+```bash
+npm run build:local
+```
+
+This produces a production build while being less memory intensive for local machines.
+
 6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
 
 > Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.

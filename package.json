@@ -2,10 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 next build",
-    "build:highmem": "cross-env NODE_OPTIONS=--max-old-space-size=8192 next build",
-    "build:highmem-workers": "cross-env NODE_OPTIONS=--max-old-space-size=8192 NEXT_PRIVATE_BUILD_WORKERS=1 next build",
-    "build:no-turbo": "cross-env NODE_OPTIONS=--max-old-space-size=8192 NEXT_PRIVATE_BUILD_WORKERS=1 NEXT_DISABLE_TURBOPACK=1 next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint ."
   },
@@ -20,7 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.511.0",
-    "next": "latest",
+    "next": "16.1.7",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -30,7 +27,8 @@
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^12.1.2",
-    "tailwind-merge": "^3.3.0"
+    "tailwind-merge": "^3.3.0",
+    "tailwind-scrollbar-hide": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -40,11 +38,11 @@
     "@types/react-slick": "^0.23.13",
     "@types/slick-carousel": "^1.6.40",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "postcss": "^8",
     "supabase": "^2.77.1",
-    "cross-env": "^7.0.3",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
