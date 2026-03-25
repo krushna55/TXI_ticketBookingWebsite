@@ -10,16 +10,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 // import { fetchMovies } from "@/api/Movies/movies";
 import { movies } from "@/types/movies";
-import { useFetchMoviesQuery } from "@/lib/slice/movieSupabaseApi";
+import { useFetchHeroMoviesQuery } from "@/lib/slice/movieSupabaseApi";
 import Skelaton from "@/components/skelaton";
 
 
 
 export default function HeroSlider() {
 
-  const { data: bannerData = [], isError, isLoading } = useFetchMoviesQuery()
-  console.log(bannerData)
-  console.log(isLoading)
+  const { data: bannerData = [], isError, isLoading } = useFetchHeroMoviesQuery()
+  if(isError){
+    return <h1>Something went wrong</h1>
+  }
 
   return (
     <>{
@@ -42,17 +43,18 @@ export default function HeroSlider() {
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
+            
             >
             {
               bannerData?.map((banner) => {
                 return (
-                  <SwiperSlide className="h-[100%] ">
+                  <SwiperSlide className="h-[100%] px-2 sm:px-00">
                     <Link href={`./movie/${banner.id}`}>
                       <div className="justify-center items-center flex flex-col sm:px-2 ">
                         {/* <div className="aspect-1/19"> */}
                         <Image src={banner?.movie_img ?? ''} alt="spider-movie" width={200} height={400} className="aspect-[3/4] object-cover overflow-none w-[500px] rounded-md  " />
                         {/* </div> */}
-                        <p className="text-md md:text-2xl xl:text-3xl line-clamp-1">{banner?.name}</p>
+                        <p className="text-md text-[14px] md:text-2xl xl:text-3xl line-clamp-1">{banner?.name}</p>
                         <div className="flex h-full justify-center space-x-2 my-2">
                           <div className="px-1 text-white bg-[linear-gradient(to_right,#F2C46F,#C6943F)] h-fit rounded-sm text-[8px] md:text-sm xl:text-md">XXI</div>
                           <div className="px-1 text-white bg-gradientRed h-fit rounded-sm text-[8px] md:text-sm xl:text-md  ">CGV</div>

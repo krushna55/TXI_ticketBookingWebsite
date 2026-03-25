@@ -12,6 +12,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       blog: {
@@ -364,6 +389,8 @@ export type Database = {
           created_at: string
           district: string | null
           id: number
+          latitude: number | null
+          longitude: number | null
           name: string
           updated_at: string
           user_id: string
@@ -375,6 +402,8 @@ export type Database = {
           created_at?: string
           district?: string | null
           id?: never
+          latitude?: number | null
+          longitude?: number | null
           name: string
           updated_at?: string
           user_id: string
@@ -386,6 +415,8 @@ export type Database = {
           created_at?: string
           district?: string | null
           id?: never
+          latitude?: number | null
+          longitude?: number | null
           name?: string
           updated_at?: string
           user_id?: string
@@ -419,7 +450,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_brand_screens: {
+        Args: never
+        Returns: {
+          brand_id: number
+          brand_logo: string
+          brand_name: string
+          screen_id: number
+          screen_name: string
+          screen_type: string
+        }[]
+      }
     }
     Enums: {
       age_rating: "U" | "U/A 7+" | "U/A 13+" | "U/A 16+" | "A" | "S"
@@ -560,6 +601,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       age_rating: ["U", "U/A 7+", "U/A 13+", "U/A 16+", "A", "S"],

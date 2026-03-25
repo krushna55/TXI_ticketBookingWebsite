@@ -1,4 +1,4 @@
-import { fetchMovieById, fetchMovies, fetchShowtimeByMovieIdandDate } from "@/api/Movies/movies";
+import { fetchHeroMovies, fetchMovieById, fetchMovies, fetchShowtimeByMovieIdandDate } from "@/api/Movies/movies";
 import { movies, showtimes, TheaterEntry, TheaterMap } from "@/types/movies";
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createClient } from "../supabase/server";
@@ -6,16 +6,27 @@ export const movieApi = createApi({
   reducerPath: "movieApi",
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
-    fetchMovies: builder.query<movies[], void>({
+    fetchHeroMovies: builder.query<movies[], void>({
       queryFn: async () => {
         try {
-          const data = await fetchMovies();
+          const data = await fetchHeroMovies();
           return { data: data as movies[] };
         } catch (e) {
           return { error: { status: "FETCH_ERROR", error: e as Error } };
         }
       },
     }),
+    fetchMoies:builder.query<movies[],void>({
+      queryFn : async()=>{
+        try{
+          const data  = await fetchMovies();
+          return {data : data as movies[]}
+        }catch(e){
+          return {error:{status:'fetch_error',error:e as Error}}
+        }
+      }
+    })
+    ,
     fetchMovieById:builder.query<movies,string>({
       queryFn: async(id:string)=>{
         try{
@@ -31,11 +42,12 @@ export const movieApi = createApi({
           }
       }
     }),
-    fetchShowtimewithDateandMovieId: builder.query<TheaterEntry[]|null, { date: string; movie_id: number,city_id:number }>({
-      queryFn: async ( {date, movie_id,city_id} ) => {
+    fetchShowtimewithDateandMovieId: builder.query<TheaterEntry[]|null, { date: string; movie_id: number,city_id:number,userLat?:number , userLng?:number }>(
+      {
+      queryFn: async ( {date, movie_id,city_id,userLat , userLng} ) => {
         try {
-          const data = await fetchShowtimeByMovieIdandDate(date, movie_id,city_id);
-          
+          const data = await fetchShowtimeByMovieIdandDate(date, movie_id,city_id,userLat , userLng);
+
           return { data: data as TheaterEntry[]|null };
         } catch (e) {
           return {
@@ -50,4 +62,4 @@ export const movieApi = createApi({
   }),
 });
 
-export const { useFetchMoviesQuery, useFetchMovieByIdQuery, useFetchShowtimewithDateandMovieIdQuery } = movieApi;
+export const { useFetchMoiesQuery,useFetchHeroMoviesQuery, useFetchMovieByIdQuery, useFetchShowtimewithDateandMovieIdQuery } = movieApi;

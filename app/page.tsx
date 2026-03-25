@@ -1,6 +1,7 @@
 import AdevertiseMent from "@/sections/Home/AdvertiseMent";
 import { BlogSection } from "@/sections/Home/blogSection";
 import HeroSlider from "@/sections/Home/HeroSlider";
+import MoviesPage from "@/sections/Home/MoviesSection";
 import { Suspense } from "react";
 
 export default async function Home() {
@@ -14,6 +15,7 @@ export default async function Home() {
       <Suspense fallback={'Loading....'}>
         <BlogSection />
       </Suspense>
+      <MoviesPage/>
     </main>
   );
 }

@@ -2,15 +2,30 @@ import { selectionMovie, Showtime, showtimes, TheaterDetails, TheaterEntry } fro
 import Image from "next/image";
 import svgStar from '@/public/Star.svg'
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setSelection } from "@/lib/slice/movieSlice";
 
-export default function ShowtimeTheaterSection({ data, setSelectedMovie }: { data: TheaterEntry[] | null | undefined, setSelectedMovie: React.Dispatch<React.SetStateAction<selectionMovie | undefined>> }) {
+export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] | null | undefined }) {
     const date = new Date()
-    const isFuture = (show_time: string | null): boolean => {
-        if (!show_time) return false
-        const [h, m] = show_time.split(':').map(Number)
-        const showMinutes = h * 60 + m
-        const nowMinutes = date.getHours() * 60 + date.getMinutes()
-        return showMinutes > nowMinutes
+    const dispatch = useDispatch()
+    const isFuture = (show_time: string | null, showdate: string | null): boolean => {
+        if (!show_time || !showdate) return false;
+        const [h, m] = show_time.split(':').map(Number);
+        const [y, mo, d] = showdate.split('-').map(Number);
+        const showMinutes = h * 60 + m;
+        const nowMinutes = date.getHours() * 60 + date.getMinutes();
+        const currentDay = date.getDate();
+
+        return y > date.getFullYear() ? true
+            : y < date.getFullYear() ? false
+                : mo > date.getMonth() + 1 ? true
+                    : mo < date.getMonth() + 1 ? false
+                        : d > currentDay ? true
+                            : d < currentDay ? false
+                                : showMinutes > nowMinutes;
+    };
+    if (!data || data?.length < 1) {
+        return <p>No movie found</p>
     }
     return (
         <div>
@@ -47,11 +62,11 @@ export default function ShowtimeTheaterSection({ data, setSelectedMovie }: { dat
                                                     return (
                                                         <div
                                                             onClick={() => {
-                                                                if (!isFuture(showtime.show_time)) return
-                                                                setSelectedMovie({ theaterDetails: theater.theaterdetails, screenDetails: screen.screendetails, showtime })
+                                                                if (!isFuture(showtime.show_time, theater.theaterdetails?.date)) return
+                                                                dispatch(setSelection({ theaterDetails: theater.theaterdetails, screenDetails: screen.screendetails, showtimes:screen.showtimes ,selected_showtime:showtime}));
                                                             }}
                                                             key={showtime.id}
-                                                            className={`text-xs md:text-sm lg:text-base border px-2 md:px-3 py-1 md:py-2 mb-4 rounded-md mr-3 ${isFuture(showtime.show_time)
+                                                            className={`text-xs md:text-sm lg:text-base border px-2 md:px-3 py-1 md:py-2 mb-4 rounded-md mr-3 ${isFuture(showtime.show_time, theater.theaterdetails?.date)
                                                                 ? 'cursor-pointer hover:bg-[#1A2C50] hover:text-white'
                                                                 : 'bg-gray-500 opacity-50 cursor-not-allowed'
                                                                 }`}

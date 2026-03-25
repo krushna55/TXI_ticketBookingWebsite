@@ -40,7 +40,9 @@ export default function MovieDateList() {
                 {btnlist.map((state, index) => (
                     <SwiperSlide key={index} className="!w-fit p-2">
                         <div
-                            onClick={() => state !== 'disable' && handledateindex(index)}
+                            onClick={() => { 
+                                state !== 'disable' && handledateindex(index)
+                            }}
                             className={`
                                 cursor-pointer border rounded-md text-center px-4 py-2
                                 transition-colors duration-200 whitespace-nowrap

@@ -13,7 +13,7 @@ export function getDate(index:number){
 
 }
 
-export const formatDate = (dateStr?: string) => {
+export const formatDate = (dateStr?: string | null) => {
     const date = dateStr ? new Date(dateStr) : new Date()
     return {
         day: date.getDate(),

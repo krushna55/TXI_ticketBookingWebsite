@@ -1,14 +1,21 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server";
-import { Database } from "@/database.types";
 import { Tables } from "@/database.types";
-type movies = Tables<'movies'>
-type theater = Tables<'theater'>
-type showtimes = Tables<'showtimes'>
 type screen = Tables<'screen'>
 import { TheaterEntry, TheaterMap } from "@/types/movies";
+import { getDistanceKm } from "@/utils/distance";
 
+export async function fetchHeroMovies() {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+        .from('movies')
+        .select('*').limit(4).eq('movies_status','streaming')
+
+    if (error) console.error('Error fetching movies:', error);
+    return data
+}
 export async function fetchMovies() {
     const supabase = await createClient()
 
@@ -32,7 +39,9 @@ export async function fetchMovieById(id: string) {
 
     return data
 }
-export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id: number, city_id: number): Promise<TheaterEntry[] | null> {
+export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id: number, city_id: number, userLat?: number,
+    userLng?: number,
+    radiusKm: number = 10): Promise<TheaterEntry[] | null> {
     const supabase = await createClient()
     const theaterMap: TheaterMap = new Map()
 
@@ -50,6 +59,8 @@ export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id
                 complete_address,
                 district,
                 city_id,
+                longitude,
+                latitude,
                 brands!inner(*)
             ),
             screen!inner(
@@ -80,7 +91,10 @@ export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id
                     city_id: theater.city_id,
                     brand_name: brand.name,
                     brand_logo: brand.logo_url,
-                    date:showtime.date
+                    date: showtime.date,
+                    distanceKm: (typeof userLat === 'number' && typeof userLng === 'number')
+                        ? getDistanceKm(userLat, userLng, theater.latitude!, theater.longitude!)
+                        : null
                 },
                 screens: []
             })

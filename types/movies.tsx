@@ -7,7 +7,8 @@ export type showtimes = Tables<'showtimes'>
 export type selectionMovie = {
     theaterDetails : TheaterDetails,
     screenDetails : screendetails,
-    showtime:Showtime
+    selected_showtime:Showtime,
+    showtimes:Showtime[]
 }
    
 
@@ -19,7 +20,8 @@ export type TheaterDetails = {
     city_id: number | null
     brand_name: string | null
     brand_logo: string  | StaticImport
-    date:string 
+    date:string | null
+    distanceKm:number | null
 }
 
 export type Showtime = {

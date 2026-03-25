@@ -6,6 +6,7 @@ import GloableLayout from "@/layout/gloableLayout";
 import { Provider } from "react-redux";
 import { store } from "@/lib/store";
 import MovieDetailsProvider from "./movieDetailsProvider";
+import QueryProvider from "./QueryProvider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -39,7 +40,9 @@ export default function RootLayout({
         >
           <MovieDetailsProvider>
             <GloableLayout>
-              {children}
+              <QueryProvider>
+                {children}
+              </QueryProvider>
             </GloableLayout>
           </MovieDetailsProvider>
         </ThemeProvider>

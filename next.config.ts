@@ -10,7 +10,7 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "127.0.0.1",
-        port: "54321", // ← add the port
+        port: "54325", // ← add the port
         pathname: "/storage/v1/object/public/**",
       },
       {
