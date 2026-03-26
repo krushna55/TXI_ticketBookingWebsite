@@ -9,7 +9,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import ShowtimeTheaterSection from "@/sections/movie/showtimetheatersetion"
-import { selectionMovie, TheaterEntry } from "@/types/movies"
+import {  TheaterEntry } from "@/types/movies"
 import { IoMdSearch } from "react-icons/io";
 import BrandScreenSelector from "@/sections/movie/brandScreenSelector"
 import BrandSelector from "@/sections/movie/brandSelector"
@@ -22,17 +22,17 @@ export default function Movie() {
     const movieid = params?.movieId as string
     const [cityvalue, setCity] = useState<number>(1)
     const [Moviedata, setData] = useState<TheaterEntry[] | null | undefined>()
-    const [selectedMovie, setSelectedMovie] = useState<selectionMovie>()
     const [filters, setFilters] = useState({ query: '', screen: '', brand: '' })
     const { location, locationError, isLocating } = useUserLocation()
-
+    if(locationError){
+        return <div>Error while getting user location</div>
+    }
     const movie_date = useSelector((state: RootState) => state.movieDetails.Movie_date)
     const { data, isLoading, isError, refetch } = useFetchShowtimewithDateandMovieIdQuery(
         { date: movie_date, movie_id: Number(movieid), city_id: cityvalue, userLat: location?.lat, userLng: location?.lng },
         { skip: !movieid || !location?.lng || !location?.lat  || !cityvalue || !movie_date}
     )
     function handleNearest(bool:boolean) {
-
         if (!data) return
         if(bool === false) return setData(data)
         const sortedData = [...data].sort((theater1, theater2) => {

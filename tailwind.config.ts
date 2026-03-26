@@ -24,6 +24,7 @@ export default {
         gradientBlue: "var(--color-gradientBlue)",
         defaultBtnColor: "var(--color-defaultBtnColor)",
         pressedBtnColor: "var(--color-pressedBtnColor)",
+        hoverBtnColor: "var(--color-hoverBtnColor)",
       }
     },
   },

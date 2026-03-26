@@ -12,6 +12,7 @@ import { memo } from "react"
 import { useSelector, shallowEqual, useDispatch } from "react-redux"  // 👈 shallowEqual
 
 const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {  // 👈 remove selectedMovie prop
+    const { data: movie, isError, isLoading } = useFetchMovieByIdQuery(movieid, { skip: !movieid })
 
     // ✅ shallowEqual prevents new object reference on every render
     const selectedMovie = useSelector((state: RootState) => ({
@@ -21,11 +22,9 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) { 
         theaterDetails: state.movieDetails.theaterDetails,
     }), shallowEqual)
      const dispatch = useDispatch()
-    const { data: movie, isError, isLoading } = useFetchMovieByIdQuery(movieid, { skip: !movieid })
     if(isError){
         return <div>something went wrong</div>
     }
-    console.log(selectedMovie)
     function durationfunc() {
         const dur = MovieDuration(Number(movie?.duration))
         return `${dur.hour} Hour ${dur.minute} Minute`
@@ -92,7 +91,7 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) { 
                                     <p>{selectedMovie.selected_showtime.show_time?.replace(':00', '')}</p>
                                 </div>
                                 <p className="text-gray-400 text-xs md:text-sm">* Seat selection can be done after this</p>
-                                <Link href={'../booking'}>
+                                <Link href={`./${movieid}/bookings`}>
                                     <div onClick={()=>dispatch(setMovieId(movieid))} className="bg-royal text-gradientXXI1 w-full p-2 md:px-3 md:py-4 rounded-lg text-base md:text-lg lg:text-xl flex justify-center items-center my-2 md:my-4">
                                         Buy now
                                     </div>

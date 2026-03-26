@@ -19,8 +19,13 @@ export default function Navbar() {
 
     useEffect(() => {
         async function getUser() {
-            const userData = await fetchUser();
-            userData && setUser(userData);
+            try{
+                const userData = await fetchUser();
+                userData && setUser(userData);
+            }catch(e){
+                setUser(null);
+            }
+
         }
         getUser();
     }, []);
@@ -36,7 +41,7 @@ export default function Navbar() {
     }
 
     return (
-        <div className="max-w-[1400px] mx-auto hidden md:flex items-center justify-between sm:px-5">
+        <div className="max-w-[1400px] mx-auto hidden md:flex items-center justify-between sm:px-2">
 
             <Image src={logo} alt="logo" className="h-20 w-auto" />
 

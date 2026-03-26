@@ -12,12 +12,14 @@ interface movieState extends selectionMovie {
 }
 
 const initialState: movieState = {
-  movie_id: '',
+  movie_id: "",
   Movie_date: todayFormatted,
   screenDetails: {
     id: 0,
-    name: '',
+    name: "",
     type: null,
+    screen_row:0,
+    screen_column:0,
   },
   selected_showtime: {
     id: 0,
@@ -27,12 +29,12 @@ const initialState: movieState = {
   showtimes: [],
   theaterDetails: {
     id: 0,
-    name: '',
+    name: "",
     complete_address: null,
     district: null,
     city_id: null,
     brand_name: null,
-    brand_logo: '',
+    brand_logo: "",
     date: null,
     distanceKm: null,
   },
@@ -54,7 +56,9 @@ export const movieSlice = createSlice({
       // state.theaterDetails = initialState.theaterDetails;
       // state.showtimes = [];
     },
-
+    setSelectedShowtime:(state,action:PayloadAction<{selected_showtime:selectionMovie['selected_showtime']}>)=>{
+      state.selected_showtime = action.payload.selected_showtime
+    },
     setSelection: (
       state,
       action: PayloadAction<{
@@ -62,17 +66,17 @@ export const movieSlice = createSlice({
         screenDetails: selectionMovie["screenDetails"];
         selected_showtime: selectionMovie["selected_showtime"];
         showtimes: selectionMovie["showtimes"];
-      }>
+      }>,
     ) => {
       state.theaterDetails = action.payload.theaterDetails;
       state.screenDetails = action.payload.screenDetails;
       state.showtimes = action.payload.showtimes;
-      state.selected_showtime  = action.payload.selected_showtime
+      state.selected_showtime = action.payload.selected_showtime;
     },
 
     setShowtimes: (
       state,
-      action: PayloadAction<selectionMovie["showtimes"]>
+      action: PayloadAction<selectionMovie["showtimes"]>,
     ) => {
       state.showtimes = action.payload;
     },
@@ -87,6 +91,7 @@ export const {
   setSelection,
   setShowtimes,
   resetSelection,
+  setSelectedShowtime
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

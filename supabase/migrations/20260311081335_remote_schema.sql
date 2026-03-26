@@ -96,7 +96,7 @@ BEGIN
   VALUES (
     NEW.id,                                      -- maps auth.id → profile.user_id
     'user',                                      -- default role (change as needed)
-    NEW.raw_user_meta_data->>'firstName',   
+    NEW.raw_user_meta_data->>'first_name',   
     null,      -- from auth metadata
     NEW.email,                                   -- from auth.users
     NULL,                                        -- mobile_no (set later by user)

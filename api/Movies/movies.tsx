@@ -11,7 +11,7 @@ export async function fetchHeroMovies() {
 
     const { data, error } = await supabase
         .from('movies')
-        .select('*').limit(4).eq('movies_status','streaming')
+        .select('*').limit(4).eq('movies_status', 'streaming')
 
     if (error) console.error('Error fetching movies:', error);
     return data
@@ -66,7 +66,9 @@ export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id
             screen!inner(
                 id,
                 name,
-                type
+                type,
+                screen_row,
+                screen_column
             )
         `)
         .eq('date', movie_date)
@@ -120,6 +122,8 @@ export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id
                     id: screen.id,
                     name: screen.name,
                     type: screen.type,
+                    screen_row:screen.screen_row,
+                    screen_column:screen.screen_column
                 },
                 showtimes: [{
                     id: showtime.id,

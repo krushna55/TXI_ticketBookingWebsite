@@ -46,14 +46,14 @@ export default function Footer() {
                     <div className='flex flex-1 flex-col space-y-5  '>
                         <p className='text-gray-600'>Follow us On Social Media</p>
                         <div className='flex space-x-5'>
-                            <Image src={Instagram} className='h-auto aspect-square' alt='instagram' />
-                            <Image src={Twitter} className='h-auto aspect-square' alt='Twitter' />
-                            <Image src={Facebook} className='h-auto aspect-square' alt='FaceBook' />
+                            <Image height={25} width={25} src={Instagram} className='h-auto aspect-square' alt='instagram' />
+                            <Image height={25} width={25} src={Twitter} className='h-auto aspect-square' alt='Twitter' />
+                            <Image height={25} width={25} src={Facebook} className='h-auto aspect-square' alt='FaceBook' />
                         </div>
                         <p className='font-bold'>Download the TIX ID Application</p>
                         <div className='flex space-x-5'>
-                            <Image src={GooglePlay} alt='Google play' />
-                            <Image src={AppleStore} alt='Apple Store' />
+                            <Image height={25} width={75 } className='h-auto' src={GooglePlay} alt='Google play' />
+                            <Image height={25} width={75 } className='h-auto' src={AppleStore} alt='Apple Store' />
 
                         </div>
                         <p className='opacity-80'>2021 TIX ID - PT Nusantara Elang Sejahtera.</p>

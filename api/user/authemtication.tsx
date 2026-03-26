@@ -5,15 +5,16 @@ const supabase = createClient()
 
 export async function fetchUser() {
     const { data, error } = await supabase.auth.getUser()
-    if (error) {
-        console.log("Error occured while fetching user", error)
+    if (error || !data.user) {
+        console.warn("No active session found");
+        return null; 
     }
     return (data.user?.user_metadata)
 }
 export async function LogoutUser() {
     const { error } = await supabase.auth.signOut()
     if (error) {
-        console.log("Error occured while fetching user", error)
+        throw new Error("Error occured while fetching user", error)
     }
 
 }
@@ -25,7 +26,7 @@ export async function RegisterUser(user: signupdata) {
         password: user.Password,
         options: {
             data: {
-                fullName: user.Name
+                first_name: user.Name
             }
         }
     })

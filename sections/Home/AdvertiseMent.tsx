@@ -31,7 +31,7 @@ export default function AdevertiseMent() {
           return (
             <SwiperSlide className="">
               <div className="flex justify-center items-center px-3 sm:px-6">
-                <Image src={url} alt="Ads Banner 1" className="w-full" />
+                <Image height={100}  loading="eager" src={url} alt="Ads Banner 1" className="w-full" />
               </div>
 
             </SwiperSlide>)

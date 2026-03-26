@@ -70,7 +70,7 @@ export default function MobileNavbar({ updateScroll }: { updateScroll: (value: b
                             className="relative bg-[linear-gradient(to_right,#F2C46F,#C6943F)] rounded-full py-1 px-3 cursor-pointer"
                         >
                             <p className="text-white">
-                                {user?.fullName?.charAt(0).toUpperCase() || "U"}
+                                {user?.first_name?.charAt(0).toUpperCase() || "U"}
                             </p>
 
                             {(logout && user) && (
@@ -91,7 +91,7 @@ export default function MobileNavbar({ updateScroll }: { updateScroll: (value: b
                             </Link>
 
                             <Link href="/login" className="bg-royal py-1 px-2 rounded-md">
-                                <p className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent text-sm">
+                                <p className=" bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent text-sm">
                                     Login
                                 </p>
                             </Link>
@@ -123,29 +123,32 @@ export default function MobileNavbar({ updateScroll }: { updateScroll: (value: b
                 </div>
 
                 {/* Menu Links */}
-                <div className="flex flex-col space-y-5 px-6">
-
+                <div className="flex flex-col justify-between h-[85vh] space-y-5 px-6">
+                    <div className="flex flex-col space-y-2">
                     <Link href="/" onClick={closeMenu}>Home</Link>
                     <Link href="/" onClick={closeMenu}>My Tickets</Link>
                     <Link href="/" onClick={closeMenu}>TXI News</Link>
-
+                    </div>
+                        
                     {!user && (
+                    <div className="flex flex-col space-y-5">
                         <>
                             <div className="border-t pt-4"></div>
-
-                            <Link href="/register" className="p-1" onClick={closeMenu}>
-                                Register Account
+                            <Link href="/register" className="bg-white border border-royal p-2  rounded-lg " onClick={closeMenu}>
+                                <p className="text-black   text-md font-medium flex justify-center ">
+                                    Register Account
+                                </p>
                             </Link>
-
                             <Link href="/login" className="bg-royal p-2 rounded-lg" onClick={closeMenu}>
-                                <p className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent text-sm">
+                                <p className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent text-md font-medium flex justify-center ">
                                     Login
                                 </p>
                             </Link>
                         </>
+                    </div>
                     )}
-
                     {user && (
+                    <div className="flex flex-col space-y-5">
                         <>
                             <div className="border-t pt-4"></div>
 
@@ -156,8 +159,8 @@ export default function MobileNavbar({ updateScroll }: { updateScroll: (value: b
                                 <LuLogOut /> Logout
                             </button>
                         </>
+                    </div>
                     )}
-
                 </div>
 
             </div>

@@ -24,9 +24,9 @@ export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] 
                             : d < currentDay ? false
                                 : showMinutes > nowMinutes;
     };
-    if (!data || data?.length < 1) {
-        return <p>No movie found</p>
-    }
+     // if (!data || data?.length < 1) {
+    //    return <p>No movie found</p>
+    // }
     return (
         <div>
             {data?.map((theater) => {
