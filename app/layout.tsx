@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "@/lib/store";
 import MovieDetailsProvider from "./movieDetailsProvider";
 import QueryProvider from "./QueryProvider";
-
+import {Toaster} from 'react-hot-toast'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -41,6 +41,7 @@ export default function RootLayout({
           <MovieDetailsProvider>
             <GloableLayout>
               <QueryProvider>
+                <Toaster position="bottom-right" />
                 {children}
               </QueryProvider>
             </GloableLayout>

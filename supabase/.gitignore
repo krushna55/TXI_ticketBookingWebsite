@@ -6,3 +6,8 @@
 .env.keys
 .env.local
 .env.*.local
+
+# check supabase/.gitignore exists and has this
+supabase/functions/.env
+.env.local
+.env

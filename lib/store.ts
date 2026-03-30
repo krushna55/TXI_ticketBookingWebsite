@@ -4,6 +4,7 @@ import { movieApi } from "./slice/movieSupabaseApi";
 import { cityApi } from "./slice/citySilce";
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
 import createWebStorage from "redux-persist/lib/storage/createWebStorage"; 
+import { bookingApi } from "./slice/bookingSlice";
 
 
 const createNoopStorage = () => {
@@ -25,6 +26,7 @@ const storage =
     : createNoopStorage();
 const rootReducder = combineReducers({
   movieDetails: movieDetailsReducer,
+  [bookingApi.reducerPath]:bookingApi.reducer,
   [movieApi.reducerPath]: movieApi.reducer,
   [cityApi.reducerPath]: cityApi.reducer,
 });
@@ -44,7 +46,8 @@ export const store = configureStore({
         }
     })
       .concat(movieApi.middleware)
-      .concat(cityApi.middleware),
+      .concat(cityApi.middleware)
+      .concat(bookingApi.middleware)
 });
 export const persistor = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>;

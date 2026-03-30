@@ -9,6 +9,7 @@ const todayFormatted = `${todayData.year}-${todayData.month}-${todayData["Date"]
 interface movieState extends selectionMovie {
   movie_id: string;
   Movie_date: string;
+  selected_seats: string[];
 }
 
 const initialState: movieState = {
@@ -38,6 +39,7 @@ const initialState: movieState = {
     date: null,
     distanceKm: null,
   },
+  selected_seats:[]
 };
 
 export const movieSlice = createSlice({
@@ -55,6 +57,9 @@ export const movieSlice = createSlice({
       // state.screenDetails = initialState.screenDetails;
       // state.theaterDetails = initialState.theaterDetails;
       // state.showtimes = [];
+    },
+    setSelected_seats:(state,action:PayloadAction<{selected_seats:string[]}>)=>{
+      state.selected_seats = action.payload.selected_seats
     },
     setSelectedShowtime:(state,action:PayloadAction<{selected_showtime:selectionMovie['selected_showtime']}>)=>{
       state.selected_showtime = action.payload.selected_showtime
@@ -91,7 +96,8 @@ export const {
   setSelection,
   setShowtimes,
   resetSelection,
-  setSelectedShowtime
+  setSelectedShowtime,
+  setSelected_seats
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

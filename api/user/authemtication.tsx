@@ -1,14 +1,16 @@
 import { createClient } from "@/lib/supabase/client"
 import { ForgetPassData, loginData, ResettPassData, signupdata } from "@/types/user"
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 const supabase = createClient()
 
 export async function fetchUser() {
     const { data, error } = await supabase.auth.getUser()
-    if (error || !data.user) {
-        console.warn("No active session found");
-        return null; 
-    }
+    // if (error || !data.user) {
+    //     console.error("No active session found");
+    //     return null; 
+    // }
     return (data.user?.user_metadata)
 }
 export async function LogoutUser() {
@@ -30,13 +32,12 @@ export async function RegisterUser(user: signupdata) {
             }
         }
     })
-
-    console.log({ error })
-
     if (error) {
-        throw new Error(error.message)
+       toast.error(error.message)
+       return 
     }
-
+    toast.success("Account created successfully")
+    redirect("/")
     return data
 }
 export async function LoginUser(user: loginData) {
@@ -44,34 +45,32 @@ export async function LoginUser(user: loginData) {
         email: user.Email,
         password: user.Password,
     })
-
-    console.log({ error })
-
     if (error) {
-        throw new Error(error.message)
+        toast.error(error.message)
+        return
     }
-
+    toast.success("Login successful")
+    redirect("/")
     return data
 }
 export async function ForgetPassword(user: ForgetPassData) {
     const { data, error } = await supabase.auth.resetPasswordForEmail(user.Email, {
         redirectTo: 'http://localhost:3000/updatepassword',
     })
-    console.log({ error })
-
     if (error) {
-        throw new Error(error.message)
+    toast.error(error.message)
+    return
     }
-
+    toast.success("Email sent successfully. Please check your email")
     return data
 }
 export async function ResetPassword(user: ResettPassData) {
     const { data, error } = await supabase.auth.updateUser({ password: user.Password })
-    console.log({ error })
 
     if (error) {
-        throw new Error(error.message)
+    toast.error(error.message)        
     }
-
+    toast.success('Password updated successfully')
+    redirect("/")
     return data
 }

@@ -4,26 +4,12 @@ import svgStar from '@/public/Star.svg'
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setSelection } from "@/lib/slice/movieSlice";
+import { isFuture } from "@/utils/isFuture";
 
 export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] | null | undefined }) {
-    const date = new Date()
+    
     const dispatch = useDispatch()
-    const isFuture = (show_time: string | null, showdate: string | null): boolean => {
-        if (!show_time || !showdate) return false;
-        const [h, m] = show_time.split(':').map(Number);
-        const [y, mo, d] = showdate.split('-').map(Number);
-        const showMinutes = h * 60 + m;
-        const nowMinutes = date.getHours() * 60 + date.getMinutes();
-        const currentDay = date.getDate();
-
-        return y > date.getFullYear() ? true
-            : y < date.getFullYear() ? false
-                : mo > date.getMonth() + 1 ? true
-                    : mo < date.getMonth() + 1 ? false
-                        : d > currentDay ? true
-                            : d < currentDay ? false
-                                : showMinutes > nowMinutes;
-    };
+    
      // if (!data || data?.length < 1) {
     //    return <p>No movie found</p>
     // }

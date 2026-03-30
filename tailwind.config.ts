@@ -25,6 +25,7 @@ export default {
         defaultBtnColor: "var(--color-defaultBtnColor)",
         pressedBtnColor: "var(--color-pressedBtnColor)",
         hoverBtnColor: "var(--color-hoverBtnColor)",
+        choosenBtnColor:'var(--color-choosenBtnColor)',
       }
     },
   },

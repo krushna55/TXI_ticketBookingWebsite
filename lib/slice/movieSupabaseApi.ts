@@ -7,6 +7,7 @@ export const movieApi = createApi({
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
     fetchHeroMovies: builder.query<movies[], void>({
+
       queryFn: async () => {
         try {
           const data = await fetchHeroMovies();

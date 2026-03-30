@@ -38,7 +38,7 @@ export default function LoginForm() {
             </div>
             < input type="submit" className={`${Object.keys(errors).length > 0? 'disabled:bg-slate-200 text-gray-600 cursor-not-allowed':'bg-royal text-white' }  p-2  mt-5 text-xl rounded-lg`} />
         </form>
-        <Typography className="py-2 text-center">Already have an Account?</Typography>
+        <Typography className="py-2 text-center">Don't have an Account?</Typography>
             <Link href={'/register'}  className={`${Object.keys(errors).length > 0? 'border-slate-200 text-gray-600 cursor-not-allowed':'border border-royal text-royal' }  p-2  mt-1  text-xl rounded-lg`} ><p className=" w-full text-center">Register now</p></Link>
         </>
     )

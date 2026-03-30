@@ -1,32 +1,47 @@
 'use client'
-import Footer from "@/components/Footer";
-import MobileNavbar from "@/components/MobileNav";
-import Navbar from "@/components/Navbar";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import Navbar from "@/components/Navbar";
+import MobileNavbar from "@/components/MobileNav";
+import Footer from "@/components/Footer";
+import { fetchUser } from "@/api/user/authemtication";
 
 export default function GlobalLayout({ children }: { children: React.ReactNode }) {
+    const [user, setUser] = useState<any>(null);
+    const [scroll, setScroll] = useState(false);
+    const pathName = usePathname();
 
-    const pathName = usePathname()
+    const isFetching = useRef(false);
 
-    const auth =
-        pathName === '/register' ||
-        pathName === '/login' ||
-        pathName === '/forgetpassword' ||
-        pathName === '/updatepassword'
+    useEffect(() => {
+        async function getUser() {
+            if (isFetching.current) return; // Exit if a request is already out
 
-    const [scroll, setScroll] = useState(false)
+            isFetching.current = true;
+            try {
+                const userData = await fetchUser();
+                if (userData) setUser(userData);
+            } finally {
+                isFetching.current = false;
+            }
+        }
+
+        if (!user) getUser();
+    }, [user]);
+
+    const authPages = ['/register', '/login', '/forgetpassword', '/updatepassword'];
+    const isAuth = authPages.includes(pathName);
 
     return (
         <>
-            {!auth && <Navbar />}
-            {!auth && <MobileNavbar updateScroll={setScroll} />}
+            {!isAuth && <Navbar user={user} setUser={setUser} />}
+            {!isAuth && <MobileNavbar user={user} setUser={setUser} updateScroll={setScroll} />}
 
             <div className={scroll ? "overflow-hidden h-screen" : ""}>
                 {children}
             </div>
 
-            {!auth && <Footer />}
+            {!isAuth && <Footer />}
         </>
-    )
+    );
 }
