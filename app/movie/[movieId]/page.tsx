@@ -9,7 +9,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import ShowtimeTheaterSection from "@/sections/movie/showtimetheatersetion"
-import {  TheaterEntry } from "@/types/movies"
+import { TheaterEntry } from "@/types/movies"
 import { IoMdSearch } from "react-icons/io";
 import BrandScreenSelector from "@/sections/movie/brandScreenSelector"
 import BrandSelector from "@/sections/movie/brandSelector"
@@ -20,26 +20,23 @@ import { setMovieId } from "@/lib/slice/movieSlice"
 export default function Movie() {
 
     const params = useParams()
-    const dispatch = useDispatch() 
     const movieid = params?.movieId as string
-    if(movieid){
-        dispatch(setMovieId(movieid))
-    }
     const [cityvalue, setCity] = useState<number>(1)
     const [Moviedata, setData] = useState<TheaterEntry[] | null | undefined>()
     const [filters, setFilters] = useState({ query: '', screen: '', brand: '' })
     const { location, locationError, isLocating } = useUserLocation()
-    if(locationError){
-        return <div>Error while getting user location</div>
-    }
+   
+    
+    
+    
     const movie_date = useSelector((state: RootState) => state.movieDetails.Movie_date)
     const { data, isLoading, isError, refetch } = useFetchShowtimewithDateandMovieIdQuery(
         { date: movie_date, movie_id: Number(movieid), city_id: cityvalue, userLat: location?.lat, userLng: location?.lng },
-        { skip: !movieid || !location?.lng || !location?.lat  || !cityvalue || !movie_date}
+        { skip: !movieid || !location?.lng || !location?.lat || !cityvalue || !movie_date }
     )
-    function handleNearest(bool:boolean) {
+    function handleNearest(bool: boolean) {
         if (!data) return
-        if(bool === false) return setData(data)
+        if (bool === false) return setData(data)
         const sortedData = [...data].sort((theater1, theater2) => {
             const a = theater1.theaterdetails?.distanceKm ?? Number.POSITIVE_INFINITY
             const b = theater2.theaterdetails?.distanceKm ?? Number.POSITIVE_INFINITY
@@ -47,9 +44,9 @@ export default function Movie() {
         })
         setData(sortedData)
     }
-    function handleAlphabatic(bool:boolean) {
+    function handleAlphabatic(bool: boolean) {
         if (!data) return
-        if(bool === false) return setData(data)
+        if (bool === false) return setData(data)
 
         const sortedData = [...data].sort((theater1, theater2) => {
             const a = theater1.theaterdetails?.name ?? ''
@@ -59,11 +56,11 @@ export default function Movie() {
 
         setData(sortedData)
     }
-    function handleCheapest(bool:boolean) {
+    function handleCheapest(bool: boolean) {
         if (!data) return;
-        if(bool === false) return setData(data)
-        const sortedData = data.map((theater) => ({
-            ...theater,
+        if (bool === false) return setData(data)
+            const sortedData = data.map((theater) => ({
+        ...theater,
             screens: theater.screens.map((screen) => ({
                 ...screen,
                 showtimes: [...screen.showtimes].sort((s1, s2) => {
@@ -73,7 +70,7 @@ export default function Movie() {
                 }),
             })),
         }));
-
+        
         const getMinPrice = (t: typeof sortedData[number]) => {
             const prices = t.screens.flatMap((s) => s.showtimes.map((st) => st?.price ?? Number.POSITIVE_INFINITY));
             return prices.length ? Math.min(...prices) : Number.POSITIVE_INFINITY;
@@ -83,8 +80,8 @@ export default function Movie() {
 
         setData(sortedData);
     }
-
-
+    
+    
     if (isError) {
         return <div>Error while fetching movie. Please try again later.</div>
     }
@@ -96,44 +93,47 @@ export default function Movie() {
 
     useEffect(() => {
         if (!data) return
-
+        
         let filtered = [...data]
-
+        
         if (filters.query.trim()) {
             filtered = filtered.filter((theater) =>
                 theater.theaterdetails.name.toLowerCase().includes(filters.query.toLowerCase()) ||
-                theater.theaterdetails.district?.toLowerCase().includes(filters.query.toLowerCase())
+            theater.theaterdetails.district?.toLowerCase().includes(filters.query.toLowerCase())
             )
         }
 
         if (filters.screen) {
             filtered = filtered.filter((theater) =>
                 theater.screens.some((s) => s.screendetails.type === filters.screen)
-            )
-        }else if(filters.screen === 'null'){
-            filtered = data
+        )
+    } else if (filters.screen === 'null') {
+        filtered = data
         }
-
+        
         if (filters.brand) {
             filtered = filtered.filter((theater) =>
                 theater.theaterdetails.brand_name === filters.brand
             )
         }
         setData(filtered)
-    }, [filters,data])
+    }, [filters, data])
     // Handlers just update filters state
     function handleMovieQuery(query: string) {
         setFilters(prev => ({ ...prev, query }))
     }
-
+    
     function handleScreenChange(screen: string) {
         setFilters(prev => ({ ...prev, screen }))
     }
-
+    
     function handleBrandChange(brand: string) {
         setFilters(prev => ({ ...prev, brand }))
     }
-
+    
+    if (locationError) {
+        return <div> {locationError} </div>
+    }
     return (
         <div className="max-w-[1400px] mx-auto pl-2 h-fit">
             <div className="flex flex-col h-full">
@@ -162,16 +162,16 @@ export default function Movie() {
                         </div>
                         <div className="flex  h-full">
                             <BrandScreenSelector setScreen={handleScreenChange} screen={filters.screen} />
-                            <BrandSelector setBrand={handleBrandChange}  brand={filters.brand}/>
+                            <BrandSelector setBrand={handleBrandChange} brand={filters.brand} />
                             <PropertySelector handleCheapest={handleCheapest} handleNearest={handleNearest} handleAlphabatic={handleAlphabatic} />
                         </div>
                         <div>
 
                         </div>
                     </div>
-                    {isLoading ? 'loading showtime' : <ShowtimeTheaterSection data={Moviedata}  />}
+                    {isLoading ? 'loading showtime' : <ShowtimeTheaterSection data={Moviedata} />}
                 </div>
-                <MovieFrame movieid={movieid}/>
+                <MovieFrame movieid={movieid} />
             </div>
         </div>
     )

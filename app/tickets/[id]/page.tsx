@@ -11,6 +11,8 @@ type BookingDetail = {
     total_amount: number
     booking_status: string
     created_at: string
+    discount_code: string | null      // ✅ new
+    discount_amount: number | null
     showtimes: {
         show_time: string | null
         date: string | null
@@ -46,6 +48,8 @@ export default function TransactionDetailPage() {
                     total_amount,
                     booking_status,
                     created_at,
+                    discount_code,     // ✅ new
+                    discount_amount,
                     showtimes (
                         show_time,
                         date,
@@ -165,6 +169,10 @@ export default function TransactionDetailPage() {
                 <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Searvice tax</span>
                     <span>₹{serviceFee.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Discount</span>
+                    <span>₹{booking.discount_amount?.toLocaleString() ?? '0'}</span>
                 </div>
                 <hr />
                 <div className="flex justify-between font-bold text-sm">

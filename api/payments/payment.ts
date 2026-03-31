@@ -1,5 +1,4 @@
-// lib/actions/payment.ts
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from '@/lib/supabase/client'
 
 export async function createCheckoutSession({
   seats,
@@ -7,28 +6,30 @@ export async function createCheckoutSession({
   price_per_seat,
   movie_name,
   show_time,
+  discount_code,
+  discount_pct,
+  discount_amount
 }: {
-  seats: string[];
-  showtime_id: number;
-  price_per_seat: number;
-  movie_name: string;
-  show_time: string;
+  seats: string[]
+  showtime_id: number
+  price_per_seat: number
+  movie_name: string
+  show_time: string
+  discount_code: string | null
+  discount_pct: number | null
+  discount_amount: number
 }) {
-  const supabase = createClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) throw new Error("You must be logged in");
+  const supabase = createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) throw new Error('You must be logged in')
 
   const res = await fetch(
-    // ✅ dev tunnel so your browser can reach local edge function
     `https://2kdq7w4z-54325.inc1.devtunnels.ms/functions/v1/create-checkout-session`,
     {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
       },
       body: JSON.stringify({
         seats,
@@ -36,16 +37,14 @@ export async function createCheckoutSession({
         price_per_seat,
         movie_name,
         show_time,
-      }),
-    },
-  );
+        discount_code,
+        discount_pct,
+        discount_amount
+      })
+    }
+  )
 
-  const data = await res.json();
-  if (data.error) {
-    console.log(data)
-    throw new Error(data.error);
-  }
-
-  // redirect to stripe hosted checkout page
-  window.location.href = data.url;
+  const data = await res.json()
+  if (data.error) throw new Error(data.error)
+  window.location.href = data.url
 }

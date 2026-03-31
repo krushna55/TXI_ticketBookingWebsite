@@ -42,14 +42,14 @@ export default function BookingPage() {
         return () => document.removeEventListener('mousedown', handler)
     }, [])
 
-    if (!state.selected_showtime || state.selected_showtime.id === 0) {
-        return (
-            <div className="max-w-[1400px] mx-auto p-10 text-center">
-                <div className="mb-4 text-xl">Please select a theater and showtime first.</div>
-                <Link href="/" className="p-3 bg-royal text-white rounded-md">Back to Home</Link>
-            </div>
-        )
-    }
+    // if (!state.selected_showtime || state.selected_showtime.id === 0) {
+    //     return (
+    //         <div className="max-w-[1400px] mx-auto p-10 text-center">
+    //             <div className="mb-4 text-xl">Please select a theater and showtime first.</div>
+    //             <Link href="/" className="p-3 bg-royal text-white rounded-md">Back to Home</Link>
+    //         </div>
+    //     )
+    // }
 
     return (
         <div className="max-w-[1400px] mx-auto px-4">

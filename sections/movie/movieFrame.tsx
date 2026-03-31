@@ -9,20 +9,21 @@ import MovieDuration from "@/utils/movieDuration"
 import Image from "next/image"
 import Link from "next/link"
 import { memo } from "react"
-import { useSelector, shallowEqual, useDispatch } from "react-redux"  // 👈 shallowEqual
+import { useSelector, shallowEqual, useDispatch } from "react-redux"
 
-const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {  // 👈 remove selectedMovie prop
+const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
     const { data: movie, isError, isLoading } = useFetchMovieByIdQuery(movieid, { skip: !movieid })
 
     // ✅ shallowEqual prevents new object reference on every render
     const selectedMovie = useSelector((state: RootState) => ({
         selected_showtime: state.movieDetails.selected_showtime,
         screenDetails: state.movieDetails.screenDetails,
-        showtimes:state.movieDetails.showtimes,
+        showtimes: state.movieDetails.showtimes,
         theaterDetails: state.movieDetails.theaterDetails,
     }), shallowEqual)
-     const dispatch = useDispatch()
-    if(isError){
+    const dispatch = useDispatch()
+    // dispatch(setMovieId(movieid))
+    if (isError) {
         return <div>something went wrong</div>
     }
     function durationfunc() {
@@ -92,7 +93,7 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) { 
                                 </div>
                                 <p className="text-gray-400 text-xs md:text-sm">* Seat selection can be done after this</p>
                                 <Link href={`./${movieid}/bookings`}>
-                                    <div onClick={()=>dispatch(setMovieId(movieid))} className="bg-royal text-gradientXXI1 w-full p-2 md:px-3 md:py-4 rounded-lg text-base md:text-lg lg:text-xl flex justify-center items-center my-2 md:my-4">
+                                    <div onClick={() => dispatch(setMovieId(movieid))} className="bg-royal text-gradientXXI1 w-full p-2 md:px-3 md:py-4 rounded-lg text-base md:text-lg lg:text-xl flex justify-center items-center my-2 md:my-4">
                                         Buy now
                                     </div>
                                 </Link>
