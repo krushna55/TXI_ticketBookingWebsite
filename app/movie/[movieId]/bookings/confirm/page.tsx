@@ -9,6 +9,7 @@ import { createCheckoutSession } from "@/api/payments/payment"
 import { useFetchMovieByIdQuery } from "@/lib/slice/movieSupabaseApi"
 import { resetSelection } from "@/lib/slice/movieSlice"
 import { createClient } from "@/lib/supabase/client"
+import Image from "next/image"
 
 type Discount = {
     id: number
@@ -152,8 +153,10 @@ export default function ConfirmPaymentPage() {
                             <p className="text-gray-400">Brand</p>
                             <div className="flex items-center gap-2">
                                 {theaterDetails.brand_logo && (
-                                    <img src={theaterDetails.brand_logo} alt={theaterDetails.brand_name ?? ''} className="w-8 h-8 object-contain" />
-                                )}
+                                    <Image src={theaterDetails.brand_logo} alt={theaterDetails.brand_name ?? ''}
+                                        width={32}
+                                        height={32}
+                                        className="object-contain" />)}
                                 <p className="font-semibold">{theaterDetails.brand_name}</p>
                             </div>
                         </div>

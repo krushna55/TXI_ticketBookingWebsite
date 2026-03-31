@@ -40,6 +40,12 @@ export default function TransactionDetailPage() {
     useEffect(() => {
         const supabase = createClient()
         const init = async () => {
+            const id = params?.id as string
+            if (!id) {
+                setLoading(false)
+                return
+            }
+
             const { data, error } = await supabase
                 .from('bookings')
                 .select(`
@@ -48,7 +54,7 @@ export default function TransactionDetailPage() {
                     total_amount,
                     booking_status,
                     created_at,
-                    discount_code,     // ✅ new
+                    discount_code,   
                     discount_amount,
                     showtimes (
                         show_time,
@@ -65,7 +71,7 @@ export default function TransactionDetailPage() {
                         payment_method
                     )
                 `)
-                .eq('id', params.id)
+                .eq('id', id)
                 .single()
 
             if (!error && data) setBooking(data as unknown as BookingDetail)
