@@ -5,9 +5,10 @@ import Navbar from "@/components/Navbar";
 import MobileNavbar from "@/components/MobileNav";
 import Footer from "@/components/Footer";
 import { fetchUser } from "@/api/user/authemtication";
+import { User } from "@supabase/supabase-js";
 
 export default function GlobalLayout({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [scroll, setScroll] = useState(false);
     const pathName = usePathname();
 
@@ -20,7 +21,7 @@ export default function GlobalLayout({ children }: { children: React.ReactNode }
             isFetching.current = true;
             try {
                 const userData = await fetchUser();
-                if (userData) setUser(userData);
+                if (userData) setUser(userData as User);
             } finally {
                 isFetching.current = false;
             }
@@ -35,7 +36,7 @@ export default function GlobalLayout({ children }: { children: React.ReactNode }
     return (
         <>
             {!isAuth && <Navbar user={user} setUser={setUser} />}
-            {!isAuth && <MobileNavbar user={user} setUser={setUser} updateScroll={setScroll} />}
+            {!isAuth && <MobileNavbar updateScroll={setScroll} />}
 
             <div className={scroll ? "overflow-hidden h-screen" : ""}>
                 {children}
