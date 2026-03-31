@@ -7,7 +7,7 @@ import MovieDateList from "@/sections/movie/MovieDateList"
 import MovieFrame from "@/sections/movie/movieFrame"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import ShowtimeTheaterSection from "@/sections/movie/showtimetheatersetion"
 import {  TheaterEntry } from "@/types/movies"
 import { IoMdSearch } from "react-icons/io";
@@ -15,11 +15,16 @@ import BrandScreenSelector from "@/sections/movie/brandScreenSelector"
 import BrandSelector from "@/sections/movie/brandSelector"
 import { useUserLocation } from "@/utils/useUserLocation"
 import PropertySelector from "@/sections/movie/propertySelector"
+import { setMovieId } from "@/lib/slice/movieSlice"
 
 export default function Movie() {
 
     const params = useParams()
+    const dispatch = useDispatch() 
     const movieid = params?.movieId as string
+    if(movieid){
+        dispatch(setMovieId(movieid))
+    }
     const [cityvalue, setCity] = useState<number>(1)
     const [Moviedata, setData] = useState<TheaterEntry[] | null | undefined>()
     const [filters, setFilters] = useState({ query: '', screen: '', brand: '' })

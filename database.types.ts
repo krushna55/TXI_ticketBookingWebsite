@@ -7,11 +7,6 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.1"
-  }
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -71,6 +66,54 @@ export type Database = {
           videoUrl?: string | null
         }
         Relationships: []
+      }
+      bookings: {
+        Row: {
+          booking_status: Database["public"]["Enums"]["booking_status"] | null
+          created_at: string | null
+          id: string
+          seats: string[]
+          showtime_id: number
+          total_amount: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          booking_status?: Database["public"]["Enums"]["booking_status"] | null
+          created_at?: string | null
+          id?: string
+          seats: string[]
+          showtime_id: number
+          total_amount: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          booking_status?: Database["public"]["Enums"]["booking_status"] | null
+          created_at?: string | null
+          id?: string
+          seats?: string[]
+          showtime_id?: number
+          total_amount?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_showtime_id_fkey"
+            columns: ["showtime_id"]
+            isOneToOne: false
+            referencedRelation: "showtimes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       brands: {
         Row: {
@@ -191,6 +234,57 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          booking_id: string
+          created_at: string | null
+          id: string
+          payment_method: Database["public"]["Enums"]["payment_method"] | null
+          payment_status: Database["public"]["Enums"]["payment_status"] | null
+          stripe_session_id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          booking_id: string
+          created_at?: string | null
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"] | null
+          payment_status?: Database["public"]["Enums"]["payment_status"] | null
+          stripe_session_id: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          booking_id?: string
+          created_at?: string | null
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"] | null
+          payment_status?: Database["public"]["Enums"]["payment_status"] | null
+          stripe_session_id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       profile: {
         Row: {
@@ -393,7 +487,7 @@ export type Database = {
           longitude: number | null
           name: string
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           brand_id: number
@@ -406,7 +500,7 @@ export type Database = {
           longitude?: number | null
           name: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           brand_id?: number
@@ -419,7 +513,7 @@ export type Database = {
           longitude?: number | null
           name?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -623,3 +717,4 @@ export const Constants = {
     },
   },
 } as const
+

@@ -19,7 +19,9 @@ export default function ConfirmPaymentPage() {
     const { selected_showtime, screenDetails, theaterDetails, selected_seats, Movie_date, movie_id } = useSelector(
         (state: RootState) => state.movieDetails
     )
+    console.log('from confirm payment page', { selected_showtime, screenDetails, theaterDetails, selected_seats, Movie_date, movie_id })
     const { data } = useFetchMovieByIdQuery(movie_id)
+    console.log('from confirm payment page', data)
     const serviceFee = 30 // adjust to your currency
     const totalAmount = selected_seats.length * (selected_showtime.price ?? 0)
     const grandTotal = totalAmount + serviceFee

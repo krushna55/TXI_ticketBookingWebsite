@@ -26,13 +26,12 @@ export default function BookingPage() {
         screenDetails: state.movieDetails.screenDetails,
         theater_details: state.movieDetails.theaterDetails
     }), shallowEqual)
-
-    const visiblity = isFuture(state.selected_showtime.show_time, state.theater_details.date)
-    if (!visiblity) {
-        router.push('./')
-        toast.error("Showtime has already started")
-        console.log(visiblity)
-    }
+    // const visiblity = isFuture(state.selected_showtime.show_time, state.theater_details.date)
+    // if (!visiblity) {
+    //     router.push('./')
+    //     toast.error("Showtime has already started")
+    //     console.log(visiblity)
+    // }
     useEffect(() => {
         function handler(e: MouseEvent) {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {

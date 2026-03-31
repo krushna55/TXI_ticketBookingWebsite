@@ -24,8 +24,8 @@ export default function Navbar({ user, setUser }: { user: any, setUser: (v: any)
             <div className="flex items-center space-x-10">
                 <div className="flex space-x-10 text-base">
                     <Link href="/">Home</Link>
-                    <Link href="/">My Tickets</Link>
-                    <Link href="/">TXI News</Link>
+                    <Link href="/tickets">My Tickets</Link>
+                    <Link href="/blogs">TXI News</Link>
                 </div>
                 {!user && <div className="w-[1px] border border-gray-400 h-5"></div>}
                 <Bell />
