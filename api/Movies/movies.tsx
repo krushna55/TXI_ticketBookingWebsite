@@ -39,8 +39,8 @@ export async function fetchMovieById(id: string) {
 
     return data
 }
-export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id: number, city_id: number, userLat?: number,
-    userLng?: number,
+export async function fetchShowtimeByMovieIdandDate(movie_date: string, movie_id: number, city_id: number, userLat?: number | null,
+    userLng?: number | null,
     radiusKm: number = 10): Promise<TheaterEntry[] | null> {
     const supabase = await createClient()
     const theaterMap: TheaterMap = new Map()

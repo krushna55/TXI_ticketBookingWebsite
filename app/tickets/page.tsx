@@ -55,7 +55,7 @@ export default function TicketsPage() {
                     created_at,
                     showtimes (
                         show_time,
-                        date,
+                        date ,
                         price,
                         movies ( name, movie_img ),
                         screen ( name, type ),
@@ -172,7 +172,7 @@ export default function TicketsPage() {
                                         {statusBadge(booking.booking_status)}
                                     </div>
                                     <p className="text-sm sm:text-base md:text-md text-gray-500 mt-1">
-                                        {booking.showtimes?.date} • {booking.showtimes?.show_time?.replace(':00', '')}
+                                        {booking.showtimes?.date?.split('T')[0]} • {booking.showtimes?.show_time?.replace(':00', '')}
                                     </p>
                                     <p className="text-sm sm:text-base md:text-md text-gray-400 mt-1 truncate">
                                         📍 {booking.showtimes?.theater?.name} | {booking.showtimes?.screen?.type ?? 'Regular 2D'}

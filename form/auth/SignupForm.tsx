@@ -36,7 +36,11 @@ export default function SignupForm() {
                 < input type="submit" className={`${Object.keys(errors).length > 0 ? 'disabled:bg-slate-200 text-gray-600 cursor-not-allowed' : 'bg-royal text-white'}  p-2  mt-10 text-xl rounded-lg`} />
             </form>
             <Typography className="py-2 text-center">Already have an Account?</Typography>
-            <Link href={'/login'} className={`${Object.keys(errors).length > 0 ? 'border-slate-200 text-gray-600 cursor-not-allowed' : 'border border-royal text-royal'}  p-2  mt-1  text-xl rounded-lg`} ><p className=" w-full text-center">Login</p></Link>
-        </>
+            <Link
+                href={'/login'}
+                className={`block w-full text-center p-2 mt-4 text-xl rounded-lg border border-royal text-royal hover:bg-royal/5`} >
+                Login
+            </Link>        
+            </>
     )
 }

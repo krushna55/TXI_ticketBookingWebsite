@@ -7,10 +7,11 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { fetchBlogWithtitle, fetchBlogWithType } from "@/api/blog/blog"
 import { useEffect, useRef, useState } from "react"
 import { blog } from "@/types/blog";
+import { set } from "react-hook-form";
 
 
 interface BlogHeaderProps {
-    setBlogs: (blogs: blog[] | null ) => void;
+    setBlogs: (blogs: blog[] | null) => void;
 }
 interface Dropdownlist {
     value: string,
@@ -36,12 +37,12 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
             return;
         }
         // if (debounce !== query) {
-            ref.current = setTimeout(async () => {
-                const data: blog[] | null = await fetchBlogWithtitle('title', query)
-                
-                setBlogs(data)
-                setDebounce(query)
-            }, 500)
+        ref.current = setTimeout(async () => {
+            const data: blog[] | null = await fetchBlogWithtitle('title', query)
+
+            setBlogs(data)
+            setDebounce(query)
+        }, 500)
         // }
     }
 
@@ -59,15 +60,21 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
         let updatedType;
         if (selectedType.includes(value)) {
             updatedType = selectedType.filter((val) => val != value)
+            const data: blog[] | null = await fetchBlogWithType('type', 'Spotlight')
+            setBlogs(data)
+            setSelectedType(updatedType)
+            setIsOpen(false)
+            return
         } else {
             updatedType = [...selectedType, value]
+            setSelectedType(updatedType)
+            setIsOpen(false)
         }
         const data = await Promise.all(updatedType.map(async (type) => {
             const data = await fetchBlogWithType('type', type)
             return data
         }))
         setBlogs(data.flat().filter(Boolean) as blog[])
-        setSelectedType(updatedType)
     };
     function handleDropDown() {
 

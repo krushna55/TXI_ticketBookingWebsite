@@ -53,10 +53,10 @@ export const movieSlice = createSlice({
     setMovieDate: (state, action: PayloadAction<string>) => {
       state.Movie_date = action.payload;
       // reset downstream selections when date changes
-      // state.selected_showtime = initialState.selected_showtime;
-      // state.screenDetails = initialState.screenDetails;
-      // state.theaterDetails = initialState.theaterDetails;
-      // state.showtimes = [];
+      state.selected_showtime = initialState.selected_showtime;
+      state.screenDetails = initialState.screenDetails;
+      state.theaterDetails = initialState.theaterDetails;
+      state.showtimes = [];
     },
     setSelected_seats:(state,action:PayloadAction<{selected_seats:string[]}>)=>{
       state.selected_seats = action.payload.selected_seats

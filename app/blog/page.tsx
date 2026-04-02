@@ -1,19 +1,21 @@
 'use client'
 
 import { fetchBlogWithType } from "@/api/blog/blog";
+import Skelaton from "@/components/skelaton";
+import Typography from "@/components/Typography";
 import { BlogHeader } from "@/sections/blog/BlogHeader";
 import BlogPageFrame from "@/sections/blog/blogPageFrame";
-import UploadBlog from "@/sections/blog/uploadBlog";
+import SuggestedBlog from "@/sections/blog/suggestedBlog";
 import { blog } from "@/types/blog";
 import { useEffect, useState } from "react";
 
 export default function Blog() {
     const [blogList, setList] = useState<blog[] | null>([])
     const [nodata, setnodata] = useState<boolean>(false)
-    function setBlogList(blogs : blog[] | null) {
+    const [loading, setLoading] = useState<boolean>(true)
+    function setBlogList(blogs: blog[] | null) {
         if (blogs?.length == 0) {
             setnodata(true)
-            console.log('no data found')
             return
         }
         setnodata(false)
@@ -23,8 +25,10 @@ export default function Blog() {
     }
     useEffect(() => {
         const fetchData = async () => {
-            const data : blog[] | null = await fetchBlogWithType('type', 'Spotlight')
+            setLoading(true)
+            const data: blog[] | null = await fetchBlogWithType('type', 'Spotlight')
             setBlogList(data)
+            setLoading(false)
         }
         fetchData()
     }, [])
@@ -34,7 +38,24 @@ export default function Blog() {
         <div className="max-w-[1400px] mx-auto">
 
             <BlogHeader setBlogs={setBlogList} />
-            {nodata ? 'No Data Found' : <BlogPageFrame blogList={blogList ?? undefined} />}
+            {
+                loading ?
+                    <div className="flex flex-col w-full space-y-5 justify-center mx-auto mt-10">
+                        <Skelaton height="100px" className="w-full" ></Skelaton>
+                        <Skelaton height="100px"  className="w-full"></Skelaton>
+                    </div>
+                    :
+                    nodata ?
+                        'No Data Found'
+                        :
+                        <>
+                            <BlogPageFrame blogList={blogList ?? undefined} />
+                        </>
+            }
+            <div>
+                <Typography size="header-small" >Suggested Blogs</Typography>
+                <SuggestedBlog />
+            </div>
         </div>
     )
 }

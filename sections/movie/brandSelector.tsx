@@ -153,7 +153,7 @@ export default function BrandSelector({
     }
 
     return (
-        <div ref={dropdownRef} className="relative w-24 font-sans select-none">
+        <div ref={dropdownRef} className="relative min-w-24 font-sans select-none">
             <button
                 onClick={() => setOpen((prev) => !prev)}
                 className="w-full flex items-center justify-between px-3 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"

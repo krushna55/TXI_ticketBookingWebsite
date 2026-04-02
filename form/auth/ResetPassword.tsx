@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function ForgetPasswordForm() {
+export default function ResetPasswordForm() {
     const router = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm<ResettPassData>();
     const onSubmit = async (data: ResettPassData) => {

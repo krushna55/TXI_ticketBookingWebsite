@@ -3,8 +3,6 @@ import { Roboto } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import GloableLayout from "@/layout/gloableLayout";
-import { Provider } from "react-redux";
-import { store } from "@/lib/store";
 import MovieDetailsProvider from "./movieDetailsProvider";
 import QueryProvider from "./QueryProvider";
 import {Toaster} from 'react-hot-toast'
@@ -31,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${robotosans.className} antialiased`}>
+      <body className={`${robotosans.className} antialiased min-h-screen  flex flex-col`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

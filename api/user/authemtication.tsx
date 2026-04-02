@@ -17,7 +17,8 @@ export async function LogoutUser() {
     const { error } = await supabase.auth.signOut()
     if (error) {
         throw new Error("Error occured while fetching user", error)
-    }
+    }  
+    toast.success("Logout successful")
 
 }
 
@@ -33,33 +34,32 @@ export async function RegisterUser(user: signupdata) {
         }
     })
     if (error) {
-       toast.error(error.message)
-       return 
+        toast.error(error.message)
+        return
     }
     toast.success("Account created successfully")
     redirect("/")
     return data
 }
 export async function LoginUser(user: loginData) {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
         email: user.Email,
         password: user.Password,
     })
     if (error) {
         toast.error(error.message)
-        return
+    } else {
+        toast.success("Login successful")
     }
-    toast.success("Login successful")
-    redirect("/")
-    return data
+    return error
 }
 export async function ForgetPassword(user: ForgetPassData) {
     const { data, error } = await supabase.auth.resetPasswordForEmail(user.Email, {
         redirectTo: 'http://localhost:3000/updatepassword',
     })
     if (error) {
-    toast.error(error.message)
-    return
+        toast.error(error.message)
+        return
     }
     toast.success("Email sent successfully. Please check your email")
     return data
@@ -68,7 +68,7 @@ export async function ResetPassword(user: ResettPassData) {
     const { data, error } = await supabase.auth.updateUser({ password: user.Password })
 
     if (error) {
-    toast.error(error.message)        
+        toast.error(error.message)
     }
     toast.success('Password updated successfully')
     redirect("/")

@@ -8,14 +8,13 @@ export default async function Home() {
   return (
     <main className="max-w-[1400px] mx-auto">
 
-      <Suspense fallback={'Loading....'}>
-        <HeroSlider />
-      </Suspense>
-        <AdevertiseMent />
-      <Suspense fallback={'Loading....'}>
-        <BlogSection />
-      </Suspense>
-      <MoviesPage/>
+
+      <HeroSlider />
+      <AdevertiseMent />
+      {/* <Suspense fallback={'Loading....'}> */}
+      <BlogSection />
+      {/* </Suspense> */}
+      <MoviesPage />
     </main>
   );
 }

@@ -12,6 +12,8 @@ import Twitter from '../../public/twitter.svg'
 import { FiLoader } from "react-icons/fi";
 import BlogFrame from "./blogFrame";
 import { blog } from "@/types/blog";
+import SuggestedBlog from "./suggestedBlog";
+import Skelaton from "@/components/skelaton";
 
 
 export const DisplayBlog = () => {
@@ -19,7 +21,7 @@ export const DisplayBlog = () => {
     const blogid = params?.blogid as string;
     const [blogData, setBlogData] = useState<blog | null>(null); // Use state to keep the data
     const [suggestData, setSuggestData] = useState<blog[] | null>(null); // Use state to keep the data
-    const [changedLikes, setLike] = useState<number >(blogData?.likes ?? 0);
+    const [changedLikes, setLike] = useState<number>(blogData?.likes ?? 0);
     const [isLoading, setLoading] = useState<boolean>(false);
     const [islikeLoading, setlikeLoading] = useState<boolean>(false);
 
@@ -65,45 +67,67 @@ export const DisplayBlog = () => {
         return <BlogFrame obj={obj} />
     })
 
-    return isLoading ? 'Loading...' 
-        :
-        <div className="px-5 md:px-20">
-            <div className="max-w-[1000px] mx-auto flex flex-col space-y-5 md:px-5 lg:p-0">
-                {/* <div> */}
-                <Typography size="xl" className="font-medium">
-                    {blogData?.title || "Loading..."}
-                </Typography>
-                {/* </div> */}
-                <Typography className="" color="light">
-                    {DateConverter(blogData?.created_at ?? '')}|TIX ID
-                </Typography>
-                <div>
-                    <Image src={blogData?.imageUrl ?? '/fallback-image.jpg'} height={500} width={1000} className="aspect-video object-cover rounded-xl mb-10 md:mb-20" alt="blog image" />
-                    <Typography size='md' className="whitespace-pre-line w-[90%] md:w-[100%] flex text-justify">
-                        {blogData?.description}
-                    </Typography>
-                </div>
-                <div className="pt-10 md:pt-20 space-y-5">
-                    <Typography className='' size="lg">Share this article</Typography>
-                    <div className='flex space-x-5'>
-                        <Image onClick={handleClick} src={Instagram} className='h-auto aspect-square' alt='instagram' />
-                        <Image onClick={handleClick} src={Twitter} className='h-auto aspect-square' alt='Twitter' />
-                        <Image onClick={handleClick} src={Facebook} className='h-auto aspect-square' alt='FaceBook' />
-                    </div>
-                </div>
-                <div className="flex justify-center items-center p-2">
-                    <div onClick={() => handleLike(blogData?.id ?? 0)} className="flex gap-4  border rounded-xl px-3 py-1 items-center border-black hover:scale-90 transition duration-300 ease-in-out ">
-                        <FaRegThumbsUp />
-                        {/* {blogData?.likes} */}
-                        {islikeLoading ? <FiLoader className="animate-spin" /> : changedLikes}
-                    </div>
-                </div>
-            </div>
-            <div className="sm:grid md:grid-cols-3 sm:grid-cols-2 gap-10 space-y-12 sm:space-y-0 md:space-y-0">
-                {renderedList}
-            </div>
-        </div>
+    return (<>
+        {isLoading ?
+            <div>
+                <div className="px-5 md:px-20 mt-10">
+                    <div className="max-w-[1000px] mx-auto flex flex-col space-y-5 md:px-5 lg:p-0">
+                        <Skelaton className=" w-full h-36 md:h-40  lg:h-52" />
+                        <Skelaton className=" w-full h-10" />
+                        <Skelaton className=" w-full h-10" />
+                        <Skelaton className=" w-full h-10" />
+                        <Skelaton className=" w-full h-10" />
 
+                    </div>
+                </div>
+            </div>
+            :
+            <div>
+
+                <div className="px-5 md:px-20 mt-10">
+                    <div className="max-w-[1000px] mx-auto flex flex-col space-y-5 md:px-5 lg:p-0">
+                        {/* <div> */}
+                        <Typography size="header-large" >
+                            {blogData?.title || "Loading..."}
+                        </Typography>
+                        {/* </div> */}
+                        <Typography size="body-large" color="font_shade_600" className="py-2    ">
+                            {DateConverter(blogData?.created_at ?? '')}|TIX ID
+                        </Typography>
+                        <div>
+                            <Image src={blogData?.imageUrl ?? '/fallback-image.jpg'} height={500} width={1000} className="aspect-video object-cover rounded-xl mb-10 md:mb-20" alt="blog image" />
+                            <Typography size='body-medium' className="whitespace-pre-line w-[90%] md:w-[100%] flex text-justify">
+                                {blogData?.description}
+                            </Typography>
+                        </div>
+                        <div className="pt-10 md:pt-20 space-y-5">
+                            <Typography size="header-small">Share this article</Typography>
+                            <div className='flex space-x-5'>
+                                <Image onClick={handleClick} src={Instagram} className='h-auto aspect-square' alt='instagram' />
+                                <Image onClick={handleClick} src={Twitter} className='h-auto aspect-square' alt='Twitter' />
+                                <Image onClick={handleClick} src={Facebook} className='h-auto aspect-square' alt='FaceBook' />
+                            </div>
+                        </div>
+                        <div className="flex justify-center items-center p-2">
+                            <div onClick={() => handleLike(blogData?.id ?? 0)} className="flex gap-4  border rounded-xl px-3 py-1 items-center border-black hover:scale-90 ">
+                                <FaRegThumbsUp />
+                                {/* {blogData?.likes} */}
+                                <div className="min-h-6 flex items-center">
+                                    {islikeLoading ? <FiLoader className="animate-spin" /> : changedLikes}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+        <div className="w-full flex justify-center my-3 md:my-10">
+            <Typography size="header-medium">See Other Articles</Typography>
+        </div>
+        <SuggestedBlog />
+    </>);
 };
 
 

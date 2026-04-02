@@ -22,7 +22,6 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
         theaterDetails: state.movieDetails.theaterDetails,
     }), shallowEqual)
     const dispatch = useDispatch()
-    // dispatch(setMovieId(movieid))
     if (isError) {
         return <div>something went wrong</div>
     }
@@ -47,12 +46,12 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
                 <div key={list}>
                     <div className="flex space-y-2">
                         <div className="w-2/5">
-                            <p className="text-sm md:text-base capitalize text-gray-500">{list}</p>
+                            < Typography size="body-small">{list}</ Typography>
                         </div>
                         <div className="w-3/5">
-                            <p className="text-sm md:text-base">
+                            < Typography size="body-small">
                                 {list === 'duration' ? durationfunc() : value as string}
-                            </p>
+                            </ Typography>
                         </div>
                     </div>
                 </div>
@@ -63,35 +62,37 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
     return (
         <>
             {isLoading ? (
-                <div className="min-h-56 w-full md:w-1/2 sm:mr-2 pr-2 border space-y-4 flex flex-col justify-center">
-                    <Skeleton height="56" width="full" />
-                    <Skeleton height="10" width="full" />
-                    <Skeleton height="10" width="full" />
+                <div className="min-h-56 w-full md:w-1/2 sm:mr-2 pr-2 border space-y-4 flex flex-col justify-center my-5">
+                    <Skeleton height="500px" className="w-[70%] mx-auto" />
+                    <Skeleton height="100px" className="w-[70%] mx-auto"/>
+                    <Skeleton height="100px" className="w-[70%] mx-auto"/>
                 </div>
             ) : (
-                <div className="w-full md:w-1/2 sm:mr-2 pr-2 flex flex-col justify-center items-center">
-                    <div className="w-fit flex flex-col justify-center">
+                <div className="w-full md:w-1/2 sm:mr-2 ml-10 pr-2 flex flex-col">
+                    
+                    <div className="w-fit flex flex-col justify-center ">
                         <Image
-                            src={movie?.movie_img ?? ""}
+                            src={movie?.movie_img || 'https://jplpanawkbfwgpehspnm.supabase.co/storage/v1/object/public/brands_logo/e1cbc849207bcb9b33f6ad160ad7a008b19b6ba8.jpg'}
+                            loading="lazy"
                             alt="movie banner"
                             height={500}
                             width={500}
                             className="aspect-[3/4] w-[400px] my-2 object-cover rounded-lg"
                         />
-                        <p className="font-semibold text-lg md:text-xl lg:text-2xl py-2">{movie?.name}</p>
+                        <Typography size="header-small" className="w-[80%] my-2 md:my-5">{movie?.name}</Typography>
                         {movie && rendererd()}
 
                         {isSelected && (  // ✅ check id instead of truthy object
-                            <div className="w-full border border-[#5A637A] rounded-lg mt-5 p-2 md:p-5">
-                                <p className="font-bold text-lg md:text-xl lg:text-2xl">{selectedMovie.theaterDetails.name}</p>
-                                <p className="text-gray-500 text-sm md:text-base mt-3">
+                            <div className="w-full border border-[#5A637A] rounded-lg mt-5 p-2 md:p-5 ">
+                                <Typography size="header-medium">{selectedMovie.theaterDetails.name}</Typography>
+                                <Typography size="header-xsmall" color="font_shade_600" className="pt-2 md:pt-4" >
                                     {HandleDate(selectedMovie.theaterDetails.date)}
-                                </p>
+                                </ Typography>
                                 <div className="text-sm md:text-base lg:text-xl flex justify-between mt-1 mb-3">
-                                    <p>{selectedMovie.screenDetails.type}</p>
-                                    <p>{selectedMovie.selected_showtime.show_time?.replace(':00', '')}</p>
+                                    <Typography size="header-small" className="mt-1 md:mt-3">{selectedMovie.screenDetails.type}</Typography>
+                                    <Typography size="header-small" className="mt-1 md:mt-3">{selectedMovie.selected_showtime.show_time?.replace(':00', '')}</Typography>
                                 </div>
-                                <p className="text-gray-400 text-xs md:text-sm">* Seat selection can be done after this</p>
+                                <Typography size="body-small" color="font_shade_400">* Seat selection can be done after this</Typography>
                                 <Link href={`./${movieid}/bookings`}>
                                     <div onClick={() => dispatch(setMovieId(movieid))} className="bg-royal text-gradientXXI1 w-full p-2 md:px-3 md:py-4 rounded-lg text-base md:text-lg lg:text-xl flex justify-center items-center my-2 md:my-4">
                                         Buy now

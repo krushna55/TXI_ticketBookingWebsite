@@ -1,6 +1,8 @@
+import Typography from "@/components/Typography"
 import { Tables } from "@/database.types"
 import { useFetchcityQuery } from "@/lib/slice/citySilce"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { set } from "react-hook-form"
 import { FaAngleDown } from "react-icons/fa6"
 import { IoSearch } from "react-icons/io5"
 import { IoLocationOutline } from "react-icons/io5";
@@ -11,7 +13,7 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
     const [selectedCity, setSelectedCity] = useState('Mumbai')
     const [query, setQuery] = useState('')
     const [filteredCities, setFilteredCities] = useState<City[]>([])
-
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const { data: citylist, isLoading, isError } = useFetchcityQuery()
 
     // Bug 1 fixed - proper dependencies
@@ -20,6 +22,16 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
             setFilteredCities(citylist)
         }
     }, [citylist, isLoading, isError])
+
+     useEffect(() => {
+            const handler = (e: MouseEvent) => {
+                if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+                    setTap(false)
+                }
+            }
+            document.addEventListener('mousedown', handler)
+            return () => document.removeEventListener('mousedown', handler)
+        }, [])
 
     function handleCityClick(city: City) {
         setSelectedCity(city.name)
@@ -52,7 +64,7 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
     )) : <p className="text-base">No city found</p>
 
     return (
-        <div>
+        <div ref={dropdownRef}>
             <div className="relative bg-white z-10 text-xl w-56 px-2 py-1">
                 {tap ? (
                     <div className="z-10 bg-white absolute inset-0 w-full">
@@ -86,7 +98,7 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
                         onClick={() => setTap(true)}
                         className="flex flex-row justify-start items-center gap-3 text-xl"
                     >
-                        <IoLocationOutline className="text-2xl"/>{selectedCity} <FaAngleDown />
+                        <IoLocationOutline className="text-2xl"/><Typography size="header-small">{selectedCity}</Typography> <FaAngleDown />
                     </div>
                 )}
             </div>

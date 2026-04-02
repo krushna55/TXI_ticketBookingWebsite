@@ -1,9 +1,9 @@
-// ✅ Use inline styles for dynamic values
-export default function Skelaton({ height, width }: { height: string, width: string }) {
+
+export default function Skelaton({ height, width ,className='' }: { height?: string, width?: string, className?: string }) {
     return (
-        <div 
-            style={{ width, height }}
-            className="bg-gradient-to-r from-slate-200 to-slate-400 animate-pulse"
-        />
+        <div
+            style={{ height, width }}
+            className={`rounded bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse ${className} my-10`}
+        ></div>
     )
-}
+}   

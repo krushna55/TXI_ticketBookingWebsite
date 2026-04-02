@@ -24,7 +24,7 @@ export async function createCheckoutSession({
   if (!session) throw new Error('You must be logged in')
 
   const res = await fetch(
-    `https://2kdq7w4z-54325.inc1.devtunnels.ms/functions/v1/create-checkout-session`,
+    `https://jplpanawkbfwgpehspnm.supabase.co/functions/v1/create-checkout-session`,
     {
       method: 'POST',
       headers: {

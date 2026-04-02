@@ -1,18 +1,18 @@
 'use client'
+import { ResetPassword } from '@/api/user/authemtication';
 import forgetpassbackground from '../../../public/forgetpassbackground.png'
 import AuthFrame from '@/components/AuthFrame';
-import ForgetPasswordForm from '@/form/auth/ForgetPasswordForm';
-import LoginForm from '@/form/auth/LoginForm';
-import SignupForm from '@/form/auth/SignupForm';
+import ResetPasswordForm from '@/form/auth/ResetPassword';
 
 
 
-export default function ResetPassword() {
+
+export default function ResetPasswordFrame() {
     
     return (
         <>
         <AuthFrame backgroundImg={forgetpassbackground} title='Reset Password'>
-            <ResetPassword/>
+            <ResetPasswordForm/>
         </AuthFrame>
         </>
     )

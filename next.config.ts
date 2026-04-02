@@ -10,8 +10,13 @@ const nextConfig = {
         pathname: "/storage/v1/object/public/**",
       },
       {
+        protocol: 'https',
+        hostname: 'jplpanawkbfwgpehspnm.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },{
         protocol: "https",
-        hostname: "jplpanawkbfwgpehspnm.supabase.co", // Consider using process.env.SUPABASE_HOSTNAME here
+        hostname: "hrcxheiyttrbccjsngkr.supabase.co", // Consider using process.env.SUPABASE_HOSTNAME here
         port: "",
         pathname: "/storage/v1/object/public/**",
       },

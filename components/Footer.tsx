@@ -11,11 +11,13 @@ import AppleStore from '../public/apple-download.png'
 export default function Footer() {
     return (
         <>
-            <hr className='border border-gray-400 mt-10  bg-white text-black  ' />
-            <div className='flex flex-col  lg:grid max-w-[1400px] mx-auto  lg:grid-cols-8 mt-10 space-x-5 space-y-5 sm:px-5 '>
+           
+            <div className='flex flex-col  lg:grid max-w-[1400px] mx-auto  lg:grid-cols-8 mt-10 space-x-5 space-y-5 sm:px-5 py-10'>
                 <div className='w-full col-span-2  mt-2'>
                     <div className='flex lg:block justify-center items-center mb-5 w-full'>
-                        <Image src={logo} alt='logo' className='w-50 aspect-auto' />
+                        <Link href={'/'}>
+                            <Image src={logo} alt='logo' className='w-50 aspect-auto' />
+                        </Link>
                     </div>
                 </div>
                 <div className='col-span-3 mt-5'>
@@ -52,8 +54,8 @@ export default function Footer() {
                         </div>
                         <p className='font-bold'>Download the TIX ID Application</p>
                         <div className='flex space-x-5'>
-                            <Image height={25} width={75 } className='h-auto' src={GooglePlay} alt='Google play' />
-                            <Image height={25} width={75 } className='h-auto' src={AppleStore} alt='Apple Store' />
+                            <Image height={25} width={75} className='h-auto' src={GooglePlay} alt='Google play' />
+                            <Image height={25} width={75} className='h-auto' src={AppleStore} alt='Apple Store' />
 
                         </div>
                         <p className='opacity-80'>2021 TIX ID - PT Nusantara Elang Sejahtera.</p>

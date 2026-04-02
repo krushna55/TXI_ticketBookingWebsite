@@ -4,49 +4,67 @@
 
 @layer base {
   :root {
-    --color-royal:#1A2C50;
-    --color-sunshine:#FFBE00;
-    --color-sweetRed:#FF6B6B;
-    --color-skyBlue:#118EEA;
-    --color-white:#ffff;
-    --color-pastelYellow:#f2c46f;
-    --color-gradientRed:#EC1E2B;
-    --color-gradientXXI1:#F2C46F;
-    --color-gradientXXI2:#C6943F;
+    --color-royal: #1a2c50;
+    --color-sunshine: #ffbe00;
+    --color-sweetRed: #ff6b6b;
+    --color-skyBlue: #118eea;
+    --color-white: #ffff;
+    --color-pastelYellow: #f2c46f;
+    --color-gradientRed: #ec1e2b;
+    --color-gradientXXI1: #f2c46f;
+    --color-gradientXXI2: #c6943f;
 
-    --color-gradientBlue:#000E62;
+    --color-gradientBlue: #000e62;
 
-    --color-defaultBtnColor:#1A2C50;
-    --color-hoverBtnColor:#282764;
-    --color-pressedBtnColor:#383782;
-    --color-choosenBtnColor:#118EEA
+    --color-defaultBtnColor: #1a2c50;
+    --color-hoverBtnColor: #282764;
+    --color-pressedBtnColor: #383782;
 
+    --color-choosenBtnColor: #118eea ;
+    --font-roboto: "Roboto", sans-serif;
+    --font-size-body-large: 20px;
+    --font-size-body-medium: 18px;
+    --font-size-body-small: 16px;
+    --font-size-body-xsmall: 12px;
+    --font-size-header-large: 56px;
+    --font-size-header-medium: 36px;
+    --font-size-header-small: 24px;
+    --font-size-header-xsmall: 18px;
+    --font-size-header-xxsmall: 16px;
+    --font-size-header-xxsmall-bold: 12px;
+
+    --font-shade-100:#FFFFFF;
+    --font-shade-200:#DADFE8;
+    --font-shade-300:#BDC5D4;
+    --font-shade-400:#9DA8BE;
+    --font-shade-500:#8F98AA;
+    --font-shade-600:#5A637A;
+    --font-shade-700:#414A62;
+    --font-shade-800:#333D58;
+    --font-shade-900:#333333;
   }
-
 }
 
 @layer base {
   * {
-    @apply box-border ;
+    @apply box-border;
   }
   body {
-    @apply mx-auto max-w-[1600px] bg-white text-black ;
+    @apply mx-auto max-w-[1400px]   bg-white text-black;
   }
-  
-
 }
 .swiper-button-prev,
- .swiper-button-next {
-  color: #6b6b6b;/* Changes the arrow color if using default SVG */
+.swiper-button-next {
+  color: #6b6b6b; /* Changes the arrow color if using default SVG */
   background-color: #ffffff;
   padding: 10px 15px;
-  border-radius: 50%; 
+  border-radius: 50%;
   box-shadow: 1px 1px 10px rgb(104, 104, 104);
   max-width: 72px;
   max-height: 72px;
 }
 
-.swiper-navigation-icon{
+.swiper-navigation-icon {
   color: #6b6b6b;
 }
 .swiper-pagination-bullet-active {
@@ -55,18 +73,18 @@
 
 @media screen and (max-width: 786px) {
   .swiper-button-prev,
- .swiper-button-next {
-  padding: 10px 10px;
-  max-width: 36px;
-  max-height: 36px;
+  .swiper-button-next {
+    padding: 10px 10px;
+    max-width: 36px;
+    max-height: 36px;
+  }
 }
-}@media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .swiper-button-prev,
- .swiper-button-next {
-  padding: 5px 7.5px;
-  max-width: 20px;
-  max-height: 20px;
-  /* margin-inline: auto; */
-}
-
+  .swiper-button-next {
+    padding: 5px 7.5px;
+    max-width: 20px;
+    max-height: 20px;
+    /* margin-inline: auto; */
+  }
 }
