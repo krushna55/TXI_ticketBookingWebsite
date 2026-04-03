@@ -68,9 +68,9 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
                     <Skeleton height="100px" className="w-[70%] mx-auto"/>
                 </div>
             ) : (
-                <div className="w-full md:w-1/2 sm:mr-2 ml-10 pr-2 flex flex-col">
+                <div className="w-full md:w-1/2 sm:mr-2  md:ml-10 pr-2 flex flex-col">
                     
-                    <div className="w-fit flex flex-col justify-center ">
+                    <div className="w-fit flex flex-col mx-auto justify-center ">
                         <Image
                             src={movie?.movie_img || 'https://jplpanawkbfwgpehspnm.supabase.co/storage/v1/object/public/brands_logo/e1cbc849207bcb9b33f6ad160ad7a008b19b6ba8.jpg'}
                             loading="lazy"
