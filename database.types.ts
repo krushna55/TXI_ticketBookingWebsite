@@ -7,30 +7,10 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
@@ -71,6 +51,8 @@ export type Database = {
         Row: {
           booking_status: Database["public"]["Enums"]["booking_status"] | null
           created_at: string | null
+          discount_amount: number | null
+          discount_code: string | null
           id: string
           seats: string[]
           showtime_id: number
@@ -81,6 +63,8 @@ export type Database = {
         Insert: {
           booking_status?: Database["public"]["Enums"]["booking_status"] | null
           created_at?: string | null
+          discount_amount?: number | null
+          discount_code?: string | null
           id?: string
           seats: string[]
           showtime_id: number
@@ -91,6 +75,8 @@ export type Database = {
         Update: {
           booking_status?: Database["public"]["Enums"]["booking_status"] | null
           created_at?: string | null
+          discount_amount?: number | null
+          discount_code?: string | null
           id?: string
           seats?: string[]
           showtime_id?: number
@@ -544,6 +530,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      delete_expired_hold_reservations: { Args: never; Returns: undefined }
       get_brand_screens: {
         Args: never
         Returns: {
@@ -695,9 +682,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       age_rating: ["U", "U/A 7+", "U/A 13+", "U/A 16+", "A", "S"],
@@ -717,4 +701,3 @@ export const Constants = {
     },
   },
 } as const
-

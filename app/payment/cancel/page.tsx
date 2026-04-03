@@ -9,7 +9,7 @@ import Link from "next/link"
 
 export default function CancelPage() {
     const dispatch = useDispatch()
-    const searchParams = useSearchParams()
+    // const searchParams = useSearchParams()
     const [cancelling, setCancelling] = useState(true)
 
     useEffect(() => {

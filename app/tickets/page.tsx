@@ -9,7 +9,7 @@ import { FaListUl } from "react-icons/fa6"
 import Skelaton from "@/components/skelaton"
 import Typography from "@/components/Typography"
 
-type BookingWithDetails = {
+export type BookingWithDetails = {
     id: string
     seats: string[]
     total_amount: number

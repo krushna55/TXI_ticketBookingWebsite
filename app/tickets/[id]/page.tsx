@@ -2,19 +2,18 @@
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import Image from "next/image"
 import { FaArrowLeft, FaDownload } from "react-icons/fa6"
 import Typography from "@/components/Typography"
 import Link from "next/link"
 import Skelaton from "@/components/skelaton"
 
-type BookingDetail = {
+export type BookingDetail = {
     id: string
     seats: string[]
     total_amount: number
     booking_status: string
     created_at: string
-    discount_code: string | null      // ✅ new
+    discount_code: string | null      
     discount_amount: number | null
     showtimes: {
         show_time: string | null
