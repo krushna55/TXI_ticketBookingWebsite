@@ -4,6 +4,9 @@ import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { FaArrowLeft, FaDownload } from "react-icons/fa6"
+import Typography from "@/components/Typography"
+import Link from "next/link"
+import Skelaton from "@/components/skelaton"
 
 type BookingDetail = {
     id: string
@@ -79,8 +82,13 @@ export default function TransactionDetailPage() {
         }
         init()
     }, [params.id])
-
-    if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>
+    if (loading) {
+        return (
+            <div className="mx-5 flex justify-center h-screen">
+                <Skelaton height="500px" className="w-full" />
+            </div>
+        )
+    }
     if (!booking) return <div className="flex justify-center items-center h-screen">Booking not found</div>
 
     const payment = booking.payments?.[0]
@@ -96,34 +104,35 @@ export default function TransactionDetailPage() {
                 <FaArrowLeft /> Back
             </button>
 
-            <h1 className="text-2xl font-bold mb-6 text-center">Transaction Details</h1>
+            <Typography size="header-medium" className="mb-6 text-center">Transaction Details</Typography>
 
-            {/* Ticket Card */}
+
+
             <div className="bg-royal rounded-t-xl pt-5 text-white mb-6 relative overflow-hidden">
                 <div className="p-6">
-                    <h2 className=" text-lg md:text-xl text-pastelYellow font-bold mb-4">
+                    <Typography size="header-small" className="text-gradientXXI1 mb-4">
                         {booking.showtimes?.movies?.name}
-                    </h2>
+                    </Typography>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                            <p className="text-white/60 text-xs">Location</p>
-                            <p className="font-medium">{booking.showtimes?.theater?.name}</p>
+                            <Typography size="header-xxsmall" color="font_shade_400" className="mb-2">Location</Typography>
+                            <Typography size="header-xsmall" color="font_shade_100" className="">{booking.showtimes?.theater?.name}</Typography>
                         </div>
                         <div>
-                            <p className="text-white/60 text-xs">Screen</p>
-                            <p className="font-medium">{booking.showtimes?.screen?.type ?? 'Regular 2D'}</p>
+                            <Typography size="header-xxsmall" color="font_shade_400" className="mb-2">Screen</Typography>
+                            <Typography size="header-xsmall" color="font_shade_100" className="">{booking.showtimes?.screen?.type ?? 'Regular 2D'}</Typography>
                         </div>
                         <div>
-                            <p className="text-white/60 text-xs">Date</p>
-                            <p className="font-medium">{booking.showtimes?.date}</p>
+                            <Typography size="header-xxsmall" color="font_shade_400" className="mb-2">Date</Typography>
+                            <Typography size="header-xsmall" color="font_shade_100" className="">{booking.showtimes?.date?.split('T')[0]}</Typography>
                         </div>
                         <div>
-                            <p className="text-white/60 text-xs">Showtime</p>
-                            <p className="font-medium">{booking.showtimes?.show_time?.replace(':00', '')}</p>
+                            <Typography size="header-xxsmall" color="font_shade_400" className="mb-2">Showtime</Typography>
+                            <Typography size="header-xsmall" color="font_shade_100" className="">{booking.showtimes?.show_time?.replace(':00', '')}</Typography>
                         </div>
                         <div>
-                            <p className="text-white/60 text-xs">Screen Type</p>
-                            <p className="font-medium">{booking.showtimes?.screen?.name}</p>
+                            <Typography size="header-xxsmall" color="font_shade_400" className="mb-2">Screen Type</Typography>
+                            <Typography size="header-xsmall" color="font_shade_100" className="">{booking.showtimes?.screen?.name}</Typography>
                         </div>
                     </div>
                 </div>
@@ -148,9 +157,9 @@ export default function TransactionDetailPage() {
                                 <p className="font-bold text-sm">{booking.seats?.join(', ')}</p>
                             </div>
                         </div>
-                        <button className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
+                        <Link href={`${booking.id}/ticket`} className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
                             <FaDownload className="text-black" />
-                        </button>
+                        </Link>
                     </div>
                 </div>
                 <div className="flex bg-[#F2C46F] justify-around md:px-2">
@@ -162,8 +171,6 @@ export default function TransactionDetailPage() {
                     ))}
                 </div>
             </div>
-
-            {/* Purchase Details */}
             <div className="border rounded-lg p-5 space-y-3">
                 <h3 className="font-bold text-base">Purchase Details</h3>
                 <div className="flex justify-between text-sm">
@@ -186,6 +193,7 @@ export default function TransactionDetailPage() {
                     <span>₹{booking.total_amount?.toLocaleString()}</span>
                 </div>
             </div>
+
         </div>
     )
 }

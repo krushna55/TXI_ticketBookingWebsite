@@ -198,15 +198,16 @@ import PropertySelector from "@/sections/movie/propertySelector"
 import { useUserLocation } from "@/utils/useUserLocation"
 import LocationBanner from "@/utils/LocationBanner"
 import { resetSelection } from "@/lib/slice/movieSlice"
+import Skelaton from "@/components/skelaton"
 
 export default function Movie() {
     const params = useParams()
     const movieid = params?.movieId as string
     const dispatch = useDispatch()
-    
-    useEffect(()=>{
-        dispatch(resetSelection())
-    })
+
+    // useEffect(() => {
+    //     dispatch(resetSelection())
+    // })
     const [cityvalue, setCity] = useState<number>(1)
     const [filters, setFilters] = useState({
         query: '',
@@ -224,9 +225,10 @@ export default function Movie() {
         statusMessage,
         getLocation,
     } = useUserLocation(true)
-    
+
     const movie_date = useSelector((state: RootState) => state.movieDetails.Movie_date)
     console.log(movie_date)
+
     // ✅ Query fires immediately (no location skip)
     // RTK Query auto-refetches when lat/lng args change as location arrives
     const { data, isLoading, isError } = useFetchShowtimewithDateandMovieIdQuery(
@@ -245,7 +247,6 @@ export default function Movie() {
         if (!data) return data
 
         let result = [...data]
-
         if (filters.query.trim()) {
             const q = filters.query.toLowerCase()
             result = result.filter(t =>
@@ -253,7 +254,7 @@ export default function Movie() {
                 t.theaterdetails.district?.toLowerCase().includes(q)
             )
         }
-
+        
         if (filters.screen) {
             result = result.filter(t =>
                 t.screens.some(s => s.screendetails.type === filters.screen)
@@ -284,9 +285,9 @@ export default function Movie() {
             }
             result = [...result].sort((a, b) => minPrice(a) - minPrice(b))
         }
-
+        console.log(result)
         return result
-    }, [data, filters])
+    }, [data, filters,movie_date])
 
     // ✅ "Sort by nearest" clicked while location is denied → show message, don't crash
     function handleNearest(bool: boolean) {
@@ -335,7 +336,7 @@ export default function Movie() {
 
                     <MovieDateList />
 
-                    <div className="my-5">
+                    <div className="my-5 min-h-10">
                         <CitySelector setCity={setCity} />
                     </div>
 
@@ -374,8 +375,22 @@ export default function Movie() {
                     )}
 
                     {isLoading
-                        ? <p className="mt-4 text-gray-400">Loading showtimes…</p>
-                        : <ShowtimeTheaterSection data={displayData} />
+                        ? <>
+                            {Array(2)
+                            .fill(0)
+                            .map((_, i) => (
+                            <div key={i} className="w-full flex flex-col justify-center">
+                                <Skelaton height="50px" className="w-[95%] my-2" />
+                                <Skelaton height="25px" className="w-[95%] my-2" />
+                                <Skelaton height="25px" className="w-[95%] my-2" />
+                            </div>
+                            ))}
+                        </>
+                        :
+                        <>
+
+                            <ShowtimeTheaterSection data={displayData} />
+                        </>
                     }
 
                 </div>

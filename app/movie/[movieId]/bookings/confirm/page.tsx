@@ -40,7 +40,7 @@ export default function ConfirmPaymentPage() {
     const discountAmount = appliedDiscount
         ? Math.floor(totalAmount * (appliedDiscount.discount_pct ?? 0) / 100)
         : 0
-    const grandTotal = totalAmount + serviceFee - discountAmount
+    const grandTotal = totalAmount - (serviceFee + discountAmount)
 
     async function handleApplyCoupon() {
         if (!couponCode.trim()) return

@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
 import Link from "next/link";
-import { movies } from "@/types/movies";
 import { useFetchHeroMoviesQuery } from "@/lib/slice/movieSupabaseApi";
 import Skelaton from "@/components/skelaton";
 import Typography from "@/components/Typography";
@@ -24,13 +23,13 @@ export default function HeroSlider() {
   return (
     <>{
       isLoading ?
-        <div className="mt-20  mb-10 px-2 gap-10 flex">
-          <Skelaton height="500px" width="45%" />
-          <Skelaton height="500px" width="45%" />
+        <div className="mt-20 flex justify-center mb-10  px-2 gap-2 md:gap-10 ">
+          <Skelaton height="500px" className="w-[45%]" />
+          <Skelaton height="500px" className="w-[45%]" />
         </div>
         :
-        <div className="mt-10 md:mt-20 mb-10 px-2">
-
+        <div className="  gap-2   mt-10 md:mt-20 mb-10 px-2">
+              
           <Swiper
             modules={[Navigation, Scrollbar, A11y, Autoplay]}
             spaceBetween={0}
@@ -51,10 +50,9 @@ export default function HeroSlider() {
                   <SwiperSlide className="h-[100%] px-2 sm:px-00">
                     <Link href={`./movie/${banner.id}`}>
                       <div className="w-[90%] mx-auto justify-center items-center flex flex-col sm:px-2 ">
-                        {/* <div className="aspect-1/19"> */}
+                      
                         <Image src={banner?.movie_img ?? ''} loading="lazy" alt="spider-movie" width={200} height={400} className="aspect-[3/4] object-cover overflow-none w-[500px] rounded-md  " />
-                        {/* </div> */}
-                        {/* <p className="text-md text-[14px] md:text-2xl xl:text-3xl line-clamp-1">{banner?.name}</p> */}
+                       
                         <div className="min-h-10 md:min-h-14 lg:min-h-20 my-2">
                           <Typography size="header-medium" className="line-clamp-2">{banner?.name}</Typography>
                         </div>

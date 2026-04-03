@@ -24,7 +24,8 @@ export default function SuggestedBlog() {
 
     return (
         loading ? (
-            <div className="sm:grid md:grid-cols-3 sm:grid-cols-2 gap-10 space-y-12 sm:space-y-0 md:space-y-0">                <Skelaton height="400px" className="w-full" />
+            <div className="sm:grid md:grid-cols-3 sm:grid-cols-2 gap-10 ">                
+                <Skelaton height="400px" className="w-full" />
                 <Skelaton height="400px" className="w-full" />
                 <Skelaton height="400px" className="w-full" />
             </div>

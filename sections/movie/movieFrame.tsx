@@ -1,3 +1,4 @@
+import Skelaton from "@/components/skelaton"
 import Skeleton from "@/components/skelaton"
 import Typography from "@/components/Typography"
 import { setMovieId } from "@/lib/slice/movieSlice"
@@ -62,10 +63,10 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
     return (
         <>
             {isLoading ? (
-                <div className="min-h-56 w-full md:w-1/2 sm:mr-2 pr-2 border space-y-4 flex flex-col justify-center my-5">
-                    <Skeleton height="500px" className="w-[70%] mx-auto" />
-                    <Skeleton height="100px" className="w-[70%] mx-auto"/>
-                    <Skeleton height="100px" className="w-[70%] mx-auto"/>
+                <div className="min-h-56 w-full md:w-1/2 sm:mr-2 pr-2  space-y-4 flex flex-col justify-center my-5">
+                    <Skelaton height="500px" className="w-[70%] mx-auto" />
+                    <Skelaton height="100px" className="w-[70%] mx-auto"/>
+                    <Skelaton height="100px" className="w-[70%] mx-auto"/>
                 </div>
             ) : (
                 <div className="w-full md:w-1/2 sm:mr-2  md:ml-10 pr-2 flex flex-col">

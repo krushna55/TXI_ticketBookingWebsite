@@ -12,7 +12,7 @@ export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] 
 
     const dispatch = useDispatch()
     const selected_showtime = useSelector((state: RootState) => state.movieDetails.selected_showtime)
-    console.log(selected_showtime)
+    
     if (!data || data?.length < 1) {
         return <p>No movie found</p>
     }

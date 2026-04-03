@@ -6,6 +6,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { MdConfirmationNumber } from "react-icons/md"
 import { FaListUl } from "react-icons/fa6"
+import Skelaton from "@/components/skelaton"
+import Typography from "@/components/Typography"
 
 type BookingWithDetails = {
     id: string
@@ -85,7 +87,6 @@ export default function TicketsPage() {
         }
     }
 
-    if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>
     if (!user) return <div className="flex justify-center items-center h-screen">Please login to view tickets</div>
 
     return (
@@ -112,10 +113,10 @@ export default function TicketsPage() {
 
             {/* MAIN CONTENT */}
             <div className="flex-1">
-                <h1 className="text-xl font-bold mb-1">My Ticket</h1>
-                <p className="text-gray-400 text-sm mb-4">
+                <Typography  size="header-small" className=" mb-1">My Ticket</Typography>
+                <Typography size="body-small" color="font_shade_600" className=" mb-4">
                     List of tickets and transactions you have made
-                </p>
+                </Typography>
 
                 {/* MOBILE TABS */}
                 <div className="flex gap-2 mb-4 md:hidden">
@@ -136,60 +137,75 @@ export default function TicketsPage() {
                 </div>
 
                 {/* BOOKING LIST */}
-                {displayBookings.length === 0 ? (
-                    <div className="text-center text-gray-400 mt-20">No bookings found</div>
-                ) : (
-                    <div className="md:space-y-4 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-1">
-                        {displayBookings.map((booking) => (
-                            <Link
-                                key={booking.id}
-                                href={`/tickets/${booking.id}`}
-                                className="mx-auto sm:w-full md:w-full md:mx-0 flex flex-col md:flex md:flex-row gap-4 border rounded-lg p-2 sm:p-4 hover:shadow-md transition cursor-pointer"
-                            >
-                                {/* Movie Image */}
-                                <div className="relative rounded-md overflow-hidden flex-shrink-0 mx-auto sm:bg-gray-100">
-                                    {booking.showtimes?.movies?.movie_img ? (
-                                        <Image
-                                            src={booking.showtimes.movies.movie_img}
-                                            alt={booking.showtimes.movies.name}
-                                            height={200}
-                                            width={200}
-                                            className="object-cover h-30 aspect-[9/16]"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-400">
-                                            No Image
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* Details */}
-                                <div className="md:flex md:justify-center md:flex-col  flex-1 min-w-0 max-w-80 md:max-w-full">
-                                    <div className="flex flex-wrap justify-between items-start gap-2">
-                                        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl truncate">
-                                            {booking.showtimes?.movies?.name}
-                                        </h2>
-                                        {statusBadge(booking.booking_status)}
+                {loading ? (
+                    <div className="text-center text-gray-400 mt-20">
+                        <Skelaton height="200px" className="w-full" />
+                        <Skelaton height="200px" className="w-full" />
+                    </div>
+                )
+                    :
+                    displayBookings.length === 0 ? (
+                        <div className="text-center text-gray-400 mt-20">
+                            <Skelaton height="200px" className="w-full" />
+                            <Skelaton height="200px" className="w-full" />
+                        </div>
+                    ) : (
+                        <div className="md:space-y-4 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-1">
+                            {displayBookings.map((booking) => (
+                                <Link
+                                    key={booking.id}
+                                    href={booking.booking_status === 'paid' ? `/tickets/${booking.id}` : '#'}
+                                    className="mx-auto w-full sm:w-full md:mx-0 flex flex-col md:flex md:flex-row gap-4 border rounded-lg p-2 sm:p-4 hover:shadow-md transition cursor-pointer"
+                                >
+                                    {/* Movie Image */}
+                                    <div className="relative rounded-md overflow-hidden flex-shrink-0 mx-auto sm:bg-gray-100">
+                                        {booking.showtimes?.movies?.movie_img ? (
+                                            <Image
+                                                src={booking.showtimes.movies.movie_img}
+                                                alt={booking.showtimes.movies.name}
+                                                height={200}
+                                                width={200}
+                                                className="object-cover h-30 aspect-[9/16]"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-400">
+                                                No Image
+                                            </div>
+                                        )}
                                     </div>
-                                    <p className="text-sm sm:text-base md:text-md text-gray-500 mt-1">
-                                        {booking.showtimes?.date?.split('T')[0]} • {booking.showtimes?.show_time?.replace(':00', '')}
-                                    </p>
-                                    <p className="text-sm sm:text-base md:text-md text-gray-400 mt-1 truncate">
-                                        📍 {booking.showtimes?.theater?.name} | {booking.showtimes?.screen?.type ?? 'Regular 2D'}
-                                    </p>
-                                    <p className="text-sm sm:text-base md:text-md text-gray-400 mt-1">
-                                        Seats: {booking.seats?.join(', ')}
-                                    </p>
-                                </div>
 
-                                {/* Amount */}
-                                {/* <div className="text-right flex-shrink-0 max-w-80 md:max-w-full">
+                                    {/* Details */}
+                                    <div className="md:flex md:justify-center md:flex-col  flex-1 min-w-0 w-full md:max-w-full">
+                                        <div className="flex w-full justify-between items-start gap-2">
+                                            <div className="w-1/2">
+                                                <Typography size="header-small" className="truncate">
+                                                    {booking.showtimes?.movies?.name}
+                                                </Typography>
+                                            </div>
+                                            <div>
+                                                {statusBadge(booking.booking_status)}
+                                            </div>
+                                        </div>
+                                        <p className="text-sm sm:text-base md:text-md text-font_shade_700 mt-1">
+                                            {booking.showtimes?.date?.split('T')[0]} • {booking.showtimes?.show_time?.replace(':00', '')}
+                                        </p>
+                                        <p className="text-sm sm:text-base md:text-md text-font_shade_400 mt-1 truncate">
+                                            📍 {booking.showtimes?.theater?.name} | {booking.showtimes?.screen?.type ?? 'Regular 2D'}
+                                        </p>
+                                        <p className="text-sm sm:text-base md:text-md text-gray-400 mt-1">
+                                            Seats: {booking.seats?.join(', ')}
+                                        </p>
+                                    </div>
+
+                                    {/* Amount */}
+                                    {/* <div className="text-right flex-shrink-0 max-w-80 md:max-w-full">
                                     <p className="font-bold text-sm">₹{booking.total_amount?.toLocaleString()}</p>
                                 </div> */}
-                            </Link>
-                        ))}
-                    </div>
-                )}
+                                </Link>
+                            ))}
+                        </div>
+                    )
+                }
             </div>
         </div>
     )
