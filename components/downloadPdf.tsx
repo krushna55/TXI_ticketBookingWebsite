@@ -9,8 +9,8 @@ export type BookingDetail = {
   id: string;
   seats: string[];
   total_amount: number;
-  booking_status: string | null;
-  created_at: string | null;
+  booking_status: string;
+  created_at: string;
   discount_code: string | null;
   discount_amount: number | null;
   showtimes: {
@@ -24,8 +24,8 @@ export type BookingDetail = {
   payments: {
     stripe_session_id: string;
     amount: number;
-    payment_status: "cancelled" | "succeeded" | "processing" | "requires_action" | "requires_payment_action" | null;
-    payment_method: "card" | "upi" | "netbanking" | "wallet" | null;
+    payment_status: "cancelled" | "succeeded" | "processing" | "requires_action" | "requires_payment_action";
+    payment_method: "card" | "upi" | "netbanking" | "wallet";
   }[];
 };
 
@@ -71,8 +71,13 @@ export const downloadTicketPdf = async (id: string) => {
   )
 
   // Generate PDF
+  const bookingData: BookingDetail = {
+    ...data,
+    created_at: data.created_at || new Date().toISOString(),
+  } as BookingDetail
+
   const blob = await pdf(
-    <TicketPDF booking={data as BookingDetail} qrCodeData={qr} />
+    <TicketPDF booking={bookingData} qrCodeData={qr} />
   ).toBlob()
 
   const url = URL.createObjectURL(blob)

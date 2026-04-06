@@ -1,4 +1,4 @@
-import { BookingDetail } from "@/app/tickets/[id]/ticket/page"
+
 import {
   Document,
   Page,
@@ -9,7 +9,29 @@ import {
   pdf
 } from "@react-pdf/renderer"
 
-
+export type BookingDetail = {
+    id: string
+    seats: string[]
+    total_amount: number
+    booking_status: string
+    created_at: string
+    discount_code: string | null      
+    discount_amount: number | null
+    showtimes: {
+        show_time: string | null
+        date: string | null
+        price: number | null
+        movies: { name: string; movie_img: string | null }
+        screen: { name: string; type: string | null }
+        theater: { name: string; complete_address: string | null }
+    }
+    payments: {
+        stripe_session_id: string
+        amount: number
+        payment_status: string
+        payment_method: string
+    }[]
+}
 const styles = StyleSheet.create({
   page: {
     padding: 30,
