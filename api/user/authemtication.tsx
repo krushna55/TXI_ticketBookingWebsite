@@ -37,7 +37,7 @@ export async function RegisterUser(user: signupdata) {
         toast.error(error.message)
         return
     }
-    toast.success("Account created successfully")
+    toast.success("Account created successfully.Please check your email for verification link")
     redirect("/")
     return data
 }

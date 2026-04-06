@@ -6,6 +6,7 @@ import { FaArrowLeft, FaDownload } from "react-icons/fa6"
 import Typography from "@/components/Typography"
 import Link from "next/link"
 import Skelaton from "@/components/skelaton"
+import { downloadTicketPdf } from "@/components/downloadPdf"
 
 export type BookingDetail = {
     id: string
@@ -156,9 +157,12 @@ export default function TransactionDetailPage() {
                                 <p className="font-bold text-sm">{booking.seats?.join(', ')}</p>
                             </div>
                         </div>
-                        <Link href={`${booking.id}/ticket`} className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
+                        {/* <Link href={`${booking.id}/ticket`} className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
                             <FaDownload className="text-black" />
-                        </Link>
+                        </Link> */}
+                        <div onClick={()=> downloadTicketPdf(params?.id as string)} className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
+                            <FaDownload className="text-black" />
+                        </div>
                     </div>
                 </div>
                 <div className="flex bg-[#F2C46F] justify-around md:px-2">

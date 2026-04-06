@@ -3,17 +3,67 @@ import { screendetails, Showtime } from "@/types/movies";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { createClient } from "@/lib/supabase/client";
+import { useCallback, useState } from "react";
+
 type selectedtheater = {
     showtimes: Showtime[];
     selected_showtime: Showtime;
     screenDetails: screendetails;
 }
+
 export default function PricingSection({ selected_seat, selectedtheater }: { selected_seat: string[], selectedtheater: selectedtheater }) {
     const router = useRouter()
     const dispatch = useDispatch()
+    const [isChecking, setIsChecking] = useState(false)
     const total = selected_seat.length * (selectedtheater.selected_showtime.price ?? 0)
-    function handleConfirm() {
+    
+    // Check if all selected seats are still available
+    const checkSeatsAvailability = useCallback(async () => {
+        setIsChecking(true)
+        try {
+            const supabase = createClient()
+            const { data: bookings, error } = await supabase
+                .from('seat_reservations')
+                .select('*')
+                .eq('showtime_id', selectedtheater.selected_showtime.id)
+                .in('seat_no', selected_seat)
+
+            if (error) throw error
+
+            // Get current user
+            const { data: { user } } = await supabase.auth.getUser()
+
+            // Check if any seat is unavailable (paid or held by someone else)
+            const unavailableSeats = bookings?.filter(b => 
+                b.reservation_status === 'paid' || 
+                (b.reservation_status === 'hold' && b.user_id !== user?.id)
+            ) || []
+
+            if (unavailableSeats.length > 0) {
+                const unavailableSeatNumbers = unavailableSeats.map(s => s.seat_no).join(', ')
+                toast.error(`Sorry! Seats ${unavailableSeatNumbers} are no longer available. Please select again.`)
+                setIsChecking(false)
+                return false
+            }
+
+            setIsChecking(false)
+            return true
+        } catch (err) {
+            toast.error("Failed to verify seat availability. Please try again.")
+            setIsChecking(false)
+            return false
+        }
+    }, [selected_seat, selectedtheater.selected_showtime.id])
+
+    async function handleConfirm() {
+        // Verify seats are available before confirming
+        const seatsAvailable = await checkSeatsAvailability()
+        if (!seatsAvailable) return
+
         dispatch(setSelected_seats({ selected_seats: selected_seat }))
+        router.push('bookings/confirm')
     }
     return (
         <>
@@ -69,13 +119,11 @@ export default function PricingSection({ selected_seat, selectedtheater }: { sel
 
                     {/* Confirm Button */}
                     <button
-                        onClick={() => {
-                            handleConfirm();
-                            router.push('bookings/confirm');
-                        }}
-                        className="flex-1 max-w-[200px] bg-royal text-white py-3 px-8 rounded-xl font-semibold shadow-lg shadow-royal/20 hover:bg-royal/90 hover:shadow-royal/30 transition-all duration-200 active:scale-95"
+                        onClick={handleConfirm}
+                        disabled={isChecking}
+                        className="flex-1 max-w-[200px] bg-royal text-white py-3 px-8 rounded-xl font-semibold shadow-lg shadow-royal/20 hover:bg-royal/90 hover:shadow-royal/30 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Confirm Seats
+                        {isChecking ? 'Checking...' : 'Confirm Seats'}
                     </button>
                 </div>
             </div>

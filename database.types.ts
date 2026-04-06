@@ -542,6 +542,15 @@ export type Database = {
           screen_type: string
         }[]
       }
+      sync_seat_reservations: {
+        Args: {
+          p_price: number
+          p_seats_to_add: string[]
+          p_seats_to_del: string[]
+          p_showtime_id: number
+        }
+        Returns: Json
+      }
     }
     Enums: {
       age_rating: "U" | "U/A 7+" | "U/A 13+" | "U/A 16+" | "A" | "S"

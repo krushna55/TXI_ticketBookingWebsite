@@ -38,9 +38,9 @@ export default function ConfirmPaymentPage() {
     const serviceFee = 30
     const totalAmount = selected_seats.length * (selected_showtime.price ?? 0)
     const discountAmount = appliedDiscount
-        ? Math.floor(totalAmount * (appliedDiscount.discount_pct ?? 0) / 100)
+        ? Math.floor((totalAmount + serviceFee)* (appliedDiscount.discount_pct ?? 0) / 100)
         : 0
-    const grandTotal = totalAmount - (serviceFee + discountAmount)
+    const grandTotal = totalAmount + serviceFee - discountAmount
 
     async function handleApplyCoupon() {
         if (!couponCode.trim()) return
@@ -103,10 +103,10 @@ export default function ConfirmPaymentPage() {
         // router.back()
     }
 
-    if (selected_seats.length === 0) {
-        router.push('../bookings')
-        return null
-    }
+    // if (selected_seats.length === 0) {
+    //     router.push('../bookings')
+    //     return null
+    // }
 
     return (
         <div className="max-w-[1400px] mx-auto px-4 py-6">

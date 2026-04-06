@@ -1,11 +1,17 @@
 'use client'
 import MovieFrame from "@/components/MovieFrame"
 import Skelaton from "@/components/skelaton"
+import { resetSelection } from "@/lib/slice/movieSlice"
 import { useFetchMoiesQuery } from "@/lib/slice/movieSupabaseApi"
-import Link from "next/link"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
 
 export default function MoviePage() {
     const { data: data = [], isError, isLoading } = useFetchMoiesQuery()
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(resetSelection())
+    }, [])
     if (isError) {
         return <div>Something Went Wrong...</div>
     }
@@ -26,7 +32,7 @@ export default function MoviePage() {
                             Array(4).fill(0).map((_, id) => {
                                 return (
                                     <>
-                                        <Skelaton height="400px" className="w-full" />
+                                        <Skelaton key={id} height="400px" className="w-full" />
                                     </>
                                 )
                             })
@@ -39,7 +45,7 @@ export default function MoviePage() {
 
                             {
                                 data.map((movie) => {
-                                    return <MovieFrame movie={movie} />
+                                    return <MovieFrame key={movie.id} movie={movie} />
                                 })
                             }
                         </div>
