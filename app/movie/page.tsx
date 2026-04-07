@@ -5,6 +5,9 @@ import { resetSelection } from "@/lib/slice/movieSlice"
 import { useFetchMoiesQuery } from "@/lib/slice/movieSupabaseApi"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
+import Link from "next/link"
+import Image from "next/image"
+import Typography from "@/components/Typography"
 
 export default function MoviePage() {
     const { data: data = [], isError, isLoading } = useFetchMoiesQuery()
@@ -45,7 +48,21 @@ export default function MoviePage() {
 
                             {
                                 data.map((movie) => {
-                                    return <MovieFrame key={movie.id} movie={movie} />
+                                    return <Link href={`./movie/${movie.id}`} key={movie.id}>
+                                        <div className="justify-center items-center flex flex-col sm:px-2 pt-2 pb-5">
+                                            {/* <div className="aspect-1/19"> */}
+                                            <Image src={movie?.movie_img ?? ''} alt="spider-movie" width={200} height={400} className="aspect-[3/4] object-cover overflow-none w-[90%] sm:w-[500px] rounded-md  " />
+                                            {/* </div> */}
+                                            <span className="flex justify-center sm:min-h-16 lg:min-h-16 my-2 ">
+                                                <Typography size="header-small" className="line-clamp-2 ">{movie?.name}</Typography>
+                                            </span>
+                                            <div className="flex h-full justify-center space-x-2 my-2">
+                                                <div className="px-2 py-0.5 rounded-[4px] text-white bg-[linear-gradient(to_right,#F2C46F,#C6943F)] h-fit  text-[8px] md:text-sm xl:text-md">XXI</div>
+                                                <div className="px-2 py-0.5 rounded-[4px] text-white bg-gradientRed h-fit text-[8px] md:text-sm xl:text-md  ">CGV</div>
+                                                <div className="px-2 py-0.5 rounded-[4px] text-white bg-royal h-fit  text-[8px] md:text-sm xl:text-md ">CINEPOLIS</div>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 })
                             }
                         </div>

@@ -12,6 +12,8 @@ import SeatOptions from "@/sections/bookings/seatOptions"
 import { isFuture } from "@/utils/isFuture"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
+import { ConfirmationModel } from "@/components/ConfirmationModel"
+import { DialogueBox } from "@/components/dialogue"
 
 export default function BookingPage() {
     const router = useRouter()
@@ -19,6 +21,7 @@ export default function BookingPage() {
     const [isopen, setIsopen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const [selected_seat, setselected_seat] = useState<string[]>([])
+    const [isOpenModel,setIsOpenModel] = useState(false)
 
 
     const state = useSelector((state: RootState) => ({
@@ -35,6 +38,7 @@ export default function BookingPage() {
     //     console.log(visiblity)
     // }
     useEffect(() => {
+        setIsOpenModel(true)
         function handler(e: MouseEvent) {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
                 setIsopen(false)
@@ -111,6 +115,14 @@ export default function BookingPage() {
             {selected_seat.length > 0 && (
                 <PricingSection selected_seat={selected_seat} selectedtheater={state} />
             )}
+            <DialogueBox
+                isOpen={isOpenModel}
+                title="Note"
+                message="You can only book a maximum of 10 seats. If you select more, the oldest selected seat will be deselected."
+                onConfirmation={() => setIsOpenModel(false)}
+                ConfirmBtn="Got it"
+                onCancle={() => setIsOpenModel(false)}
+            />
         </div>
     )
 }

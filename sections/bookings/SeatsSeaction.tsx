@@ -209,6 +209,7 @@ import { RootState } from "@/lib/store"
 import toast from "react-hot-toast"
 import { Tables } from "@/database.types"
 import { RealtimePostgresChangesPayload, User } from "@supabase/supabase-js"
+import { useRouter } from "next/navigation"
 
 type Booking = Tables<'seat_reservations'>
 
@@ -253,7 +254,7 @@ export default function SeatSection({
     const [allBookings, setAllBookings] = useState<Booking[]>([])
     const [user, setUser] = useState<User | null>(null)
     const [isSyncing, setIsSyncing] = useState(false)
-
+    const router = useRouter()
     const screenDetails = useSelector((state: RootState) => state.movieDetails.screenDetails)
     const currentPrice = useSelector((state: RootState) => state.movieDetails.selected_showtime.price)
 
@@ -461,7 +462,10 @@ export default function SeatSection({
     //   - Max 10 seats: FIFO swap (drop oldest, add new)
     // ─────────────────────────────────────────────────────────────────────────
     const handleSeatClick = useCallback((seatLabel: string) => {
-        if (!user) return toast.error("Please login to book seats")
+        if (!user){
+            router.push('/login')
+            return toast.error("Please login to book seats")
+        }
 
         const booking = allBookings.find(b => b.seat_no === seatLabel)
         const blockedByOther =
@@ -476,7 +480,6 @@ export default function SeatSection({
                 return prev.filter(s => s !== seatLabel)        // deselect
             }
             if (prev.length >= 10) {
-                toast.error("Max 10 seats. Oldest selection removed.")
                 const next = [...prev.slice(-(10 - 1)), seatLabel]         // FIFO swap
                 pendingDesired.current = next
                 scheduleFlush()

@@ -3,10 +3,11 @@ import Image from "next/image";
 import svgStar from '@/public/Star.svg'
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelection } from "@/lib/slice/movieSlice";
+import { resetSelectedSession, resetSelection, setSelection } from "@/lib/slice/movieSlice";
 import { isFuture } from "@/utils/isFuture";
 import { RootState } from "@/lib/store";
 import Typography from "@/components/Typography";
+import { set } from "react-hook-form";
 
 export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] | null | undefined }) {
 
@@ -52,12 +53,16 @@ export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] 
                                                         <div
                                                             onClick={() => {
                                                                 if (!isFuture(showtime.show_time, theater.theaterdetails?.date)) return
-                                                                dispatch(setSelection({ theaterDetails: theater.theaterdetails, screenDetails: screen.screendetails, showtimes: screen.showtimes, selected_showtime: showtime }));
+                                                                if(selected_showtime?.id === showtime.id){
+                                                                    dispatch(resetSelection());
+                                                                }else{
+                                                                    dispatch(setSelection({ theaterDetails: theater.theaterdetails, screenDetails: screen.screendetails, showtimes: screen.showtimes, selected_showtime: showtime }));
+                                                                }
                                                             }}
                                                             key={showtime.id}
                                                             className={`text-xs md:text-sm lg:text-base border px-2 md:px-3 py-1 md:py-2 mb-4 rounded-md mr-3
                                                                     ${selected_showtime?.id === showtime.id
-                                                                    ? 'bg-[#1A2C50] text-white' 
+                                                                    ? 'bg-[#1A2C50] text-white cursor-pointer' 
                                                                     : isFuture(showtime.show_time, theater.theaterdetails?.date)
                                                                         ? 'cursor-pointer hover:bg-[#1A2C50] hover:text-white'
                                                                         : 'bg-gray-500 opacity-50 cursor-not-allowed'

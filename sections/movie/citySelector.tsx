@@ -67,7 +67,7 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
         <div ref={dropdownRef}>
             <div className="relative bg-white z-10 text-xl w-56 px-2 py-1">
                 {tap ? (
-                    <div className="z-10 bg-white absolute inset-0 w-full">
+                    <div className=" z-10 bg-white absolute inset-0 w-full">
                         <div className="bg-white border w-full px-4">
                             <div
                                 onClick={() => setTap(false)}
@@ -82,7 +82,7 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
                                     placeholder="Search city"
                                     className="py-1 px-2 w-full rounded-lg bg-white text-base outline-none"
                                 />
-                                <span className="flex justify-center items-center px-2">
+                                <span className="cursor-pointer flex justify-center items-center px-2">
                                     <IoSearch />
                                 </span>
                             </div>
@@ -96,7 +96,7 @@ export default function CitySelector({setCity}:{setCity:React.Dispatch<React.Set
                 ) : (
                     <div
                         onClick={() => setTap(true)}
-                        className="flex flex-row justify-start items-center gap-3 text-xl"
+                        className="flex flex-row justify-start items-center gap-3 text-xl cursor-pointer"
                     >
                         <IoLocationOutline className="text-2xl"/><Typography size="header-small">{selectedCity}</Typography> <FaAngleDown />
                     </div>

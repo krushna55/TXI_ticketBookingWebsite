@@ -87,6 +87,13 @@ export const movieSlice = createSlice({
     },
 
     resetSelection: () => initialState,
+      resetSelectedSession: (state) => {
+      state.selected_showtime = {
+        id: 0,
+        show_time: null,
+        price: null,
+      }
+    }
   },
 });
 
@@ -97,7 +104,8 @@ export const {
   setShowtimes,
   resetSelection,
   setSelectedShowtime,
-  setSelected_seats
+  setSelected_seats,
+  resetSelectedSession
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

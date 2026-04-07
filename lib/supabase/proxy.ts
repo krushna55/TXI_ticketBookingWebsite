@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { hasEnvVars } from "../utils";
 
-const protectedRoutes = ["/blog", "/profile", "/settings"];
+const protectedRoutes = [ "/profile", "/settings"];
 const publicRoutes = ["/login", "/register", "/forgotpassword"]; // Pages logged-in users shouldn't see
 
 export async function updateSession(request: NextRequest) {

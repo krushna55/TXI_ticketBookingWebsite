@@ -154,7 +154,7 @@ export default function Movie() {
 
                     <MovieDateList />
 
-                    <div className="my-5 min-h-10">
+                    <div className=" my-5 min-h-10">
                         <CitySelector setCity={setCity} />
                     </div>
 
@@ -206,8 +206,7 @@ export default function Movie() {
                         </>
                         :
                         <>
-
-                            <ShowtimeTheaterSection data={displayData} />
+                                                    <ShowtimeTheaterSection data={displayData} />
                         </>
                     }
 
