@@ -10,11 +10,12 @@ import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import logo from "../public/logo.png";
 import toast from "react-hot-toast";
+import { ConfirmationModel } from "./ConfirmationModel";
 
 export default function Navbar() {
   const supabase = createClient();
   const router = useRouter();
-
+  const [isOpenModel, setIsOpenModel] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -109,13 +110,23 @@ export default function Navbar() {
               </div>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-40 bg-white rounded shadow-md z-50">
+                <div className="absolute right-0 mt-3 w-30 bg-white rounded shadow-md z-50">
                   <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 w-full"
+                    // onClick={handleLogout}
+                    onClick={() => setIsOpenModel(!isOpenModel)}
+                    className="flex items-center  hover:bg-red-50 w-full"
                   >
-                    <LuLogOut /> Logout
+                    <span className="text-red-600 flex items-center gap-2 px-3 py-2">
+                      <LuLogOut /> Logout
+                    </span>
                   </button>
+                    <ConfirmationModel
+                     isOpen={isOpenModel}
+                      title="Logout" 
+                      message="Are you sure you want to logout?" 
+                      onConfirmation={handleLogout} 
+                      onCancle={() => setIsOpenModel(false)} 
+                      />
                 </div>
               )}
             </div>
@@ -157,13 +168,20 @@ export default function Navbar() {
               </div>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-40 bg-white rounded shadow-md z-50">
+                <div className="absolute right-0 mt-3 w-30 bg-white rounded shadow-md z-50">
                   <button
-                    onClick={handleLogout}
+                    onClick={()=> setIsOpenModel(!isOpenModel)}
                     className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 w-full"
                   >
                     <LuLogOut /> Logout
                   </button>
+                   <ConfirmationModel
+                     isOpen={isOpenModel}
+                      title="Logout" 
+                      message="Are you sure you want to logout?" 
+                      onConfirmation={handleLogout} 
+                      onCancle={() => setIsOpenModel(false)} 
+                      />
                 </div>
               )}
             </div>
@@ -213,12 +231,21 @@ export default function Navbar() {
                     </Link>
                   </div>
                 ) : (
+                  <>
                   <button
-                    onClick={handleLogout}
+                    onClick={() => setIsOpenModel(!isOpenModel)}
                     className="flex items-center gap-2 text-red-600"
-                  >
+                    >
                     <LuLogOut /> Logout
                   </button>
+                   <ConfirmationModel
+                     isOpen={isOpenModel}
+                      title="Logout" 
+                      message="Are you sure you want to logout?" 
+                      onConfirmation={handleLogout} 
+                      onCancle={() => setIsOpenModel(false)} 
+                      />
+                      </>
                 )}
               </div>
             </div>

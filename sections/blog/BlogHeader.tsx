@@ -66,7 +66,7 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
             setIsOpen(false)
             return
         } else {
-            updatedType = [...selectedType, value]
+            updatedType = [value]
             setSelectedType(updatedType)
             setIsOpen(false)
         }
@@ -77,9 +77,7 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
         setBlogs(data.flat().filter(Boolean) as blog[])
     };
     function handleDropDown() {
-
         setIsOpen(!isOpen)
-
     }
     const icon = isOpen ? <FaCaretUp /> : <FaCaretDown />
     const classfordrop = isOpen ? 'border-2 border-gray-200 shadow-md' : ''
@@ -93,7 +91,7 @@ export const BlogHeader = ({ setBlogs }: BlogHeaderProps) => {
 
             </div>
             <div className=" w-32 h-full sm:w-36 relative ">
-                <div onClick={handleDropDown} className="flex justify-between items-center gap-1  p-2 ">Sort By {icon}</div>
+                <div onClick={handleDropDown} className="flex justify-between items-center gap-1  p-2 border-2 border-white">Sort By {icon}</div>
                 <div className={`${classfordrop} top-0 absolute w-full   bg-white `}>
                     {isOpen &&
                         <div className="">

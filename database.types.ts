@@ -47,6 +47,32 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_likes: {
+        Row: {
+          blog_id: number
+          created_at: string | null
+          user_id: string
+        }
+        Insert: {
+          blog_id: number
+          created_at?: string | null
+          user_id: string
+        }
+        Update: {
+          blog_id?: number
+          created_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_likes_blog_id_fkey"
+            columns: ["blog_id"]
+            isOneToOne: false
+            referencedRelation: "blog"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           booking_status: Database["public"]["Enums"]["booking_status"] | null
@@ -527,7 +553,21 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_status: {
+        Row: {
+          email: string | null
+          is_verified: boolean | null
+        }
+        Insert: {
+          email?: string | null
+          is_verified?: never
+        }
+        Update: {
+          email?: string | null
+          is_verified?: never
+        }
+        Relationships: []
+      }
     }
     Functions: {
       delete_expired_hold_reservations: { Args: never; Returns: undefined }

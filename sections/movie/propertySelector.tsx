@@ -60,6 +60,7 @@ export default function PropertySelector({ handleCheapest, handleNearest, handle
                                 } else {
                                     handleNearest(true)
                                     setSelectedOption('Nearest')
+                                    setOpen(false)
                                 }
                             }
                             }
@@ -80,6 +81,7 @@ export default function PropertySelector({ handleCheapest, handleNearest, handle
                                 } else {
                                     handleCheapest(true)
                                     setSelectedOption('Cheapest')
+                                    setOpen(false)
                                 }
 
                             }
@@ -101,6 +103,7 @@ export default function PropertySelector({ handleCheapest, handleNearest, handle
                                 } else {
                                     handleAlphabatic(true)
                                     setSelectedOption('Alphabatic')
+                                    setOpen(false)
                                 }
                             }
                             }

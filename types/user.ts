@@ -14,4 +14,5 @@ export interface ForgetPassData {
 }
 export interface ResettPassData {
     Password: string
+    confirmPassword: string
 }

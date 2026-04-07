@@ -38,7 +38,6 @@ export async function RegisterUser(user: signupdata) {
         return
     }
     toast.success("Account created successfully.Please check your email for verification link")
-    redirect("/")
     return data
 }
 export async function LoginUser(user: loginData) {
@@ -55,7 +54,7 @@ export async function LoginUser(user: loginData) {
 }
 export async function ForgetPassword(user: ForgetPassData) {
     const { data, error } = await supabase.auth.resetPasswordForEmail(user.Email, {
-        redirectTo: 'http://localhost:3000/updatepassword',
+        redirectTo: `${window.location.origin}/updatepassword`,
     })
     if (error) {
         toast.error(error.message)
@@ -69,8 +68,9 @@ export async function ResetPassword(user: ResettPassData) {
 
     if (error) {
         toast.error(error.message)
+        return error;
     }
     toast.success('Password updated successfully')
-    redirect("/")
+    redirect('/login')
     return data
 }

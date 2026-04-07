@@ -53,7 +53,7 @@ export default function MovieDateList() {
                                 ${state === 'disable' ? 'opacity-40 pointer-events-none' : ''}
                             `}
                         >
-                            <HandleDate index={index} />
+                            <HandleDate state={btnid===index} index={index} />
                         </div>
                     </SwiperSlide>
                 ))}

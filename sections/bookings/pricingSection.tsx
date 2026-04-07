@@ -16,9 +16,10 @@ type selectedtheater = {
 export default function PricingSection({ selected_seat, selectedtheater }: { selected_seat: string[], selectedtheater: selectedtheater }) {
     const router = useRouter()
     const dispatch = useDispatch()
+    const [isOpenModel,setisOpenModel] = useState(false)
     const [isChecking, setIsChecking] = useState(false)
     const total = selected_seat.length * (selectedtheater.selected_showtime.price ?? 0)
-    
+
     // Check if all selected seats are still available
     const checkSeatsAvailability = useCallback(async () => {
         setIsChecking(true)
@@ -36,8 +37,8 @@ export default function PricingSection({ selected_seat, selectedtheater }: { sel
             const { data: { user } } = await supabase.auth.getUser()
 
             // Check if any seat is unavailable (paid or held by someone else)
-            const unavailableSeats = bookings?.filter(b => 
-                b.reservation_status === 'paid' || 
+            const unavailableSeats = bookings?.filter(b =>
+                b.reservation_status === 'paid' ||
                 (b.reservation_status === 'hold' && b.user_id !== user?.id)
             ) || []
 
@@ -116,6 +117,13 @@ export default function PricingSection({ selected_seat, selectedtheater }: { sel
                     >
                         Back
                     </button>
+                    {/* <ConfirmationModel
+                        isOpen={isOpenModel}
+                        title=""
+                        message="Are you sure you want to logout?"
+                        onConfirmation={handleLogout}
+                        onCancle={() => setIsOpenModel(false)}
+                    /> */}
 
                     {/* Confirm Button */}
                     <button

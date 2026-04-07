@@ -10,6 +10,8 @@ import { useFetchMovieByIdQuery } from "@/lib/slice/movieSupabaseApi"
 import { resetSelection } from "@/lib/slice/movieSlice"
 import { createClient } from "@/lib/supabase/client"
 import Image from "next/image"
+import Typography from "@/components/Typography"
+import { ConfirmationModel } from "@/components/ConfirmationModel"
 
 type Discount = {
     id: number
@@ -38,7 +40,7 @@ export default function ConfirmPaymentPage() {
     const serviceFee = 30
     const totalAmount = selected_seats.length * (selected_showtime.price ?? 0)
     const discountAmount = appliedDiscount
-        ? Math.floor((totalAmount + serviceFee)* (appliedDiscount.discount_pct ?? 0) / 100)
+        ? Math.floor((totalAmount + serviceFee) * (appliedDiscount.discount_pct ?? 0) / 100)
         : 0
     const grandTotal = totalAmount + serviceFee - discountAmount
 
@@ -99,8 +101,8 @@ export default function ConfirmPaymentPage() {
     }
 
     function handleGoBack() {
-        dispatch(resetSelection())
-        // router.back()
+        // dispatch(resetSelection())
+        router.back()
     }
 
     // if (selected_seats.length === 0) {
@@ -110,47 +112,56 @@ export default function ConfirmPaymentPage() {
 
     return (
         <div className="max-w-[1400px] mx-auto px-4 py-6">
-            <h1 className="text-2xl font-bold mb-1">Confirm Payment</h1>
-            <p className="text-gray-400 text-sm mb-6">Confirm payment details for your selected seats</p>
+            <Typography size="header-medium">
+                Confirm Payment
+            </Typography>
+            <Typography size="body-small" color="font_shade_600" className="my-2 md:my-5">
+                Confirm payment details for your selected seats
+            </Typography>
 
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex  flex-col md:flex-row gap-6 mt-10 md:mt-20">
                 {/* LEFT */}
-                <div className="md:min-w-96">
-                    <h2 className="text-sm font-semibold text-gray-500 mb-4">Schedule Details</h2>
+                <div className="w-1/2 md:min-w-96">
+                    <Typography size="header-xsmall" className="text-sm font-semibold text-gray-500 mb-4">Schedule Details</Typography>
                     <div className="space-y-4 text-sm">
                         <div>
                             <p className="text-gray-400">Movie</p>
-                            <p className="font-bold uppercase">{data?.name}</p>
+                            <Typography size="header-xsmall" className="font-bold uppercase my-2">{data?.name}</Typography>
                         </div>
+                        <div className="border bg-black" />
                         <div>
                             <p className="text-gray-400">Theater</p>
-                            <p className="font-bold uppercase">{theaterDetails.name}</p>
-                            <p className="text-gray-400 text-xs">{theaterDetails.complete_address}</p>
+                            <Typography size="header-xsmall" className="font-bold uppercase my-2">{theaterDetails.name}</Typography>
+                            <Typography size="header-xsmall" className="font-bold uppercase my-2">{theaterDetails.complete_address}</Typography>
                         </div>
+                        <div className="border bg-black" />
                         <div>
                             <p className="text-gray-400">Date</p>
-                            <p className="font-semibold uppercase">{Movie_date}</p>
+                            <Typography size="header-xsmall" className="font-bold uppercase my-2">{Movie_date}</Typography>
                         </div>
+                        <div className="border bg-black" />
                         <div className="flex gap-10">
                             <div>
                                 <p className="text-gray-400">Screen</p>
-                                <p className="font-semibold">{screenDetails.name}</p>
+                                <Typography size="header-xsmall" className=" my-2">{screenDetails.name}</Typography>
                             </div>
                             <div>
                                 <p className="text-gray-400">Type</p>
-                                <p className="font-semibold">{screenDetails.type ?? 'REGULAR 2D'}</p>
+                                <Typography size="header-xsmall" className=" my-2">{screenDetails.type ?? 'REGULAR 2D'}</Typography>
                             </div>
                             <div>
                                 <p className="text-gray-400">Time</p>
-                                <p className="font-semibold">{selected_showtime.show_time?.replace(':00', '')}</p>
+                                <Typography size="header-xsmall" className=" my-2">{selected_showtime.show_time?.replace(':00', '')}</Typography>
                             </div>
                         </div>
+                        <div className="border bg-black" />
                         <div>
                             <p className="text-gray-400">Seats ({selected_seats.length})</p>
-                            <p className="font-semibold">{selected_seats.join(', ')}</p>
+                            <Typography size="header-xsmall" className=" my-2">{selected_seats.join(', ')}</Typography>
                         </div>
+                        <div className="border bg-black" />
                         <div>
-                            <p className="text-gray-400">Brand</p>
+                            <p className="text-gray-400 my-1">Brand</p>
                             <div className="flex items-center gap-2">
                                 {theaterDetails.brand_logo && (
                                     <Image src={theaterDetails.brand_logo} alt={theaterDetails.brand_name ?? ''}
@@ -167,16 +178,16 @@ export default function ConfirmPaymentPage() {
                 </div>
 
                 {/* RIGHT */}
-                <div className="w-full md:w-[340px] border rounded-lg p-5 space-y-4 h-fit">
-                    <h2 className="font-bold text-base">Order Summary</h2>
+                <div className="w-full md:max-w-[540px] space-y-5 border rounded-lg p-5 h-fit shadow-lg">
+                    <Typography size="header-small" >Order Summary</Typography>
                     <div>
-                        <p className="text-xs text-gray-400 mb-2">Transaction Details</p>
+                        <Typography size="body-small" className="mb-2">Transaction Details</Typography>
                         <div className="flex justify-between text-sm">
-                            <span>{screenDetails.type ?? 'REGULAR'} SEAT</span>
-                            <span className="flex items-center gap-2">
+                            <Typography  size="body-small">{screenDetails.type ?? 'REGULAR'} SEAT</Typography>
+                            <Typography  size="body-small"className="flex items-center gap-2">
                                 ₹{(selected_showtime.price ?? 0).toLocaleString()}
                                 <span className="text-gray-400">X{selected_seats.length}</span>
-                            </span>
+                            </Typography>
                         </div>
                         <div className="flex justify-between text-sm mt-1 text-gray-500">
                             <span>Service Fee</span>
@@ -247,11 +258,11 @@ export default function ConfirmPaymentPage() {
                 </div>
             </div>
 
-            {showCancelModal && (
+            {/* {showCancelModal && (
                 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 w-80 shadow-xl">
                         <div className="flex justify-between items-center mb-2">
-                            <h3 className="font-bold">Go Back?</h3>
+                            <h3 className="font-bold"></h3>
                             <button onClick={() => setShowCancelModal(false)}>✕</button>
                         </div>
                         <p className="text-sm text-gray-500 mb-6">
@@ -263,7 +274,15 @@ export default function ConfirmPaymentPage() {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
+
+            <ConfirmationModel
+            isOpen={showCancelModal}
+            title="Go Back?"
+            message="Click back again to go back to seat selection"
+            onConfirmation={handleGoBack}
+            onCancle={() => setShowCancelModal(false)}
+            />
         </div>
     )
 }

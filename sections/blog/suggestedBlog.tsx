@@ -19,7 +19,7 @@ export default function SuggestedBlog() {
     }, [])
 
     const renderedList = suggestData?.map((obj) => {
-        return <BlogFrame obj={obj} />
+        return <BlogFrame key={obj.id} obj={obj} />
     })
 
     return (
