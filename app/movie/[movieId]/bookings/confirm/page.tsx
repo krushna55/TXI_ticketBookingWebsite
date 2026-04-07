@@ -1,7 +1,7 @@
 'use client'
 import { useSelector, useDispatch } from "react-redux"
 import { RootState } from "@/lib/store"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 import { FaArrowLeft, FaTag } from "react-icons/fa6"
@@ -12,6 +12,7 @@ import { createClient } from "@/lib/supabase/client"
 import Image from "next/image"
 import Typography from "@/components/Typography"
 import { ConfirmationModel } from "@/components/ConfirmationModel"
+import Link from "next/link"
 
 type Discount = {
     id: number
@@ -36,6 +37,13 @@ export default function ConfirmPaymentPage() {
         (state: RootState) => state.movieDetails
     )
     const { data } = useFetchMovieByIdQuery(movie_id)
+    
+    useEffect(() => {
+        if (!movie_id || !selected_showtime || !screenDetails || !theaterDetails) {
+            // router.push('../')
+            router.push('/movie')
+        }
+    }, [movie_id, selected_showtime, screenDetails, theaterDetails, router])
 
     const serviceFee = 30
     const totalAmount = selected_seats.length * (selected_showtime.price ?? 0)
@@ -93,7 +101,7 @@ export default function ConfirmPaymentPage() {
                 discount_pct: appliedDiscount?.discount_pct ?? null,
                 discount_amount: discountAmount
             })
-            dispatch(resetSelection())
+            setLoading(false)
         } catch (e) {
             toast.error('Payment failed. Try again.')
             setLoading(false)
@@ -109,6 +117,7 @@ export default function ConfirmPaymentPage() {
     //     router.push('../bookings')
     //     return null
     // }
+    
 
     return (
         <div className="max-w-[1400px] mx-auto px-4 py-6">
@@ -119,9 +128,9 @@ export default function ConfirmPaymentPage() {
                 Confirm payment details for your selected seats
             </Typography>
 
-            <div className="flex  flex-col md:flex-row gap-6 mt-10 md:mt-20">
+            <div className="flex  flex-col justify-between md:flex-row gap-6 mt-10 md:mt-20">
                 {/* LEFT */}
-                <div className="w-1/2 md:min-w-96">
+                <div className="w-fit md:min-w-96">
                     <Typography size="header-xsmall" className="text-sm font-semibold text-gray-500 mb-4">Schedule Details</Typography>
                     <div className="space-y-4 text-sm">
                         <div>
@@ -178,20 +187,23 @@ export default function ConfirmPaymentPage() {
                 </div>
 
                 {/* RIGHT */}
-                <div className="w-full md:max-w-[540px] space-y-5 border rounded-lg p-5 h-fit shadow-lg">
+                <div className="w-full md:max-w-[600px] space-y-5 border rounded-lg p-5 h-fit shadow-lg">
                     <Typography size="header-small" >Order Summary</Typography>
                     <div>
                         <Typography size="body-small" className="mb-2">Transaction Details</Typography>
                         <div className="flex justify-between text-sm">
-                            <Typography  size="body-small">{screenDetails.type ?? 'REGULAR'} SEAT</Typography>
-                            <Typography  size="body-small"className="flex items-center gap-2">
-                                ₹{(selected_showtime.price ?? 0).toLocaleString()}
-                                <span className="text-gray-400">X{selected_seats.length}</span>
+                            <Typography size="body-small">{screenDetails.type ?? 'REGULAR'} SEAT</Typography>
+                            <Typography size="body-small" className="flex items-center gap-2">
+                                ₹{(selected_showtime.price ?? 0).toLocaleString()} X {selected_seats.length} = {totalAmount}
                             </Typography>
                         </div>
                         <div className="flex justify-between text-sm mt-1 text-gray-500">
                             <span>Service Fee</span>
                             <span>₹{serviceFee.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between font-bold text-sm mt-2">
+                            <span>Sub Total</span>
+                            <span>₹{(totalAmount + serviceFee).toLocaleString()}</span>
                         </div>
                     </div>
 
@@ -258,30 +270,12 @@ export default function ConfirmPaymentPage() {
                 </div>
             </div>
 
-            {/* {showCancelModal && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 w-80 shadow-xl">
-                        <div className="flex justify-between items-center mb-2">
-                            <h3 className="font-bold"></h3>
-                            <button onClick={() => setShowCancelModal(false)}>✕</button>
-                        </div>
-                        <p className="text-sm text-gray-500 mb-6">
-                            Your selected seats will be released and you will need to select again.
-                        </p>
-                        <div className="flex justify-end gap-3">
-                            <button onClick={() => setShowCancelModal(false)} className="border px-4 py-2 rounded text-sm">Stay</button>
-                            <button onClick={handleGoBack} className="bg-royal text-white px-4 py-2 rounded text-sm">Go Back</button>
-                        </div>
-                    </div>
-                </div>
-            )} */}
-
             <ConfirmationModel
-            isOpen={showCancelModal}
-            title="Go Back?"
-            message="Click back again to go back to seat selection"
-            onConfirmation={handleGoBack}
-            onCancle={() => setShowCancelModal(false)}
+                isOpen={showCancelModal}
+                title="Go Back?"
+                message="Click back again to go back to seat selection"
+                onConfirmation={handleGoBack}
+                onCancle={() => setShowCancelModal(false)}
             />
         </div>
     )

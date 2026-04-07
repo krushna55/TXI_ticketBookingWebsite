@@ -158,12 +158,12 @@ export default function Movie() {
                         <CitySelector setCity={setCity} />
                     </div>
 
-                    <div className="border flex rounded-lg my-3">
+                    <div className="border flex rounded-md my-3">
                         <input
                             value={filters.query}
                             onChange={e => setFilters(prev => ({ ...prev, query: e.target.value }))}
                             placeholder="Search theater"
-                            className="bg-white py-1 px-2 w-full outline-none"
+                            className="bg-white py-1 px-2 rounded-lg w-full outline-none"
                         />
                         <IoMdSearch className="text-2xl m-auto mx-2" />
                     </div>

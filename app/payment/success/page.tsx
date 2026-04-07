@@ -9,7 +9,6 @@ export default function SuccessPage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // ✅ clear all redux state when payment succeeds
         dispatch(resetSelection())
     }, [])
 

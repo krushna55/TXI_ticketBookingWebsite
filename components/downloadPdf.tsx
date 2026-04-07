@@ -65,12 +65,11 @@ export const downloadTicketPdf = async (id: string) => {
     return
   }
 
-  // Generate QR
   const qr = await QRCode.toDataURL(
     `https://txi-ticket-booking-website.vercel.app/tickets/${data.id}`
   )
 
-  // Generate PDF
+ 
   const bookingData: BookingDetail = {
     ...data,
     created_at: data.created_at || new Date().toISOString(),

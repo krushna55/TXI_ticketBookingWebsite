@@ -99,7 +99,8 @@ Deno.serve(async (req) => {
 
     if (bookingError) throw new Error(bookingError.message);
 
-    const appUrl = Deno.env.get("APP_URL") ?? "http://localhost:3000";
+    const appUrl = "https://txi-ticket-booking-website.vercel.app" ;
+    // const appUrl = "http://localhost:3000";
 
     // build stripe discounts if coupon applied
     const stripeDiscounts: { coupon: string }[] = [];

@@ -19,13 +19,15 @@ export default function BookingPage() {
     const [isopen, setIsopen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const [selected_seat, setselected_seat] = useState<string[]>([])
-    
+
+
     const state = useSelector((state: RootState) => ({
         showtimes: state.movieDetails.showtimes,
         selected_showtime: state.movieDetails.selected_showtime,
         screenDetails: state.movieDetails.screenDetails,
         theater_details: state.movieDetails.theaterDetails
     }), shallowEqual)
+
     // const visiblity = isFuture(state.selected_showtime.show_time, state.theater_details.date)
     // if (!visiblity) {
     //     router.push('./')
@@ -42,15 +44,11 @@ export default function BookingPage() {
         return () => document.removeEventListener('mousedown', handler)
     }, [])
 
-    // if (!state.selected_showtime || state.selected_showtime.id === 0) {
-    //     return (
-    //         <div className="max-w-[1400px] mx-auto p-10 text-center">
-    //             <div className="mb-4 text-xl">Please select a theater and showtime first.</div>
-    //             <Link href="/" className="p-3 bg-royal text-white rounded-md">Back to Home</Link>
-    //         </div>
-    //     )
-    // }
 
+    if (!state.selected_showtime || state.selected_showtime.id === 0) {
+        // router.push('../')
+        router.push('/movie')
+    }
     return (
         <div className="max-w-[1400px] mx-auto px-4">
             <div className="mt-5 mb-10">

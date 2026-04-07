@@ -47,9 +47,9 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.redirect(redirectUrl);
     }
   }
-  // if (publicRoutes.includes(pathname) && session) {
-  //   return NextResponse.redirect(new URL("/dashboard", request.url));
-  // }
+  if (publicRoutes.includes(pathname) && session) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   return supabaseResponse;
 }

@@ -54,7 +54,7 @@ export default function HeroSlider() {
                         <Image src={banner?.movie_img ?? ''} loading="lazy" alt="spider-movie" width={200} height={400} className="aspect-[3/4] object-cover overflow-none w-[500px] rounded-md  " />
                        
                         <div className="min-h-10 md:min-h-14 lg:min-h-20 my-2">
-                          <Typography size="header-medium" className="line-clamp-2">{banner?.name}</Typography>
+                          <Typography size="header-medium" className="line-clamp-2 lg:px-10">{banner?.name}</Typography>
                         </div>
                         <div className="flex h-full justify-center space-x-2 my-2">
                           <div className="px-2 py-0.5 rounded-[4px] text-white bg-[linear-gradient(to_right,#F2C46F,#C6943F)] h-fit  text-[8px] md:text-sm xl:text-md">XXI</div>

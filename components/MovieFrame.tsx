@@ -12,8 +12,8 @@ export default function MovieFrame({ movie }: { movie: movies }) {
                     {/* <div className="aspect-1/19"> */}
                     <Image src={movie?.movie_img ?? ''} alt="spider-movie" width={200} height={400} className="aspect-[3/4] object-cover overflow-none w-[90%] sm:w-[500px] rounded-md  " />
                     {/* </div> */}
-                    <span className="sm:min-h-16 lg:min-h-20 my-2">
-                        <Typography size="header-small" className="line-clamp-2 px-2">{movie?.name}</Typography>
+                    <span className="flex justify-center sm:min-h-16 lg:min-h-16 my-2 w-[80%]">
+                        <Typography size="header-small" className="line-clamp-2 ">{movie?.name}</Typography>
                     </span>
                     <div className="flex h-full justify-center space-x-2 my-2">
                         <div className="px-2 py-0.5 rounded-[4px] text-white bg-[linear-gradient(to_right,#F2C46F,#C6943F)] h-fit  text-[8px] md:text-sm xl:text-md">XXI</div>

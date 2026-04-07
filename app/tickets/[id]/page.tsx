@@ -159,7 +159,7 @@ export default function TransactionDetailPage() {
                         {/* <Link href={`${booking.id}/ticket`} className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
                             <FaDownload className="text-black" />
                         </Link> */}
-                        <div onClick={()=> downloadTicketPdf(params?.id as string)} className="bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
+                        <div onClick={()=> downloadTicketPdf(params?.id as string)} className="cursor-pointer bg-black/10 hover:bg-black/20 p-3 rounded-full transition">
                             <FaDownload className="text-black" />
                         </div>
                     </div>
