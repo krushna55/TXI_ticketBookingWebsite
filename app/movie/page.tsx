@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import Link from "next/link"
 import Image from "next/image"
 import Typography from "@/components/Typography"
+import { NoDataFound } from "@/components/NoDataFound"
 
 export default function MoviePage() {
     const { data: data = [], isError, isLoading } = useFetchMoiesQuery()
@@ -17,6 +18,9 @@ export default function MoviePage() {
     }, [])
     if (isError) {
         return <div>Something Went Wrong...</div>
+    }
+    if(data.length === 0) {
+        return <NoDataFound message="Sorry! No Movies Found" />
     }
 
     return (
@@ -34,20 +38,18 @@ export default function MoviePage() {
                         {
                             Array(4).fill(0).map((_, id) => {
                                 return (
-                                    <>
-                                        <Skelaton key={id} height="400px" className="w-full" />
-                                    </>
+                                    <div key={id} >
+                                        <Skelaton height="400px" className="w-full" />
+                                    </div>
                                 )
                             })
                         }
                     </div>
                     :
                     <>
-
                         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4">
-
                             {
-                                data.map((movie) => {
+                                data?.map((movie) => {
                                     return <Link href={`./movie/${movie.id}`} key={movie.id}>
                                         <div className="justify-center items-center flex flex-col sm:px-2 pt-2 pb-5">
                                             {/* <div className="aspect-1/19"> */}

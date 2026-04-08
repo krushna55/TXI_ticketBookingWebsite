@@ -23,10 +23,13 @@ export default function MovieDateList() {
         const data = getDate(index)
         dispatch(setMovieDate(`${data.year}-${data.month}-${data["Date"]}`))
     }, [dispatch])
-
+    
     return (
         <div className="w-full flex items-center gap-2 px-2">
-            <button className="custom-prev shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-white text-gray-600 hover:bg-[#383782] hover:text-white transition-colors border border-gray-200 shadow-sm">
+            <button className="custom-prev shrink-0
+             flex items-center justify-center w-7 h-7 rounded-full bg-white text-gray-600 
+            hover:bg-[#383782] hover:text-white transition-colors border border-gray-200 shadow-sm
+            disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed">
                 <FaChevronLeft size={12} />
             </button>
             <Swiper
@@ -40,7 +43,7 @@ export default function MovieDateList() {
                 {btnlist.map((state, index) => (
                     <SwiperSlide key={index} className="!w-fit p-2">
                         <div
-                            onClick={() => { 
+                            onClick={() => {
                                 state !== 'disable' && handledateindex(index)
                             }}
                             className={`
@@ -50,15 +53,17 @@ export default function MovieDateList() {
                                     ? 'bg-[#383782] text-white border-[#383782]'
                                     : 'border-gray-400 text-gray-600 hover:bg-[#282764] hover:text-white'
                                 }
-                                ${state === 'disable' ? 'opacity-40 pointer-events-none' : ''}
+                                ${state === 'disable' ? 'opacity-40 pointer-events-none cursor-not-allowed' : ''}
                             `}
                         >
-                            <HandleDate state={btnid===index} index={index} />
+                            <HandleDate state={btnid === index} index={index} />
                         </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button className="custom-next shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-white text-gray-600 hover:bg-[#383782] hover:text-white transition-colors border border-gray-200 shadow-sm">
+            <button className="custom-next shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-white text-gray-600 
+            hover:bg-[#383782] hover:text-white transition-colors border border-gray-200 shadow-sm
+            disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed">
                 <FaChevronRight size={12} />
             </button>
         </div>

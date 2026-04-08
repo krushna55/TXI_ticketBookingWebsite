@@ -74,7 +74,6 @@ export const downloadTicketPdf = async (id: string) => {
     ...data,
     created_at: data.created_at || new Date().toISOString(),
   } as BookingDetail
-
   const blob = await pdf(
     <TicketPDF booking={bookingData} qrCodeData={qr} />
   ).toBlob()

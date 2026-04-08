@@ -34,10 +34,10 @@ export async function fetchMovies() {
     }
     return data
 }
-export async function fetchRecommandedBlog(start = 0, end = 10, id: number) {
+export async function fetchRecommandedBlog(start = 0, end = 10, id = '0' ) {
     const supabase = await createClient()
 
-    const { data, error } = await supabase.from('blog').select("*").range(start, end).neq('id', id);
+    const { data, error } = await supabase.from('blog').select("*").range(start, end).neq('id', Number(id));
     if (error) {
         console.error('error while fetching the blog', error);
     }

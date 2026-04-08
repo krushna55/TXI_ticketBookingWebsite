@@ -186,8 +186,12 @@ export default function TransactionDetailPage() {
                     <span>₹{serviceFee.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Discount</span>
-                    <span>₹{booking.discount_amount?.toLocaleString() ?? '0'}</span>
+                    <span className="">Sub total</span>
+                    <span>₹{(seatTotal + serviceFee).toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Discount ({booking.discount_code})</span>
+                    <span>- ₹{booking.discount_amount?.toLocaleString() ?? '0'}</span>
                 </div>
                 <hr />
                 <div className="flex justify-between font-bold text-sm">

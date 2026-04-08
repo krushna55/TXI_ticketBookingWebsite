@@ -5,7 +5,7 @@ import Link from "next/link";
 import { MenuIcon, X } from "lucide-react";
 import { LuLogOut } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import logo from "../public/logo.png";
@@ -19,7 +19,7 @@ export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const pathName = usePathname()
   const desktopRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
 
@@ -133,7 +133,7 @@ export default function Navbar() {
           ) : (
             <div className="flex gap-5 items-center">
               <Link href="/register">Register</Link>
-              <Link href="/login" className="bg-royal px-3 py-1 rounded-md">
+              <Link href={`/login?redirect=${pathName}`} className="bg-royal px-3 py-1 rounded-md">
                 <span className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent">
                   Login
                 </span>
@@ -186,7 +186,7 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link href="/login" className="bg-royal px-3 py-1 rounded-md">
+            <Link href={`/login?redirect=${pathName}`} className="bg-royal px-3 py-1 rounded-md">
               <span className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent">
                 Login
               </span>
@@ -228,7 +228,7 @@ export default function Navbar() {
                     <Link href="/register" className=" px-3 py-1 border rounded-md hover:bg-font_shade_200" onClick={() => setIsMenuOpen(false)}>
                       Register
                     </Link>
-                    <Link href="/login" className="bg-royal px-3 py-1 rounded-md">
+                    <Link href={`/login?redirect=${pathName}`} className="bg-royal px-3 py-1 rounded-md">
                       <span className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent">
                         Login
                       </span>

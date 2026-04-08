@@ -209,7 +209,7 @@ import { RootState } from "@/lib/store"
 import toast from "react-hot-toast"
 import { Tables } from "@/database.types"
 import { RealtimePostgresChangesPayload, User } from "@supabase/supabase-js"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 type Booking = Tables<'seat_reservations'>
 
@@ -237,9 +237,6 @@ function computeDiff(synced: string[], desired: string[]) {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SeatSection
-// ─────────────────────────────────────────────────────────────────────────────
 export default function SeatSection({
     showtimeId,
     selected_seat,
@@ -257,7 +254,8 @@ export default function SeatSection({
     const router = useRouter()
     const screenDetails = useSelector((state: RootState) => state.movieDetails.screenDetails)
     const currentPrice = useSelector((state: RootState) => state.movieDetails.selected_showtime.price)
-
+    const movieid = useSelector((state:RootState)=>state.movieDetails.movie_id)
+    const pathName = usePathname()
     // ─────────────────────────────────────────────────────────────────────────
     // Two refs — the engine of the sync system
     //
@@ -463,7 +461,7 @@ export default function SeatSection({
     // ─────────────────────────────────────────────────────────────────────────
     const handleSeatClick = useCallback((seatLabel: string) => {
         if (!user){
-            router.push('/login')
+            router.push(`/login?redirect=${pathName}`)
             return toast.error("Please login to book seats")
         }
 

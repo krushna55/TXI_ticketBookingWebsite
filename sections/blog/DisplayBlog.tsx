@@ -138,7 +138,7 @@ import { fetchBlogById, fetchRecommandedBlog } from "@/api/blog/blog";
 import Typography from "@/components/Typography";
 import DateConverter from "@/utils/dateConverter";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Instagram from '../../public/insta.svg';
 import Facebook from '../../public/facebook.svg';
@@ -160,7 +160,8 @@ export const DisplayBlog = () => {
     const [isLiked, setIsLiked] = useState<boolean>(false);
     const [isLoading, setLoading] = useState<boolean>(true);
     const [islikeLoading, setlikeLoading] = useState<boolean>(false);
-
+    const pathName = usePathname()
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             if (!blogid) return;
@@ -194,7 +195,8 @@ export const DisplayBlog = () => {
         const { data: { user } } = await supabase.auth.getUser();
         
         if (!user) {
-            toast.error("Please log in to like this post!");
+            toast.error("Please login to like the blog.");  
+            router.push(`/login?redirect=${pathName}`);
             return;
         }
 
@@ -296,7 +298,7 @@ export const DisplayBlog = () => {
                             className={`flex gap-4 border rounded-xl px-4 py-2 items-center transition-all ${isLiked ? 'border-royal text-royal bg-royal/5' : 'border-black hover:scale-95'}`}
                         >
                             {isLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
-                            <div className="min-w-[20px] flex justify-center">
+                            <div className="min-w-[20px] min-h-6 flex justify-center">
                                 {islikeLoading ? <FiLoader className="animate-spin" /> : changedLikes}
                             </div>
                         </button>
@@ -307,7 +309,7 @@ export const DisplayBlog = () => {
             <div className="w-full flex justify-center my-3 md:my-10">
                 <Typography size="header-medium">See Other Articles</Typography>
             </div>
-            <SuggestedBlog />
+            <SuggestedBlog nId={blogid}/>
         </>
     );
 };

@@ -18,6 +18,7 @@ import { useUserLocation } from "@/utils/useUserLocation"
 import LocationBanner from "@/utils/LocationBanner"
 import Skelaton from "@/components/skelaton"
 import { resetSelection } from "@/lib/slice/movieSlice"
+import { NoDataFound } from "@/components/NoDataFound"
 
 export default function Movie() {
     const params = useParams()
@@ -26,7 +27,7 @@ export default function Movie() {
 
     useEffect(() => {
         dispatch(resetSelection())
-    },[])
+    }, [])
     const [cityvalue, setCity] = useState<number>(1)
     const [filters, setFilters] = useState({
         query: '',
@@ -46,7 +47,7 @@ export default function Movie() {
     } = useUserLocation(true)
 
     const movie_date = useSelector((state: RootState) => state.movieDetails.Movie_date)
-    console.log(movie_date)
+   
 
     // ✅ Query fires immediately (no location skip)
     // RTK Query auto-refetches when lat/lng args change as location arrives
@@ -104,7 +105,6 @@ export default function Movie() {
             }
             result = [...result].sort((a, b) => minPrice(a) - minPrice(b))
         }
-        console.log(result)
         return result
     }, [data, filters, movie_date])
 
@@ -207,7 +207,11 @@ export default function Movie() {
                         </>
                         :
                         <>
-                            <ShowtimeTheaterSection data={displayData} />
+                            {!data || data?.length < 1 ?
+                                <NoDataFound message="Sorry! No showtime found" />
+                                :
+                                <ShowtimeTheaterSection data={displayData} />
+                            }
                         </>
                     }
 

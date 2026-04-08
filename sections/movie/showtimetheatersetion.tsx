@@ -8,15 +8,15 @@ import { isFuture } from "@/utils/isFuture";
 import { RootState } from "@/lib/store";
 import Typography from "@/components/Typography";
 import { set } from "react-hook-form";
+import { NoDataFound } from "@/components/NoDataFound";
 
 export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] | null | undefined }) {
 
     const dispatch = useDispatch()
     const selected_showtime = useSelector((state: RootState) => state.movieDetails.selected_showtime)
     
-    if (!data || data?.length < 1) {
-        return <p>No movie found</p>
-    }
+
+
     return (
         <div className="mt-5 md:mt-10">
             {data?.map((theater) => {
@@ -39,7 +39,7 @@ export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] 
                                 return (
                                     <div key={screen.screendetails.id}>
                                         <div className="flex justify-between">
-                                            <Typography size="header-small"  color="font_shade_600">
+                                            <Typography size="header-small" color="font_shade_600">
                                                 {screen.screendetails?.type}
                                             </Typography>
                                             <Typography size="body-small" color="font_shade_600">
@@ -53,16 +53,17 @@ export default function ShowtimeTheaterSection({ data }: { data: TheaterEntry[] 
                                                         <div
                                                             onClick={() => {
                                                                 if (!isFuture(showtime.show_time, theater.theaterdetails?.date)) return
-                                                                if(selected_showtime?.id === showtime.id){
+                                                                if (selected_showtime?.id === showtime.id) {
                                                                     dispatch(resetSelection());
-                                                                }else{
+                                                                    console.log('heyy', showtime.show_time, theater.theaterdetails?.date)
+                                                                } else {
                                                                     dispatch(setSelection({ theaterDetails: theater.theaterdetails, screenDetails: screen.screendetails, showtimes: screen.showtimes, selected_showtime: showtime }));
                                                                 }
                                                             }}
                                                             key={showtime.id}
                                                             className={`text-xs md:text-sm lg:text-base border px-2 md:px-3 py-1 md:py-2 mb-4 rounded-md mr-3
                                                                     ${selected_showtime?.id === showtime.id
-                                                                    ? 'bg-[#1A2C50] text-white cursor-pointer' 
+                                                                    ? 'bg-[#1A2C50] text-white cursor-pointer'
                                                                     : isFuture(showtime.show_time, theater.theaterdetails?.date)
                                                                         ? 'cursor-pointer hover:bg-[#1A2C50] hover:text-white'
                                                                         : 'bg-gray-500 opacity-50 cursor-not-allowed'

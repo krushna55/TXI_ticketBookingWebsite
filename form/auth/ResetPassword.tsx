@@ -8,34 +8,34 @@ import { ConfirmationModel } from "@/components/ConfirmationModel";
 import { ResettPassData } from "@/types/user";
 import { createClient } from "@/lib/supabase/client";
 import toast from "react-hot-toast";
+import { ShowPasswordBtn } from "@/components/showPasswordbtn";
 
 export default function ResetPasswordForm() {
     const router = useRouter();
-    const supabase = createClient();
     const [loading, setLoading] = useState(false);
     const [isOpenModel, setIsOpenModel] = useState(false);
     const [isValidSession, setIsValidSession] = useState(true);
-    const [error,setError] = useState<string | null>(null);
+    const [newPasswordvisible, setNewPasswordVisible] = useState(true);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const { register, handleSubmit, watch,reset, formState: { errors } } = useForm<ResettPassData>();
-
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm<ResettPassData>();
+    const supabase = createClient();
     // 1. Security Check: Verify user arrived via a valid reset link
-    // useEffect(() => {
-    //     const checkSession = async () => {
-    //         const { data } = await supabase.auth.getSession();
-    //         if (!data.session) {
-    //             setIsValidSession(false);
-    //         }
-    //     };
-    //     checkSession();
-    // }, [supabase]);
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data } = await supabase.auth.getSession();
+            if (!data.session) {
+                router.push('/login');
+            }
+        };
+        checkSession();
+    }, [supabase]);
 
     const onSubmit = async (data: ResettPassData) => {
         setLoading(true);
         try {
-            const error = await ResetPassword(data);
-            if (error) throw error;
-            
+            await ResetPassword(data);
             // Show success modal instead of immediate redirect
             setIsOpenModel(true);
         } catch (err) {
@@ -61,39 +61,44 @@ export default function ResetPasswordForm() {
         <>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col text-black my-3 h-[400px] justify-center'>
                 <label className='text-gray-600 md:text-xl text-sm my-3'>New Password</label>
-                <input 
-                    className={`p-1 ${errors.Password ? 'border-b-2 border-red-500' : 'border-b-2 border-gray-300 mb-5'} bg-white text-sm md:text-xl font-light outline-none`} 
-                    type="password" // Use password type for security
-                    placeholder="Enter new password" 
-                    {...register("Password", { 
-                        required: 'Please Enter new Password',
-                        pattern: {
-                            value: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/i,
-                            message: "Must be 8-16 characters, containing uppercase, lowercase, number, and symbol."
-                        }
-                    })} 
-                />
+                <div className={`flex justify-between ${errors.Password ? 'border-b-2 border-red-500' : 'border-b-2 border-gray-300 mb-5'} `}>
+                    <input
+                        className={`p-1 bg-white text-sm md:text-xl font-light outline-none`}
+                        type={`${newPasswordvisible ? 'password' : 'text'}`} // Use password type for security
+                        placeholder="Enter new password"
+                        {...register("Password", {
+                            required: 'Please Enter new Password',
+                            pattern: {
+                                value: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/i,
+                                message: "Must be 8-16 characters, containing uppercase, lowercase, number, and symbol."
+                            }
+                        })}
+                    />
+                    <ShowPasswordBtn passwordVisible={newPasswordvisible} setPasswordVisible={setNewPasswordVisible} />
+                </div>
                 {errors.Password && <p role="alert" className='text-red-500 text-xs'>{errors.Password.message}</p>}
-
                 {/* 2. Added Confirm Password Field for UX */}
                 <label className='text-gray-600 md:text-xl text-sm my-3'>Confirm Password</label>
-                <input 
-                    className={`p-1 ${errors.confirmPassword ? 'border-b-2 border-red-500' : 'border-b-2 border-gray-300 mb-5'} bg-white text-sm md:text-xl font-light outline-none`} 
-                    type="password"
-                    placeholder="Repeat new password" 
-                    {...register("confirmPassword", { 
-                        required: 'Please confirm your password',
-                        validate: (val: string) => {
-                            if (watch('Password') !== val) {
-                              return "Your passwords do not match";
-                            }
-                        },
-                    })} 
-                />
+                <div className={`flex justify-between ${errors.confirmPassword ? 'border-b-2 border-red-500' : 'border-b-2 border-gray-300 mb-5'}`}>
+                    <input
+                        className={`p-1  bg-white text-sm md:text-xl font-light outline-none`}
+                        type={`${confirmPasswordVisible ? 'password' : 'text'}`} // Use password type for security
+                        placeholder="Repeat new password"
+                        {...register("confirmPassword", {
+                            required: 'Please confirm your password',
+                            validate: (val: string) => {
+                                if (watch('Password') !== val) {
+                                    return "Your passwords do not match";
+                                }
+                            },
+                        })}
+                    />
+                    <ShowPasswordBtn passwordVisible={confirmPasswordVisible} setPasswordVisible={setConfirmPasswordVisible} />
+                </div>
                 {errors.confirmPassword && <p className='text-red-500 text-xs'>{errors.confirmPassword.message}</p>}
 
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     disabled={loading}
                     className={`${loading || Object.keys(errors).length > 0 ? 'bg-slate-200 text-gray-600 cursor-not-allowed' : 'bg-royal text-white'} p-2 mt-10 text-xl rounded-lg`}
                 >

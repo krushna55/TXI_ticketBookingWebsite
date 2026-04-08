@@ -1,6 +1,7 @@
 'use client'
 
 import { fetchBlogWithType } from "@/api/blog/blog";
+import { NoDataFound } from "@/components/NoDataFound";
 import Skelaton from "@/components/skelaton";
 import Typography from "@/components/Typography";
 import { BlogHeader } from "@/sections/blog/BlogHeader";
@@ -42,19 +43,21 @@ export default function Blog() {
                 loading ?
                     <div className="flex flex-col w-full space-y-5 justify-center mx-auto mt-10">
                         <Skelaton height="100px" className="w-full" ></Skelaton>
-                        <Skelaton height="100px"  className="w-full"></Skelaton>
+                        <Skelaton height="100px" className="w-full"></Skelaton>
                     </div>
                     :
                     nodata ?
-                        'No Data Found'
+                        <NoDataFound message="Sorry! No Blogs Found" />
                         :
                         <>
                             <BlogPageFrame blogList={blogList ?? undefined} />
                         </>
             }
             <div>
-                <Typography size="header-small" >Suggested Blogs</Typography>
-                <SuggestedBlog />
+                <div className="my-10  ">
+                    <Typography size="header-medium" className="flex justify-center items-center" >Suggested Blogs</Typography>
+                </div>
+                <SuggestedBlog nId={'1'}/>
             </div>
         </div>
     )

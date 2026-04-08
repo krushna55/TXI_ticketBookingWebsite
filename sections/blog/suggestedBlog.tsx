@@ -4,13 +4,13 @@ import { blog } from "@/types/blog";
 import { fetchBlogWithOffset, fetchRecommandedBlog } from "@/api/blog/blog";
 import Skelaton from "@/components/skelaton";
 
-export default function SuggestedBlog() {
+export default function SuggestedBlog({nId}: {nId: string}) {
     const [suggestData, setSuggestData] = useState<blog[] | null>(null); // Use state to keep the data
     const [loading, setLoading] = useState<boolean>(false);
     useEffect(() => {
         async function suggest() {
             setLoading(true)
-            const suggestdata = await fetchBlogWithOffset(0, 2)
+            const suggestdata = await fetchRecommandedBlog(0, 2, nId)
             console.log("from suggestion ", suggestdata)
             setSuggestData(suggestdata)
             setLoading(false)

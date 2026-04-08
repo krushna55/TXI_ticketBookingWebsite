@@ -67,10 +67,8 @@ export async function ResetPassword(user: ResettPassData) {
     const { data, error } = await supabase.auth.updateUser({ password: user.Password })
 
     if (error) {
-        toast.error(error.message)
-        return error;
+        return error.message;
     }
     toast.success('Password updated successfully')
     redirect('/login')
-    return data
 }

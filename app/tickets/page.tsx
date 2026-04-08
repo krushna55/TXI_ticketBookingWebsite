@@ -8,6 +8,8 @@ import { MdConfirmationNumber } from "react-icons/md"
 import { FaListUl } from "react-icons/fa6"
 import Skelaton from "@/components/skelaton"
 import Typography from "@/components/Typography"
+import { NoDataFound } from "@/components/NoDataFound"
+import { isFuture } from "@/utils/isFuture"
 
 export type BookingWithDetails = {
     id: string
@@ -73,7 +75,7 @@ export default function TicketsPage() {
         init()
     }, [])
 
-    const activeBookings = bookings.filter(b => b.booking_status === 'paid')
+    const activeBookings = bookings.filter(b => b.booking_status === 'paid' && isFuture(b.showtimes.show_time, b.showtimes.date))
     const allTransactions = bookings
 
     const displayBookings = activeTab === 'active' ? activeBookings : allTransactions
@@ -87,7 +89,7 @@ export default function TicketsPage() {
         }
     }
 
-    if (!user) return <div className="flex justify-center items-center h-screen">Please login to view tickets</div>
+    if (!user) return <div className="flex justify-center items-center text-xl"><NoDataFound message="Please Login to view you tickets"/></div>
 
     return (
         <div className="max-w-[1400px] mx-auto px-4 py-6 flex gap-6">
@@ -145,9 +147,8 @@ export default function TicketsPage() {
                 )
                     :
                     displayBookings.length === 0 ? (
-                        <div className="text-center text-gray-400 mt-20">
-                            <Skelaton height="200px" className="w-full" />
-                            <Skelaton height="200px" className="w-full" />
+                        <div className="text-center text-gray-400 mt-20 w-full">
+                            <NoDataFound message="You have no active tickets." />
                         </div>
                     ) : (
                         <div className="md:space-y-4 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-1">

@@ -62,7 +62,7 @@ export default function BrandScreenSelector({
     }
 
     return (
-        <div ref={dropdownRef} className="relative w-40 font-sans select-none">
+        <div ref={dropdownRef} className="relative min-w-24 font-sans select-none">
             {/* Trigger */}
             <button
                 onClick={() => setOpen((prev) => !prev)}
