@@ -4,7 +4,8 @@
 import Image, { StaticImageData } from 'next/image'
 import { FaArrowLeft } from "react-icons/fa6";
 import Typography from '@/components/Typography';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 type AuthFrameProp = {
     children: React.ReactNode;
@@ -14,11 +15,17 @@ type AuthFrameProp = {
 
 export default function AuthFrame({ children, backgroundImg, title }: AuthFrameProp) {
     const router = useRouter();
-    const callbackUrl = useSearchParams().get('redirect') || '/';
+    const [callbackUrl, setCallbackUrl] = useState('/');
+
+    // Get callback URL on client-side only
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect') || '/';
+        setCallbackUrl(redirect);
+    }, []);
 
     const handleGoBack = () => {
         // Check if there's history to go back to
-        console.log(callbackUrl)
         if (window.history.length > 1) {
             router.push(callbackUrl);
         } else {

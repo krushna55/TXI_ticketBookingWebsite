@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { LoginUser } from "@/api/user/authemtication";
 import { ConfirmationModel } from "@/components/ConfirmationModel";
@@ -18,9 +18,16 @@ export default function LoginForm() {
     const [loading, setLoading] = useState(false);
     const [isOpenModel, setisOpenModel] = useState(false);
     const [modelData, setModelData] = useState({ title: "", message: "", location: "/" });
-    const callbackurl = useSearchParams().get('redirect') || '/';
+    const [callbackurl, setCallbackurl] = useState('/');
     const [passwordVisible, setPasswordVisible] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm<loginData>();
+
+    // Get callback URL on client-side only
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect') || '/';
+        setCallbackurl(redirect);
+    }, []);
 
     const onSubmit = async (data: loginData) => {
         setLoading(true);

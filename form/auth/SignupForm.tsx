@@ -5,7 +5,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { RegisterUser } from "@/api/user/authemtication";
 import { ConfirmationModel } from "@/components/ConfirmationModel";
