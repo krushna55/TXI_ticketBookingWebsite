@@ -146,7 +146,7 @@ export function TicketPDF({ booking, qrCodeData }: { booking: BookingDetail, qrC
   const seatCount = booking.seats.length
   const seatPrice = showtime.price || 0
   const serviceFee = 30
-  const discount = booking.discount_amount
+  const discount = booking.discount_amount ?? 0
   const passwordKey = payment?.stripe_session_id?.slice(-6).toUpperCase() ?? "000000"
   const seats = booking.seats.join(", ")
 
