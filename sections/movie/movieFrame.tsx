@@ -84,7 +84,7 @@ const MovieFrame = memo(function MovieFrame({ movieid }: { movieid: string }) {
                         {movie && rendererd()}
 
                         {isSelected && (  // ✅ check id instead of truthy object
-                            <div className="w-full border border-[#5A637A] rounded-lg mt-5 p-2 md:p-5 ">
+                            <div className="w-full border border-[#5A637A] rounded-lg my-10 p-2 md:p-5 space-y-2 ">
                                 <Typography size="header-medium">{selectedMovie.theaterDetails.name}</Typography>
                                 <Typography size="header-xsmall" color="font_shade_600" className="pt-2 md:pt-4" >
                                     {HandleDate(selectedMovie.theaterDetails.date)}

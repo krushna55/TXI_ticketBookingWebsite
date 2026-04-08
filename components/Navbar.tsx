@@ -120,13 +120,13 @@ export default function Navbar() {
                       <LuLogOut /> Logout
                     </span>
                   </button>
-                    <ConfirmationModel
-                     isOpen={isOpenModel}
-                      title="Logout" 
-                      message="Are you sure you want to logout?" 
-                      onConfirmation={handleLogout} 
-                      onCancle={() => setIsOpenModel(false)} 
-                      />
+                  <ConfirmationModel
+                    isOpen={isOpenModel}
+                    title="Logout"
+                    message="Are you sure you want to logout?"
+                    onConfirmation={handleLogout}
+                    onCancle={() => setIsOpenModel(false)}
+                  />
                 </div>
               )}
             </div>
@@ -170,24 +170,26 @@ export default function Navbar() {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-3 w-30 bg-white rounded shadow-md z-50">
                   <button
-                    onClick={()=> setIsOpenModel(!isOpenModel)}
+                    onClick={() => setIsOpenModel(!isOpenModel)}
                     className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 w-full"
                   >
                     <LuLogOut /> Logout
                   </button>
-                   <ConfirmationModel
-                     isOpen={isOpenModel}
-                      title="Logout" 
-                      message="Are you sure you want to logout?" 
-                      onConfirmation={handleLogout} 
-                      onCancle={() => setIsOpenModel(false)} 
-                      />
+                  <ConfirmationModel
+                    isOpen={isOpenModel}
+                    title="Logout"
+                    message="Are you sure you want to logout?"
+                    onConfirmation={handleLogout}
+                    onCancle={() => setIsOpenModel(false)}
+                  />
                 </div>
               )}
             </div>
           ) : (
-            <Link href="/login" className="text-sm">
-              Login
+            <Link href="/login" className="bg-royal px-3 py-1 rounded-md">
+              <span className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent">
+                Login
+              </span>
             </Link>
           )}
         </div>
@@ -223,29 +225,31 @@ export default function Navbar() {
               <div className="border-t pt-4">
                 {!user ? (
                   <div className="flex flex-col gap-4">
-                    <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/register" className=" px-3 py-1 border rounded-md hover:bg-font_shade_200" onClick={() => setIsMenuOpen(false)}>
                       Register
                     </Link>
-                    <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                      Login
+                    <Link href="/login" className="bg-royal px-3 py-1 rounded-md">
+                      <span className="bg-gradient-to-r from-[#F2C46F] to-[#e3bb76] bg-clip-text text-transparent">
+                        Login
+                      </span>
                     </Link>
                   </div>
                 ) : (
                   <>
-                  <button
-                    onClick={() => setIsOpenModel(!isOpenModel)}
-                    className="flex items-center gap-2 text-red-600"
+                    <button
+                      onClick={() => setIsOpenModel(!isOpenModel)}
+                      className="flex items-center gap-2 text-red-600"
                     >
-                    <LuLogOut /> Logout
-                  </button>
-                   <ConfirmationModel
-                     isOpen={isOpenModel}
-                      title="Logout" 
-                      message="Are you sure you want to logout?" 
-                      onConfirmation={handleLogout} 
-                      onCancle={() => setIsOpenModel(false)} 
-                      />
-                      </>
+                      <LuLogOut /> Logout
+                    </button>
+                    <ConfirmationModel
+                      isOpen={isOpenModel}
+                      title="Logout"
+                      message="Are you sure you want to logout?"
+                      onConfirmation={handleLogout}
+                      onCancle={() => setIsOpenModel(false)}
+                    />
+                  </>
                 )}
               </div>
             </div>

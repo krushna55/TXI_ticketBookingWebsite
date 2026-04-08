@@ -5,7 +5,7 @@ export const ConfirmationModel = ({ isOpen, title, message, onConfirmation, onCa
     return (
         <>
             <div className="fixed flex justify-center items-center inset-0 bg-black bg-opacity-50 z-50">
-                <div className="bg-white rounded-lg p-6 w-80 md:w-[35%] shadow-xl">
+                <div className="max-w-96 bg-white rounded-lg p-6 w-80 md:w-[35%] shadow-xl">
                     <div className="flex justify-start items-start flex-col mb-2">
                         <div className="flex justify-between  w-full">
                             <Typography size="header-xsmall" className="mb-3 text-center">

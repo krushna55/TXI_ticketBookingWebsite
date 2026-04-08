@@ -17,15 +17,16 @@ import PropertySelector from "@/sections/movie/propertySelector"
 import { useUserLocation } from "@/utils/useUserLocation"
 import LocationBanner from "@/utils/LocationBanner"
 import Skelaton from "@/components/skelaton"
+import { resetSelection } from "@/lib/slice/movieSlice"
 
 export default function Movie() {
     const params = useParams()
     const movieid = params?.movieId as string
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(resetSelection())
-    // })
+    useEffect(() => {
+        dispatch(resetSelection())
+    },[])
     const [cityvalue, setCity] = useState<number>(1)
     const [filters, setFilters] = useState({
         query: '',
@@ -72,7 +73,7 @@ export default function Movie() {
                 t.theaterdetails.district?.toLowerCase().includes(q)
             )
         }
-        
+
         if (filters.screen) {
             result = result.filter(t =>
                 t.screens.some(s => s.screendetails.type === filters.screen)
@@ -105,7 +106,7 @@ export default function Movie() {
         }
         console.log(result)
         return result
-    }, [data, filters,movie_date])
+    }, [data, filters, movie_date])
 
     // ✅ "Sort by nearest" clicked while location is denied → show message, don't crash
     function handleNearest(bool: boolean) {
@@ -168,7 +169,7 @@ export default function Movie() {
                         <IoMdSearch className="text-2xl m-auto mx-2" />
                     </div>
 
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="flex gap-2 flex-wrap my-5  md:my-0">
                         <BrandScreenSelector
                             setScreen={s => setFilters(prev => ({ ...prev, screen: s }))}
                             screen={filters.screen}
@@ -195,18 +196,18 @@ export default function Movie() {
                     {isLoading
                         ? <>
                             {Array(2)
-                            .fill(0)
-                            .map((_, i) => (
-                            <div key={i} className="w-full flex flex-col justify-center">
-                                <Skelaton height="50px" className="w-[95%] my-2" />
-                                <Skelaton height="25px" className="w-[95%] my-2" />
-                                <Skelaton height="25px" className="w-[95%] my-2" />
-                            </div>
-                            ))}
+                                .fill(0)
+                                .map((_, i) => (
+                                    <div key={i} className="w-full flex flex-col justify-center">
+                                        <Skelaton height="50px" className="w-[95%] my-2" />
+                                        <Skelaton height="25px" className="w-[95%] my-2" />
+                                        <Skelaton height="25px" className="w-[95%] my-2" />
+                                    </div>
+                                ))}
                         </>
                         :
                         <>
-                                                    <ShowtimeTheaterSection data={displayData} />
+                            <ShowtimeTheaterSection data={displayData} />
                         </>
                     }
 
