@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Basic, Roboto } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import GloableLayout from "@/layout/gloableLayout";
@@ -36,13 +36,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+        
           <MovieDetailsProvider>
-            <GloableLayout>
               <QueryProvider>
                 <Toaster position="bottom-right" />
                 {children}
               </QueryProvider>
-            </GloableLayout>
           </MovieDetailsProvider>
         </ThemeProvider>
       </body>

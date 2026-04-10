@@ -3,7 +3,6 @@
 import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import { resetSelection } from "@/lib/slice/movieSlice"
-import { useSearchParams } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
 

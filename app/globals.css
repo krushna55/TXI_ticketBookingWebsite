@@ -50,7 +50,7 @@
     @apply box-border;
   }
   body {
-    @apply mx-auto max-w-[1400px]   bg-white text-black;
+    @apply mx-auto  bg-white text-black;
   }
 }
 .swiper-button-prev,

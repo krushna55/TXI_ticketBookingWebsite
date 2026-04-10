@@ -43,7 +43,7 @@ export default function PropertySelector({ handleCheapest, handleNearest, handle
 
             {/* Dropdown */}
             {open && (
-                <div className="absolute left-0 top-0 w-40 sm:w-44 bg-white border border-gray-200 rounded shadow-lg z-50 max-h-72 overflow-y-auto scrollbar-hide">
+                <div className="absolute left-0 top-0 w-40 sm:w-44 bg-white border border-gray-200 rounded shadow-lg z-40 max-h-72 overflow-y-auto scrollbar-hide">
                     <div >
                         <div
                             className="px-3 py-2 flex justify-start items-center cursor-pointer"

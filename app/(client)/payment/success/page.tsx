@@ -10,7 +10,7 @@ export default function SuccessPage() {
 
     useEffect(() => {
         dispatch(resetSelection())
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="flex flex-col items-center justify-center h-screen gap-4">

@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-export default function GlobalLayout({ children }: { children: React.ReactNode }) {
+export default function BasicLayout({ children }: { children: React.ReactNode }) {
 
     // const pathName = usePathname();
 
@@ -11,7 +11,7 @@ export default function GlobalLayout({ children }: { children: React.ReactNode }
     // const isAuth = authPages.includes(pathName);
 
     return (
-        <div className="min-h-screen  flex flex-col">
+        <div className="min-h-screen max-w-[1400px]  flex flex-col">
 
             <div className="sticky top-0 z-50">
                 <Navbar/>

@@ -167,7 +167,7 @@ export default function BrandSelector({
             </button>
 
             {open && (
-                <div className="absolute left-0 top-0 w-40 bg-white border border-gray-200 rounded shadow-lg z-50 max-h-72 overflow-y-auto scrollbar-hide">
+                <div className="absolute left-0 top-0 w-40 bg-white border border-gray-200 rounded shadow-lg z-40 max-h-72 overflow-y-auto scrollbar-hide">
                     <div
                         className="px-3 py-2 flex justify-start items-center cursor-pointer"
                         onClick={() => setOpen(false)}

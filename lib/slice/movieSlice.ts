@@ -87,7 +87,7 @@ export const movieSlice = createSlice({
     },
 
     resetSelection: () => initialState,
-      resetSelectedSession: (state) => {
+    resetSelectedSession: (state) => {
       state.selected_showtime = {
         id: 0,
         show_time: null,
